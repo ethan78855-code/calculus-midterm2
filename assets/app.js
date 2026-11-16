@@ -5,9 +5,9 @@
   'use strict';
 
   /* ================= 1. 站台資料 ================= */
-  // 2026-11-19（月份從 0 起算）。知道開考時間後填 hh、mm，並把 timed 改成 true；
-  // timed 是 false 時只知道日期，倒數到當天 0:00。
-  var EXAM = { y: 2026, m: 10, d: 19, hh: 0, mm: 0, timed: false };
+  // 2026-11-19 上午 10:10 開考（月份從 0 起算）。
+  // timed 改成 false 的話只看日期，倒數到當天 0:00。
+  var EXAM = { y: 2026, m: 10, d: 19, hh: 10, mm: 10, timed: true };
   var LS_KEY = 'calc-mid2-v1';
 
   var PAGES = [
