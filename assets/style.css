@@ -112,13 +112,23 @@ a:hover { text-decoration-thickness: 2px; }
 .top-link:hover { background: var(--paper); color: var(--ink); }
 
 .countdown {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
   font: 600 0.82rem/1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
   color: var(--ink);
   background: var(--mark);
   padding: 8px 10px;
   border-radius: 999px;
   white-space: nowrap;
 }
+/* 標籤有三種寬度：桌機「距離考試日」、手機「倒數」、很窄的手機不顯示 */
+.countdown .cd-label,
+.countdown .cd-short { font-weight: 500; }
+.countdown .cd-short { display: none; }
+.countdown.is-over .cd-label,
+.countdown.is-over .cd-short { display: none; }
 
 .menu-btn {
   display: none;
@@ -742,7 +752,9 @@ details.hint > :last-child, details.peek > :last-child { margin-bottom: 12px; }
   .topbar { gap: 8px; padding: 0 10px; }
   .brand { font-size: 1rem; min-width: 0; }
   .brand-mark { display: none; }
-  .countdown { font-size: 0.74rem; padding: 7px 9px; }
+  .countdown { font-size: 0.74rem; padding: 7px 9px; gap: 5px; }
+  .countdown .cd-label { display: none; }
+  .countdown:not(.is-over) .cd-short { display: inline; }
   .prob { padding: 0 14px 16px; }
   .step { padding-left: 40px; }
   .plan li { grid-template-columns: 1fr; gap: 4px; }
@@ -750,6 +762,13 @@ details.hint > :last-child, details.peek > :last-child { margin-bottom: 12px; }
   .pager .next, .pager .prev { grid-column: 1; text-align: left; }
   figure.fig { padding: 10px 10px 10px; }
   .sol-count { margin-left: 0; flex-basis: 100%; }
+}
+@media (max-width: 371px) {
+  .countdown:not(.is-over) .cd-short { display: none; }
+}
+@media (max-width: 339px) {
+  .brand > span:not(.brand-mark) { display: none; }
+  .brand-mark { display: grid; }
 }
 
 @media (prefers-reduced-motion: reduce) {

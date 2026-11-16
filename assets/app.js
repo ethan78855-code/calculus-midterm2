@@ -5,7 +5,9 @@
   'use strict';
 
   /* ================= 1. 站台資料 ================= */
-  var EXAM = { y: 2026, m: 10, d: 19 }; // 2026-11-19（月份從 0 起算）
+  // 2026-11-19（月份從 0 起算）。知道開考時間後填 hh、mm，並把 timed 改成 true；
+  // timed 是 false 時只知道日期，倒數到當天 0:00。
+  var EXAM = { y: 2026, m: 10, d: 19, hh: 0, mm: 0, timed: false };
   var LS_KEY = 'calc-mid2-v1';
 
   var PAGES = [
@@ -61,18 +63,44 @@
   }
 
   /* ================= 2. 頂列、目錄、頁尾 ================= */
-  function daysToExam() {
-    var now = new Date();
-    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    var exam = new Date(EXAM.y, EXAM.m, EXAM.d);
-    return Math.round((exam - today) / 86400000);
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  // 回傳 { label, time, live }：live 表示還在倒數，需要每秒更新
+  function countdownParts(now) {
+    var start = new Date(EXAM.y, EXAM.m, EXAM.d, EXAM.timed ? EXAM.hh : 0, EXAM.timed ? EXAM.mm : 0, 0);
+    var dayEnd = new Date(EXAM.y, EXAM.m, EXAM.d + 1);
+    var ms = start - now;
+    if (ms > 0) {
+      var s = Math.ceil(ms / 1000);
+      var d = Math.floor(s / 86400); s -= d * 86400;
+      var h = Math.floor(s / 3600); s -= h * 3600;
+      var m = Math.floor(s / 60); s -= m * 60;
+      return {
+        label: EXAM.timed ? '距離考試' : '距離考試日',
+        time: (d > 0 ? d + ' 天 ' : '') + pad2(h) + ':' + pad2(m) + ':' + pad2(s),
+        live: true
+      };
+    }
+    if (now < dayEnd) return { label: '', time: EXAM.timed ? '考試已開始' : '今天考試', live: false };
+    return { label: '', time: '考試已結束', live: false };
   }
-  function countdownText() {
-    var d = daysToExam();
-    if (d > 1) return '距離考試 ' + d + ' 天';
-    if (d === 1) return '明天考試';
-    if (d === 0) return '今天考試';
-    return '考試已結束';
+  function startCountdown(el) {
+    var labelEl = el.querySelector('.cd-label');
+    var timeEl = el.querySelector('.cd-time');
+    var timer = null;
+    function tick() {
+      clearTimeout(timer);
+      var now = new Date();
+      var p = countdownParts(now);
+      if (labelEl.textContent !== p.label) labelEl.textContent = p.label;
+      el.classList.toggle('is-over', !p.live);
+      if (timeEl.textContent !== p.time) timeEl.textContent = p.time;
+      el.setAttribute('aria-label', (p.label ? p.label + ' ' : '') + p.time);
+      // 對齊到下一個整秒；倒數結束後改成每分鐘檢查一次（今天考試 → 考試已結束）
+      timer = setTimeout(tick, p.live ? 1000 - (now.getTime() % 1000) + 20 : 60000);
+    }
+    tick();
+    // 分頁切回來時立刻更新（背景分頁的計時器會被瀏覽器放慢）
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) tick(); });
   }
 
   function buildChrome() {
@@ -84,7 +112,7 @@
       '<a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">f′</span><span>微積分期中考二<small>衝刺講義</small></span></a>' +
       '<span class="top-spacer"></span>' +
       '<a class="top-link" href="formulas.html">公式總表</a>' +
-      '<span class="countdown">' + countdownText() + '</span>';
+      '<span class="countdown" role="timer"><span class="cd-label"></span><span class="cd-short">倒數</span><span class="cd-time"></span></span>';
 
     var side = mk('nav', 'sidebar');
     side.id = 'sidebar';
@@ -105,6 +133,7 @@
     document.body.prepend(scrim);
     document.body.prepend(side);
     document.body.prepend(top);
+    startCountdown(top.querySelector('.countdown'));
 
     var menuBtn = top.querySelector('.menu-btn');
     function setNav(open) {
