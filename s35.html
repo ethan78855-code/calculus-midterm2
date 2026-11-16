@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.5 高階導數｜微積分期中考二衝刺</title>
+<meta name="description" content="二階、三階導數怎麼算、代表什麼意思（速度與加速度、成長趨緩），含指定題 3.5 #28 逐步解答。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="s35">
+<main class="page">
+
+<p class="kicker">第 3 章 · Section 3.5</p>
+<h1>高階導數</h1>
+<p class="lead">「高階導數」聽起來很難，其實只是<strong>微分完再微分一次</strong>。這一節要會兩件事：算得出二階、三階導數，以及說得出二階導數代表什麼。第 4 章判斷圖形怎麼彎，全靠二階導數。</p>
+<div data-toc></div>
+
+<h2 id="what">二階導數：把導數再微分一次</h2>
+<p>$f(x)$ 微分一次得到 $f'(x)$。$f'(x)$ 本身也是一個函數，所以可以再微分，得到的東西叫<strong>二階導數</strong>，寫成 $f''(x)$。再微一次就是三階導數 $f'''(x)$，可以一直微下去。</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>微分幾次</th><th>名稱</th><th>撇號寫法</th><th>$\dfrac{d}{dx}$ 寫法</th></tr></thead>
+<tbody>
+<tr><td>1 次</td><td>一階導數</td><td>$f'(x)$、$y'$</td><td>$\dfrac{dy}{dx}$</td></tr>
+<tr><td>2 次</td><td>二階導數</td><td>$f''(x)$、$y''$</td><td>$\dfrac{d^2y}{dx^2}$</td></tr>
+<tr><td>3 次</td><td>三階導數</td><td>$f'''(x)$、$y'''$</td><td>$\dfrac{d^3y}{dx^3}$</td></tr>
+<tr><td>$n$ 次</td><td>$n$ 階導數</td><td>$f^{(n)}(x)$</td><td>$\dfrac{d^ny}{dx^n}$</td></tr>
+</tbody>
+</table>
+</div>
+<p>撇號超過三個不好讀，所以四階以上改寫成 $f^{(4)}(x)$。括號不能省，$f^{(4)}$ 是微分四次，$f^4$ 是四次方。</p>
+<p><strong>例：</strong>$f(x) = x^4 - 2x^3 + 6x^2 - 3x + 10$，一路微到變成 0：</p>
+$$\begin{aligned}
+f'(x) &= 4x^3 - 6x^2 + 12x - 3\\
+f''(x) &= 12x^2 - 12x + 12\\
+f'''(x) &= 24x - 12\\
+f^{(4)}(x) &= 24\\
+f^{(5)}(x) &= 0
+\end{aligned}$$
+<div class="say">
+<p>每微一次，多項式的次數就少 1。四次多項式微四次剩常數，微第五次變 0。算高階導數沒有新規則，就是<mark>把上一行的答案當成新題目再微一次</mark>。</p>
+</div>
+<div class="trap">
+<p>$f''(x)$ 不是 $\big[f'(x)\big]^2$。二階導數是「再微分一次」，不是「平方」。例如 $f(x) = x^3$：$f'(x) = 3x^2$，$f''(x) = 6x$，而不是 $9x^4$。</p>
+</div>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">$f(x) = x^3 - 4x^2 + 7$，$f''(x)$ 是？</p>
+<button>$3x^2 - 8x$</button>
+<button>$6x - 8$</button>
+<button>$6x$</button>
+<p class="quiz-why">先微一次：$f'(x) = 3x^2 - 8x$。再微一次：$f''(x) = 6x - 8$。第一個選項只微了一次。</p>
+</div>
+
+<h2 id="meaning">f″ 的意思：變化率的變化率</h2>
+<p>$f'(x)$ 是切線斜率，告訴你 $f$ 變化得多快。$f''(x)$ 是「$f'$ 的導數」，所以它告訴你<strong>斜率本身</strong>變化得多快：</p>
+<div class="key" data-title="二階導數的正負號">
+<p>$f''(x) \gt 0$：切線斜率正在<strong>變大</strong>，曲線往上彎（像碗 ∪）<br>
+$f''(x) \lt 0$：切線斜率正在<strong>變小</strong>，曲線往下彎（像蓋子 ∩）</p>
+</div>
+<p>拖曳下面的圖，一邊看橘色切線怎麼轉，一邊對照 $f''$ 的正負：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-2.4, 2.4], "y": [-6.5, 6.5], "h": 340,
+  "fns": [
+    { "f": "x^3-3*x", "color": "f", "label": "f(x) = x³ − 3x" },
+    { "f": "3*x^2-3", "color": "d1", "dash": true, "label": "f′(x) = 3x² − 3", "toggle": true, "show": false },
+    { "f": "6*x", "color": "d2", "dash": true, "label": "f″(x) = 6x", "toggle": true, "show": false }
+  ],
+  "tangent": { "fn": 0 },
+  "slider": { "label": "x", "min": -2.2, "max": 2.2, "step": 0.01, "value": -1.5, "digits": 2, "play": true,
+    "presets": [ { "label": "x = −1", "value": -1 }, { "label": "x = 0（彎的方向改變）", "value": 0 }, { "label": "x = 1", "value": 1 } ] },
+  "readouts": [
+    { "label": "切線斜率 f′(x)", "expr": "3*a^2-3", "digits": 2, "color": "d1" },
+    { "label": "二階導數 f″(x)", "expr": "6*a", "digits": 2, "color": "d2" },
+    { "label": "斜率正在", "expr": "6*a", "pos": "變大，曲線往上彎 ∪", "neg": "變小，曲線往下彎 ∩", "zero": "轉折的瞬間", "eps": 0.06 }
+  ]
+}
+</script>
+<figcaption>按「播放」從左走到右：x 是負的時候 f″ &lt; 0，切線越來越往下轉；過了 x = 0 之後 f″ &gt; 0，切線開始往上轉。點圖例可以把 f′、f″ 的圖形疊上來。</figcaption>
+</figure>
+<p>「曲線往上彎或往下彎」在 4.2 節有正式的名字，叫<strong>凹向上、凹向下</strong>。現在先有這個印象就好。</p>
+
+<h2 id="motion">位置、速度、加速度</h2>
+<p>高階導數最直接的例子是車子的運動。$s(t)$ 是車子在時間 $t$ 的位置：</p>
+<div class="key" data-title="速度與加速度">
+$$v(t) = s'(t) \qquad\qquad a(t) = v'(t) = s''(t)$$
+<p>速度是位置的變化率；加速度是速度的變化率，所以是位置的<strong>二階導數</strong>。</p>
+</div>
+<p>假設一台車的位置是 $s(t) = t^3 - 6t^2 + 9t$（公尺），那麼</p>
+$$v(t) = 3t^2 - 12t + 9 \qquad\qquad a(t) = 6t - 12$$
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 5], "y": [-14, 26], "h": 340,
+  "xlabel": "時間 t（秒）",
+  "fns": [
+    { "f": "x^3-6*x^2+9*x", "color": "f", "label": "位置 s(t)" },
+    { "f": "3*x^2-12*x+9", "color": "d1", "label": "速度 v(t) = s′(t)", "toggle": true },
+    { "f": "6*x-12", "color": "d2", "label": "加速度 a(t) = s″(t)", "toggle": true }
+  ],
+  "points": [
+    { "x": "a", "on": 0, "color": "f" },
+    { "x": "a", "on": 1, "color": "d1" },
+    { "x": "a", "on": 2, "color": "d2" }
+  ],
+  "vlines": [ { "x": "a", "color": "mute" } ],
+  "slider": { "label": "時間 t", "min": 0, "max": 5, "step": 0.05, "value": 0.5, "digits": 2, "unit": " 秒", "play": true,
+    "presets": [ { "label": "t = 1（停住）", "value": 1 }, { "label": "t = 2", "value": 2 }, { "label": "t = 3（又停住）", "value": 3 } ] },
+  "readouts": [
+    { "label": "位置 s", "expr": "a^3-6*a^2+9*a", "digits": 2, "unit": " m", "color": "f" },
+    { "label": "速度 v", "expr": "3*a^2-12*a+9", "digits": 2, "unit": " m/秒", "color": "d1" },
+    { "label": "加速度 a", "expr": "6*a-12", "digits": 2, "unit": " m/秒²", "color": "d2" },
+    { "label": "車子正在", "expr": "3*a^2-12*a+9", "pos": "往前開（v > 0）", "neg": "倒車（v < 0）", "zero": "瞬間停住（v = 0）", "eps": 0.12 }
+  ]
+}
+</script>
+<figcaption>藍線往上爬的時候速度（橘）是正的；橘線往上爬的時候加速度（紫）是正的。每一條線都是上一條線的「斜率圖」。</figcaption>
+</figure>
+<p><strong>課本型例題：</strong>工地有一把鐵鎚從 256 英尺高掉下來，落下的距離是 $s = 16t^2$（英尺）。落地時的速度和加速度是多少？</p>
+<details class="peek"><summary>看解法</summary>
+<p>落地代表掉了 256 英尺：$16t^2 = 256$，$t^2 = 16$，$t = 4$ 秒。</p>
+<p>速度 $v = s' = 32t$，所以 $v(4) = 128$ 英尺/秒。加速度 $a = s'' = 32$ 英尺/秒²，是常數（這就是重力加速度）。</p>
+</details>
+
+<h2 id="econ">新聞說「成長趨緩」，講的就是 f″</h2>
+<p>商管題最愛考這種句子的翻譯。「在成長」講的是 $f' \gt 0$；「成長得越來越快或越來越慢」講的是 $f''$ 的正負。</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>$f'$</th><th>$f''$</th><th>白話</th><th>圖形的樣子</th></tr></thead>
+<tbody>
+<tr><td class="c-pos">正</td><td class="c-pos">正</td><td>在增加，而且越增越快（加速成長）</td><td>往上走、往上彎</td></tr>
+<tr><td class="c-pos">正</td><td class="c-neg">負</td><td>在增加，但越增越慢（成長趨緩）</td><td>往上走、往下彎</td></tr>
+<tr><td class="c-neg">負</td><td class="c-neg">負</td><td>在減少，而且越掉越快</td><td>往下走、往下彎</td></tr>
+<tr><td class="c-neg">負</td><td class="c-pos">正</td><td>在減少，但越掉越慢（跌勢趨緩）</td><td>往下走、往上彎</td></tr>
+</tbody>
+</table>
+</div>
+<p>下面是課本習題裡某開發中國家的 GDP：$G(t) = -0.2t^3 + 2.4t^2 + 60$（十億美元，$t$ 是年）。它的 $G'(t) = -0.6t^2 + 4.8t$，$G''(t) = -1.2t + 4.8$。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 8], "y": [50, 120], "h": 320,
+  "xlabel": "t（年）", "ylabel": "GDP（十億美元）",
+  "fns": [{ "f": "-0.2*x^3+2.4*x^2+60", "color": "f", "label": "G(t) = −0.2t³ + 2.4t² + 60" }],
+  "tangent": { "fn": 0 },
+  "vlines": [ { "x": 4, "label": "t = 4：G″ = 0", "color": "mute", "low": true } ],
+  "slider": { "label": "t", "min": 0.2, "max": 7.8, "step": 0.05, "value": 1, "digits": 2, "play": true,
+    "presets": [ { "label": "t = 1", "value": 1 }, { "label": "t = 4", "value": 4 }, { "label": "t = 7", "value": 7 } ] },
+  "readouts": [
+    { "label": "成長速度 G′(t)", "expr": "-0.6*a^2+4.8*a", "digits": 2, "color": "d1" },
+    { "label": "G″(t)", "expr": "-1.2*a+4.8", "digits": 2, "color": "d2" },
+    { "label": "解讀", "expr": "-1.2*a+4.8", "pos": "在成長，而且越來越快", "neg": "還在成長，但越來越慢", "zero": "成長速度最快的時刻", "eps": 0.07 }
+  ]
+}
+</script>
+<figcaption>整段時間 GDP 都在增加（G′ &gt; 0）。前四年切線越來越陡（G″ &gt; 0），第四年之後切線越來越平（G″ &lt; 0），這就是「起步慢、中間衝、後來降溫」。</figcaption>
+</figure>
+<div class="quiz" data-answer="3">
+<p class="quiz-q">新聞：「房價還在漲，但漲勢已經趨緩。」設房價是 $P(t)$，這句話用導數怎麼寫？</p>
+<button>$P'(t) \lt 0$，$P''(t) \lt 0$</button>
+<button>$P'(t) \gt 0$，$P''(t) \gt 0$</button>
+<button>$P'(t) \gt 0$，$P''(t) \lt 0$</button>
+<p class="quiz-why">「還在漲」是 $P' \gt 0$。「漲勢趨緩」是上漲的速度 $P'$ 在變小，也就是 $P'' \lt 0$。</p>
+</div>
+
+<h2 id="howto">計算的訣竅：每微一次，先整理再往下</h2>
+<div class="how" data-title="算高階導數的習慣">
+<ol>
+<li>根號、分母先改寫成次方（$\dfrac1x = x^{-1}$、$\sqrt{x} = x^{1/2}$）。</li>
+<li>微完一次，<strong>先化簡</strong>（合併、提公因式），再微下一次。</li>
+<li>如果上一行是「兩包東西相乘」，下一次就要用乘法規則；有括號的次方就要用連鎖律。</li>
+</ol>
+</div>
+<p><strong>例 1（負次方）：</strong>$f(x) = \dfrac1x = x^{-1}$，求 $f'''(x)$。</p>
+$$f'(x) = -x^{-2} \qquad f''(x) = 2x^{-3} \qquad f'''(x) = -6x^{-4} = -\frac{6}{x^4}$$
+<p>次方一直搬下來乘，正負號會交替出現。</p>
+<p><strong>例 2（連鎖律）：</strong>$f(x) = (2x - 3)^4$，求 $f'''(x)$。裡面 $2x - 3$ 的微分是 2，每一次都要乘：</p>
+$$\begin{aligned}
+f'(x) &= 4(2x-3)^3\cdot 2 = 8(2x-3)^3\\
+f''(x) &= 8\cdot 3(2x-3)^2\cdot 2 = 48(2x-3)^2\\
+f'''(x) &= 48\cdot 2(2x-3)\cdot 2 = 192(2x-3)
+\end{aligned}$$
+<p><strong>例 3（連鎖律之後要用乘法規則）：</strong>$y = (2x^2 + 3)^{3/2}$，求 $y''$。</p>
+<p>第一次：外層 $\tfrac32$ 次方，裡面 $2x^2 + 3$ 的微分是 $4x$。</p>
+$$y' = \tfrac32(2x^2+3)^{1/2}\cdot 4x = 6x\,(2x^2+3)^{1/2}$$
+<p>現在 $y'$ 是 $6x$ 和 $(2x^2+3)^{1/2}$ 相乘，第二次要用乘法規則：</p>
+$$y'' = \underbrace{6}_{\text{前微}}(2x^2+3)^{1/2} + 6x\cdot\underbrace{\tfrac12(2x^2+3)^{-1/2}\cdot 4x}_{\text{後微}} = 6(2x^2+3)^{1/2} + \frac{12x^2}{(2x^2+3)^{1/2}}$$
+<p>通分之後：</p>
+$$y'' = \frac{6(2x^2+3) + 12x^2}{\sqrt{2x^2+3}} = \frac{24x^2 + 18}{\sqrt{2x^2+3}}$$
+<div class="trap">
+<p>連鎖律微完第一次以後，前面多出來的那個 $x$（像例 3 的 $6x$）會讓式子變成「乘積」。第二次如果還只用連鎖律、忘記乘法規則，就會少一項。指定題 #28 就是考這個。</p>
+</div>
+<div class="quiz" data-answer="1">
+<p class="quiz-q">$f(x) = (3x+1)^3$，$f''(x)$ 是？</p>
+<button>$54(3x+1)$</button>
+<button>$6(3x+1)$</button>
+<button>$18(3x+1)$</button>
+<p class="quiz-why">$f'(x) = 3(3x+1)^2\cdot 3 = 9(3x+1)^2$。$f''(x) = 9\cdot 2(3x+1)\cdot 3 = 54(3x+1)$。兩次都要乘裡面的微分 3。</p>
+</div>
+
+<h2 id="problems">指定題</h2>
+<p>這一節只有一題，但是它把連鎖律、乘法規則、提公因式全部用上了。先自己算到 $g''$，再對答案。</p>
+
+<article class="prob" data-prob="3.5-28">
+<h3>求三階導數</h3>
+<div class="prob-q">
+<p>求函數 $g(t) = \left(\tfrac12 t^2 - 1\right)^5$ 的三階導數 $g'''(t)$。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>裡面那包 $\tfrac12 t^2 - 1$ 的微分是 $t$。第一次用連鎖律，之後每一行都是「兩包相乘」，要用乘法規則。每微完一次就把共同的 $\left(\tfrac12 t^2 - 1\right)$ 次方提出來，下一步會好算很多。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>一階導數：連鎖律</h4>
+<p>外層是 5 次方，裡面是 $\tfrac12 t^2 - 1$，裡面的微分是 $\tfrac12\cdot 2t = t$：</p>
+$$g'(t) = 5\left(\tfrac12 t^2 - 1\right)^4\cdot t = 5t\left(\tfrac12 t^2 - 1\right)^4$$
+</div>
+<div class="step">
+<h4>二階導數：乘法規則</h4>
+<p>把 $g'$ 看成前面 $5t$、後面 $\left(\tfrac12 t^2 - 1\right)^4$。前面微分是 $5$；後面微分是 $4\left(\tfrac12 t^2 - 1\right)^3\cdot t$。</p>
+$$g''(t) = 5\left(\tfrac12 t^2 - 1\right)^4 + 5t\cdot 4t\left(\tfrac12 t^2 - 1\right)^3 = 5\left(\tfrac12 t^2 - 1\right)^4 + 20t^2\left(\tfrac12 t^2 - 1\right)^3$$
+</div>
+<div class="step">
+<h4>提公因式，把 g″ 整理乾淨</h4>
+<p>兩項都有 $5\left(\tfrac12 t^2 - 1\right)^3$，提出來：</p>
+$$g''(t) = 5\left(\tfrac12 t^2 - 1\right)^3\Big[\left(\tfrac12 t^2 - 1\right) + 4t^2\Big] = 5\left(\tfrac12 t^2 - 1\right)^3\left(\tfrac92 t^2 - 1\right)$$
+<p>中括號裡 $\tfrac12 t^2 + 4t^2 = \tfrac92 t^2$。</p>
+</div>
+<div class="step">
+<h4>三階導數：再用一次乘法規則</h4>
+<p>前面 $5\left(\tfrac12 t^2 - 1\right)^3$ 的微分是 $15\left(\tfrac12 t^2 - 1\right)^2\cdot t$；後面 $\tfrac92 t^2 - 1$ 的微分是 $9t$。</p>
+$$g'''(t) = 15t\left(\tfrac12 t^2 - 1\right)^2\left(\tfrac92 t^2 - 1\right) + 5\left(\tfrac12 t^2 - 1\right)^3\cdot 9t$$
+</div>
+<div class="step">
+<h4>再提一次公因式</h4>
+<p>兩項都有 $15t\left(\tfrac12 t^2 - 1\right)^2$（第二項的 $45t = 15t\times 3$）：</p>
+$$\begin{aligned}
+g'''(t) &= 15t\left(\tfrac12 t^2 - 1\right)^2\Big[\left(\tfrac92 t^2 - 1\right) + 3\left(\tfrac12 t^2 - 1\right)\Big]\\
+&= 15t\left(\tfrac12 t^2 - 1\right)^2\left(6t^2 - 4\right)\\
+&= 30t\left(\tfrac12 t^2 - 1\right)^2\left(3t^2 - 2\right)
+\end{aligned}$$
+<p>中括號裡 $\tfrac92 t^2 + \tfrac32 t^2 = 6t^2$，$-1 - 3 = -4$；最後 $6t^2 - 4 = 2(3t^2 - 2)$。</p>
+</div>
+<div class="step">
+<h4>代一個數字驗算</h4>
+<p>取 $t = 2$：$\tfrac12 t^2 - 1 = 1$，所以 $g'''(2) = 30\cdot 2\cdot 1^2\cdot(12 - 2) = 600$。用沒化簡的那一行算：$15\cdot 2\cdot 1\cdot 17 + 5\cdot 1\cdot 18 = 510 + 90 = 600$，一致。考試有時間就挑一個簡單的數字這樣檢查。</p>
+<p class="answer"><span>$g'''(t) = 30t\left(\tfrac12 t^2 - 1\right)^2\left(3t^2 - 2\right)$</span></p>
+</div>
+</div>
+</article>
+
+<div class="exam">
+<p>高階導數的題目，錯通常不是錯在觀念，是錯在抄寫。每一行都把「這是幾階導數」標清楚（$g'$、$g''$、$g'''$），微完先整理再往下。答案不一定要化到最簡，但提公因式之後下一步會簡單很多，也比較不會掉項。遇到「速度、加速度」的應用題，記得答案要寫單位。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

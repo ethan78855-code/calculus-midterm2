@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.6 隱函數微分與相關變率｜微積分期中考二衝刺</title>
+<meta name="description" content="y 解不出來也能微分：隱函數微分三步驟與相關變率的固定解法，含指定題 3.6 #19、#23、#44 逐步解答。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="s36">
+<main class="page">
+
+<p class="kicker">第 3 章 · Section 3.6</p>
+<h1>隱函數微分與相關變率</h1>
+<p class="lead">到目前為止，題目都是 $y = \text{一堆 } x$ 的樣子。這一節處理 $x$ 和 $y$ 混在一起、$y$ 沒有被單獨解出來的方程式。做法只有一個重點：<strong>看到 $y$ 微分，後面要多乘一個 $\dfrac{dy}{dx}$</strong>。後半段的「相關變率」是同一招，只是改成對時間 $t$ 微分。</p>
+<div data-toc></div>
+
+<h2 id="implicit">顯函數與隱函數</h2>
+<p>$y = x^2 + 1$ 這種「$y$ 自己在等號一邊」的叫<strong>顯函數</strong>。像 $x^2 + y^2 = 25$ 這種 $x$、$y$ 攪在一起的叫<strong>隱函數</strong>：$y$ 還是跟著 $x$ 變，只是關係藏在方程式裡。</p>
+<p>$x^2 + y^2 = 25$ 是半徑 5 的圓。硬要解出 $y$ 會得到 $y = \pm\sqrt{25 - x^2}$，有正負兩支，還要對根號微分，很麻煩。</p>
+<div class="say">
+<p>隱函數微分的想法：<mark>不用把 $y$ 解出來，直接把整條方程式的兩邊一起微分</mark>，最後再把 $\dfrac{dy}{dx}$ 解出來。</p>
+</div>
+<p>先看結果。對圓 $x^2 + y^2 = 25$ 做隱函數微分會得到 $\dfrac{dy}{dx} = -\dfrac{x}{y}$（下一段教怎麼算）。拖曳圖上的點，看切線斜率是不是真的等於 $-x/y$：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-7.5, 7.5], "y": [-6, 6], "h": 360, "equal": true,
+  "fns": [
+    { "f": "sqrt(25-x^2)", "color": "f", "label": "x² + y² = 25", "domain": [-5, 5] },
+    { "f": "-sqrt(25-x^2)", "color": "f", "domain": [-5, 5] }
+  ],
+  "tangent": { "fn": 0 },
+  "slider": { "label": "點的 x 座標", "min": -4.8, "max": 4.8, "step": 0.05, "value": 3, "digits": 2,
+    "presets": [ { "label": "點 (3, 4)", "value": 3 }, { "label": "點 (0, 5)", "value": 0 }, { "label": "點 (−4, 3)", "value": -4 } ] },
+  "readouts": [
+    { "label": "點的 y 座標", "expr": "sqrt(25-a^2)", "digits": 2 },
+    { "label": "切線斜率 dy/dx = −x/y", "expr": "-a/sqrt(25-a^2)", "digits": 3, "color": "d1" }
+  ]
+}
+</script>
+<figcaption>在 (3, 4) 斜率是 −3/4 = −0.75；在最高點 (0, 5) 斜率是 0；在 (−4, 3) 斜率是 4/3。答案裡同時有 x 和 y 是正常的。</figcaption>
+</figure>
+
+<h2 id="steps">隱函數微分三步驟</h2>
+<div class="how" data-title="隱函數微分">
+<ol>
+<li>等號<strong>兩邊同時</strong>對 $x$ 微分。</li>
+<li>只有 $x$ 的項照平常微。含 $y$ 的項，把 $y$ 當成「一包 $x$ 的函數」，用連鎖律：照微之後<strong>多乘一個 $\dfrac{dy}{dx}$</strong>。</li>
+<li>把有 $\dfrac{dy}{dx}$ 的項全部移到同一邊，提出來，解出 $\dfrac{dy}{dx}$。</li>
+</ol>
+</div>
+<p>為什麼要多乘 $\dfrac{dy}{dx}$？因為 $y$ 裡面藏著 $x$。$y^2$ 其實是 $\big[y(x)\big]^2$，跟 $(2x+1)^2$ 一樣是「外面平方、裡面一包」，連鎖律要乘上裡面那包的微分，而 $y$ 的微分就是 $\dfrac{dy}{dx}$。</p>
+<div class="key" data-title="最常用的兩個">
+$$\frac{d}{dx}\big(y^n\big) = n\,y^{n-1}\cdot\frac{dy}{dx} \qquad\qquad \frac{d}{dx}\big(xy\big) = \underbrace{1\cdot y}_{\text{前微}} + \underbrace{x\cdot\frac{dy}{dx}}_{\text{後微}}$$
+<p>$xy$ 是 $x$ 和 $y$ 相乘，要用<strong>乘法規則</strong>。</p>
+</div>
+<p><strong>例 1：</strong>$x^2 + y^2 = 25$。兩邊對 $x$ 微分（右邊 25 是常數，微分是 0）：</p>
+$$2x + 2y\,\frac{dy}{dx} = 0 \quad\Longrightarrow\quad 2y\,\frac{dy}{dx} = -2x \quad\Longrightarrow\quad \frac{dy}{dx} = -\frac{x}{y}$$
+<p><strong>例 2（有 $xy$）：</strong>$x^2 - 2xy = 6$。中間那項是 $-2$ 乘上 $xy$，用乘法規則：</p>
+$$2x - 2\Big(y + x\,\frac{dy}{dx}\Big) = 0 \quad\Longrightarrow\quad 2x - 2y - 2x\,\frac{dy}{dx} = 0 \quad\Longrightarrow\quad \frac{dy}{dx} = \frac{x - y}{x}$$
+<p><strong>例 3（$\dfrac{dy}{dx}$ 出現兩次）：</strong>$x^3 + y^3 + y - 4 = 0$。</p>
+$$3x^2 + 3y^2\,\frac{dy}{dx} + \frac{dy}{dx} = 0 \quad\Longrightarrow\quad \big(3y^2 + 1\big)\frac{dy}{dx} = -3x^2 \quad\Longrightarrow\quad \frac{dy}{dx} = -\frac{3x^2}{3y^2 + 1}$$
+<p>有兩項帶 $\dfrac{dy}{dx}$ 時，把它<strong>提出來</strong>變成一個括號，再除過去。指定題 #23 就需要這一步。</p>
+<div class="trap">
+<p>三個最常見的錯：</p>
+<ul>
+<li>$\dfrac{d}{dx}(y^2)$ 只寫 $2y$，忘了乘 $\dfrac{dy}{dx}$。</li>
+<li>$\dfrac{d}{dx}(xy)$ 寫成 $\dfrac{dy}{dx}$ 或 $y$，沒有用乘法規則。</li>
+<li>等號右邊的常數忘了微分成 0，或右邊有 $x$ 卻忘了微。</li>
+</ul>
+</div>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">隱函數微分時，$\dfrac{d}{dx}\big(y^3\big)$ 是？</p>
+<button>$3y^2$</button>
+<button>$3y^2\,\dfrac{dy}{dx}$</button>
+<button>$3x^2$</button>
+<p class="quiz-why">$y$ 是 $x$ 的函數，連鎖律：外層微分 $3y^2$，再乘上 $y$ 自己的微分 $\dfrac{dy}{dx}$。</p>
+</div>
+<div class="quiz" data-answer="3">
+<p class="quiz-q">$x^2 + xy = 10$，$\dfrac{dy}{dx}$ 是？</p>
+<button>$-2x$</button>
+<button>$-\dfrac{2x}{x + y}$</button>
+<button>$-\dfrac{2x + y}{x}$</button>
+<p class="quiz-why">兩邊微分：$2x + \Big(y + x\dfrac{dy}{dx}\Big) = 0$，所以 $x\dfrac{dy}{dx} = -2x - y$，$\dfrac{dy}{dx} = -\dfrac{2x+y}{x}$。</p>
+</div>
+<h3>求某一點的切線</h3>
+<p>題目如果給了點，把座標代進 $\dfrac{dy}{dx}$ 就是切線斜率，再用點斜式 $y - y_0 = m(x - x_0)$。</p>
+<details class="peek"><summary>例：求 $4x^2 + 9y^2 = 36$ 在點 $(0, 2)$ 的切線</summary>
+<p>兩邊微分：$8x + 18y\,\dfrac{dy}{dx} = 0$，所以 $\dfrac{dy}{dx} = -\dfrac{4x}{9y}$。代 $(0, 2)$ 得斜率 $0$，切線是水平線 $y = 2$。</p>
+</details>
+
+<h2 id="related">相關變率</h2>
+<div class="say">
+<p>兩個量被一條關係式綁在一起，其中一個隨時間在變，另一個就會跟著變。<mark>已知一個變多快，求另一個變多快</mark>，這就是相關變率。</p>
+</div>
+<p>這裡所有變數都是時間 $t$ 的函數，所以改成<strong>兩邊對 $t$ 微分</strong>。規則跟隱函數微分一模一樣，只是現在每個變數後面都要乘上「它自己對 $t$ 的變率」：</p>
+<div class="key" data-title="對時間 t 微分">
+$$\frac{d}{dt}\big(x^2\big) = 2x\,\frac{dx}{dt} \qquad \frac{d}{dt}\big(p^2\big) = 2p\,\frac{dp}{dt} \qquad \frac{d}{dt}\big(\pi r^2\big) = 2\pi r\,\frac{dr}{dt}$$
+<p>$\dfrac{dx}{dt}$ 讀作「$x$ 對時間的變化率」。在增加是正的，<strong>在減少是負的</strong>。</p>
+</div>
+<div class="how" data-title="相關變率五步驟">
+<ol>
+<li>列出題目給的數字：哪些是「量」（如 $x = 25$），哪些是「變率」（如 $\dfrac{dp}{dt} = -0.02$）。</li>
+<li>寫下要求的是哪個變率（如 $\dfrac{dx}{dt}$）。</li>
+<li>寫出連結這些變數的關係式（題目給的方程式，或幾何公式）。</li>
+<li>兩邊對 $t$ 微分。</li>
+<li><strong>最後</strong>才把數字代進去，解出答案，寫上單位。</li>
+</ol>
+</div>
+<div class="trap">
+<p>一定要<strong>先微分、再代數字</strong>。如果先把 $x = 25$ 代進方程式，$x$ 就變成常數，微分會變 0，整題就錯了。</p>
+</div>
+
+<h3>例 1：油污擴散</h3>
+<p>油輪漏油，海面上的油污是一個圓。當半徑是 60 英尺、而且半徑以每秒 $\tfrac12$ 英尺的速度變大時，油污面積增加得多快？</p>
+<p>已知 $r = 60$，$\dfrac{dr}{dt} = \tfrac12$；求 $\dfrac{dA}{dt}$。關係式是圓面積 $A = \pi r^2$，對 $t$ 微分再代入：</p>
+$$\frac{dA}{dt} = 2\pi r\,\frac{dr}{dt} = 2\pi(60)\Big(\frac12\Big) = 60\pi \approx 188.5 \text{ 平方英尺/秒}$$
+<figure class="fig">
+<script type="application/json">
+{
+  "slider": { "label": "半徑 r", "min": 10, "max": 100, "step": 1, "value": 60, "digits": 0, "unit": " ft", "play": true, "dragPanel": 1,
+    "presets": [ { "label": "r = 20", "value": 20 }, { "label": "r = 60（題目）", "value": 60 }, { "label": "r = 100", "value": 100 } ] },
+  "panels": [
+    { "title": "油污（從上方看）", "narrow": true, "axes": false, "equal": true, "x": [-110, 110], "y": [-110, 110], "h": 270,
+      "shapes": [
+        { "type": "circle", "cx": 0, "cy": 0, "r": "a", "color": "f", "fill": true },
+        { "type": "line", "x1": 0, "y1": 0, "x2": "a", "y2": 0, "color": "d1", "w": 2.5, "label": "r = {{a|0}}", "lo": [0, -8] }
+      ] },
+    { "title": "面積 A = πr²", "x": [0, 100], "y": [0, 32000], "h": 270, "xlabel": "r（ft）", "ylabel": "A（ft²）",
+      "fns": [ { "f": "pi*x^2", "color": "f", "label": "A = πr²" } ],
+      "tangent": { "fn": 0 } }
+  ],
+  "readouts": [
+    { "label": "面積 A", "expr": "pi*a^2", "digits": 0, "unit": " ft²", "color": "f" },
+    { "label": "dA/dt = 2πr × ½", "expr": "pi*a", "digits": 1, "unit": " ft²/秒", "color": "d1" }
+  ]
+}
+</script>
+<figcaption>半徑每秒都只多 ½ 英尺，但是圓越大，外面那一圈越長，所以面積增加得越快。這就是為什麼答案裡有 r，要代題目指定的那一刻。</figcaption>
+</figure>
+
+<h3>例 2：兩台車的距離</h3>
+<p>兩台車同時離開路口，一台往西、一台往北。某一刻，往西的車離路口 20 英尺、速度 9 英尺/秒；往北的車離路口 28 英尺、速度 11 英尺/秒。兩車之間的距離變化得多快？</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "axes": false, "equal": true, "x": [-27, 9], "y": [-8, 33], "h": 290,
+  "shapes": [
+    { "type": "line", "x1": 0, "y1": 0, "x2": -20, "y2": 0, "color": "f", "w": 3, "label": "x = 20", "lo": [0, 20] },
+    { "type": "line", "x1": 0, "y1": 0, "x2": 0, "y2": 28, "color": "pos", "w": 3, "label": "y = 28", "lo": [10, 4], "anchor": "start" },
+    { "type": "line", "x1": -20, "y1": 0, "x2": 0, "y2": 28, "color": "d1", "dash": true, "w": 2.5, "label": "D = ?", "lo": [-10, -4], "anchor": "end" },
+    { "type": "circle", "cx": -20, "cy": 0, "rpx": 7, "color": "f", "fill": true },
+    { "type": "circle", "cx": 0, "cy": 28, "rpx": 7, "color": "pos", "fill": true },
+    { "type": "text", "x": 0, "y": -5, "t": "路口", "color": "ink" },
+    { "type": "text", "x": -20, "y": -5, "t": "← 往西", "color": "f" },
+    { "type": "text", "x": 0, "y": 30.5, "t": "↑ 往北", "color": "pos", "anchor": "start" }
+  ]
+}
+</script>
+<figcaption>兩台車和路口形成直角三角形，距離 D 是斜邊。</figcaption>
+</figure>
+<p>已知 $x = 20$，$y = 28$，$\dfrac{dx}{dt} = 9$，$\dfrac{dy}{dt} = 11$；求 $\dfrac{dD}{dt}$。關係式是畢氏定理 $D^2 = x^2 + y^2$。對 $t$ 微分：</p>
+$$2D\,\frac{dD}{dt} = 2x\,\frac{dx}{dt} + 2y\,\frac{dy}{dt} \quad\Longrightarrow\quad \frac{dD}{dt} = \frac{x\,\dfrac{dx}{dt} + y\,\dfrac{dy}{dt}}{D}$$
+<p>這一刻 $D = \sqrt{20^2 + 28^2} = \sqrt{1184} \approx 34.41$，所以</p>
+$$\frac{dD}{dt} = \frac{20(9) + 28(11)}{34.41} = \frac{488}{34.41} \approx 14.2 \text{ 英尺/秒}$$
+
+<h3>例 3：價格和需求量（跟指定題同一型）</h3>
+<p>某輪胎每週需求量 $x$（千條）與單價 $p$（美元）滿足 $p + x^2 = 144$。當 $x = 9$、$p = 63$，而且價格每週上漲 2 美元時，需求量變化得多快？</p>
+<p>已知 $\dfrac{dp}{dt} = 2$，求 $\dfrac{dx}{dt}$。兩邊對 $t$ 微分：</p>
+$$\frac{dp}{dt} + 2x\,\frac{dx}{dt} = 0 \quad\Longrightarrow\quad \frac{dx}{dt} = -\frac{1}{2x}\cdot\frac{dp}{dt} = -\frac{2}{2(9)} = -\frac19 \approx -0.111$$
+<p>$x$ 的單位是千條，所以需求量每週大約<strong>減少 111 條</strong>。答案是負的，剛好符合「漲價，買的人變少」。</p>
+<div class="quiz" data-answer="1">
+<p class="quiz-q">正方形的邊長 $s$ 以每秒 2 公分的速度變長。邊長是 5 公分的那一刻，面積 $A = s^2$ 增加得多快？</p>
+<button>20 平方公分/秒</button>
+<button>10 平方公分/秒</button>
+<button>4 平方公分/秒</button>
+<p class="quiz-why">對 $t$ 微分：$\dfrac{dA}{dt} = 2s\,\dfrac{ds}{dt} = 2(5)(2) = 20$。記得要乘 $\dfrac{ds}{dt}$。</p>
+</div>
+
+<h2 id="problems">指定題</h2>
+<p>#19、#23 是隱函數微分，#44 是相關變率。先自己寫，卡住再開解答。</p>
+
+<article class="prob" data-prob="3.6-19">
+<h3>根號裡有 y 的隱函數微分</h3>
+<div class="prob-q">
+<p>用隱函數微分求 $\dfrac{dy}{dx}$：</p>
+$$\sqrt{x + y} = x$$
+</div>
+<details class="hint"><summary>提示</summary>
+<p>先把左邊寫成 $(x+y)^{1/2}$。用連鎖律時，裡面那包 $x + y$ 的微分是 $1 + \dfrac{dy}{dx}$，不是 1。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>改寫成次方</h4>
+$$(x + y)^{1/2} = x$$
+</div>
+<div class="step">
+<h4>兩邊對 x 微分</h4>
+<p>左邊用連鎖律：外層 $\tfrac12$ 次方，裡面 $x + y$ 的微分是 $1 + \dfrac{dy}{dx}$。右邊 $x$ 的微分是 1。</p>
+$$\frac12(x + y)^{-1/2}\Big(1 + \frac{dy}{dx}\Big) = 1 \qquad\text{也就是}\qquad \frac{1 + \dfrac{dy}{dx}}{2\sqrt{x + y}} = 1$$
+</div>
+<div class="step">
+<h4>解出 dy/dx</h4>
+<p>兩邊同乘 $2\sqrt{x+y}$，再把 1 移過去：</p>
+$$1 + \frac{dy}{dx} = 2\sqrt{x + y} \quad\Longrightarrow\quad \frac{dy}{dx} = 2\sqrt{x + y} - 1$$
+</div>
+<div class="step">
+<h4>用圖形檢查</h4>
+<p>這題其實可以解出 $y$：兩邊平方得 $x + y = x^2$，所以 $y = x^2 - x$（$x \ge 0$），直接微分是 $2x - 1$。而原式說 $\sqrt{x+y} = x$，所以 $2\sqrt{x+y} - 1$ 就是 $2x - 1$，兩種算法一致。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-0.5, 3.5], "y": [-1, 7], "h": 280,
+  "fns": [{ "f": "x^2-x", "color": "f", "label": "√(x + y) = x，也就是 y = x² − x（x ≥ 0）", "domain": [0, 3.4] }],
+  "tangent": { "fn": 0 },
+  "slider": { "label": "x", "min": 0.1, "max": 3, "step": 0.01, "value": 2, "digits": 2 },
+  "readouts": [
+    { "label": "y", "expr": "a^2-a", "digits": 2 },
+    { "label": "2√(x + y) − 1", "expr": "2*sqrt(a+a^2-a)-1", "digits": 2, "color": "d1" },
+    { "label": "2x − 1", "expr": "2*a-1", "digits": 2, "color": "d1" }
+  ]
+}
+</script>
+<figcaption>不管拖到哪裡，兩個讀數都一樣，而且就是橘色切線的斜率。</figcaption>
+</figure>
+<p class="answer"><span>$\dfrac{dy}{dx} = 2\sqrt{x + y} - 1$</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="3.6-23">
+<h3>根號裡有 xy 的隱函數微分</h3>
+<div class="prob-q">
+<p>用隱函數微分求 $\dfrac{dy}{dx}$：</p>
+$$\sqrt{xy} = x + y$$
+</div>
+<details class="hint"><summary>提示</summary>
+<p>左邊 $(xy)^{1/2}$ 用連鎖律，裡面那包 $xy$ 要用乘法規則，微分是 $y + x\dfrac{dy}{dx}$。這題 $\dfrac{dy}{dx}$ 會出現在等號兩邊，要移項之後提出來。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>改寫成次方</h4>
+$$(xy)^{1/2} = x + y$$
+</div>
+<div class="step">
+<h4>兩邊對 x 微分</h4>
+<p>左邊：外層 $\tfrac12$ 次方，裡面 $xy$ 的微分是 $y + x\dfrac{dy}{dx}$。右邊：$x + y$ 的微分是 $1 + \dfrac{dy}{dx}$。</p>
+$$\frac12(xy)^{-1/2}\Big(y + x\,\frac{dy}{dx}\Big) = 1 + \frac{dy}{dx}$$
+</div>
+<div class="step">
+<h4>去掉分母</h4>
+<p>$\tfrac12(xy)^{-1/2} = \dfrac{1}{2\sqrt{xy}}$，兩邊同乘 $2\sqrt{xy}$：</p>
+$$y + x\,\frac{dy}{dx} = 2\sqrt{xy} + 2\sqrt{xy}\,\frac{dy}{dx}$$
+</div>
+<div class="step">
+<h4>把有 dy/dx 的項移到左邊，其他移到右邊</h4>
+$$x\,\frac{dy}{dx} - 2\sqrt{xy}\,\frac{dy}{dx} = 2\sqrt{xy} - y$$
+</div>
+<div class="step">
+<h4>提出 dy/dx，除過去</h4>
+$$\big(x - 2\sqrt{xy}\big)\frac{dy}{dx} = 2\sqrt{xy} - y \quad\Longrightarrow\quad \frac{dy}{dx} = \frac{2\sqrt{xy} - y}{x - 2\sqrt{xy}}$$
+<p class="answer"><span>$\dfrac{dy}{dx} = \dfrac{2\sqrt{xy} - y}{x - 2\sqrt{xy}}$</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="3.6-44">
+<h3>雞蛋的價格與供給量</h3>
+<div class="prob-q">
+<p>某品牌中型雞蛋的批發價 $p$（美元/盒）與每週供給量 $x$（千盒）滿足</p>
+$$625p^2 - x^2 = 100$$
+<p>某一週開始時市面上有 25,000 盒，而且價格正以每週每盒 2 美分的速度下跌。這時候每週供給量下降得多快？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>25,000 盒是 $x = 25$（單位是千盒）。2 美分是 0.02 美元，而且是下跌，所以 $\dfrac{dp}{dt} = -0.02$。題目沒給 $p$，要先把 $x = 25$ 代回方程式求出來；但這個 $p$ 要等微分完才代。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>整理已知和所求</h4>
+<p>已知：$x = 25$，$\dfrac{dp}{dt} = -0.02$（下跌所以是負的）。所求：$\dfrac{dx}{dt}$。</p>
+</div>
+<div class="step">
+<h4>求這一刻的價格 p</h4>
+<p>把 $x = 25$ 代入方程式：</p>
+$$625p^2 - 625 = 100 \quad\Longrightarrow\quad p^2 = \frac{725}{625} = 1.16 \quad\Longrightarrow\quad p = \sqrt{1.16} \approx 1.077$$
+<p>價格是正的，取正根。</p>
+</div>
+<div class="step">
+<h4>方程式兩邊對 t 微分</h4>
+<p>$p$ 和 $x$ 都是時間的函數，右邊 100 是常數：</p>
+$$1250\,p\,\frac{dp}{dt} - 2x\,\frac{dx}{dt} = 0$$
+</div>
+<div class="step">
+<h4>解出 dx/dt</h4>
+$$2x\,\frac{dx}{dt} = 1250\,p\,\frac{dp}{dt} \quad\Longrightarrow\quad \frac{dx}{dt} = \frac{625\,p}{x}\cdot\frac{dp}{dt}$$
+</div>
+<div class="step">
+<h4>代入數字</h4>
+$$\frac{dx}{dt} = \frac{625(1.077)}{25}\,(-0.02) \approx -0.5385 \text{（千盒/週）}$$
+<p>$-0.5385$ 千盒就是大約 $-539$ 盒。負號代表在減少。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 2], "y": [0, 50], "h": 280,
+  "xlabel": "批發價 p（美元/盒）", "ylabel": "供給量 x（千盒）",
+  "fns": [{ "f": "sqrt(625*x^2-100)", "color": "f", "label": "供給曲線 625p² − x² = 100", "domain": [0.4, 2] }],
+  "tangent": { "fn": 0, "at": 1.077 },
+  "points": [ { "x": 1.077, "y": 25, "label": "p ≈ 1.077，x = 25", "pos": "br", "color": "d1" } ]
+}
+</script>
+<figcaption>切線斜率 dx/dp = 625p/x ≈ 26.9：價格每掉 1 美元，供給少 26.9 千盒。現在每週掉 0.02 美元，所以供給每週少 26.9 × 0.02 ≈ 0.54 千盒。</figcaption>
+</figure>
+<p class="answer"><span>$\dfrac{dx}{dt} \approx -0.539$ 千盒/週，也就是每週供給量大約減少 539 盒。</span></p>
+</div>
+</div>
+</article>
+
+<div class="exam">
+<p>隱函數微分的答案通常同時有 $x$ 和 $y$，不用硬化成只有 $x$。相關變率要注意三件事：「下跌、減少」的變率要寫<strong>負號</strong>；單位要對（2 美分 = 0.02 美元，25,000 盒 = 25 千盒）；最後用一句話回答，例如「供給量每週約減少 539 盒」。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

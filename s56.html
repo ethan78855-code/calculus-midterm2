@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5.6 指數模型：成長、衰退、學習曲線｜微積分期中考二衝刺</title>
+<meta name="description" content="指數成長、指數衰退與半衰期、學習曲線、邏輯斯成長四種模型，含指定題 5.6 #15、#16、#19、#22、#23、#24 逐步解答與計算機按法。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="s56">
+<main class="page">
+
+<p class="kicker">第 5 章 · Section 5.6</p>
+<h1>指數模型：成長、衰退、學習曲線</h1>
+<p class="lead">這一節是第 5 章的應用題，只有四種公式。每一種題目都只會問三件事：<strong>代時間求值</strong>、<strong>最後會穩定在多少</strong>、<strong>某個時刻變化多快</strong>。認出是哪一種公式，剩下就是按計算機。</p>
+<div data-toc></div>
+
+<h2 id="three">每一題都在問這三件事</h2>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>題目的問法</th><th>要做的事</th><th>用到的工具</th></tr></thead>
+<tbody>
+<tr><td>「第 10 天有多少？」「2013 年是多少？」</td><td>把 $t$ 代進公式</td><td>計算機的 $e^x$ 鍵</td></tr>
+<tr><td>「最後會到多少？」「最多多少？」「穩定在哪裡？」</td><td>讓 $t \to \infty$，這時 $e^{-kt} \to 0$</td><td>把 $e^{-kt}$ 那一項當成 0</td></tr>
+<tr><td>「成長多快？」「下降的速率？」</td><td>先微分，再代 $t$</td><td>$\big(e^{kt}\big)' = k\,e^{kt}$</td></tr>
+<tr><td>「什麼時候到達某個量？」「求常數 $k$」</td><td>把 $e$ 那一項單獨留下，兩邊取 $\ln$</td><td>計算機的 $\ln$ 鍵</td></tr>
+</tbody>
+</table>
+</div>
+<div class="say">
+<p>整節最重要的一句話：<mark>$t$ 很大的時候，$e^{-kt}$ 會變成 0</mark>。例如 $e^{-3} \approx 0.05$，$e^{-8} \approx 0.0003$。所以公式裡帶負號指數的那一項，時間久了就消失。</p>
+</div>
+
+<h2 id="growth">模型一：指數成長</h2>
+<div class="key" data-title="指數成長">
+$$Q(t) = Q_0\,e^{kt} \qquad (k \gt 0)$$
+<p>$Q_0$ 是一開始的量（$t = 0$ 時 $e^0 = 1$），$k$ 是成長常數，越大長得越快。</p>
+</div>
+<p>微分一次：$Q'(t) = k\,Q_0e^{kt} = k\,Q(t)$。意思是<strong>成長速度和現有的量成正比</strong>：東西越多，長得越快。細菌、人口、連續複利都是這一型。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 30], "y": [0, 1200], "h": 300,
+  "xlabel": "時間 t", "ylabel": "數量 Q",
+  "fns": [{ "f": "100*e^(a*x)", "color": "f", "label": "Q(t) = 100 e^(kt)" }],
+  "points": [
+    { "x": 0, "y": 100, "label": "起點 Q₀ = 100", "pos": "tr", "color": "ink" },
+    { "x": "ln(2)/a", "y": 200, "label": "變成 2 倍", "pos": "br", "color": "d1" }
+  ],
+  "hlines": [ { "y": 200, "color": "mute" } ],
+  "slider": { "label": "成長常數 k", "min": 0.02, "max": 0.08, "step": 0.001, "value": 0.035, "digits": 3, "drag": false,
+    "presets": [ { "label": "k = 0.02", "value": 0.02 }, { "label": "k = 0.035", "value": 0.035 }, { "label": "k = 0.08", "value": 0.08 } ] },
+  "readouts": [
+    { "label": "變成 2 倍要花的時間 ln2 / k", "expr": "ln(2)/a", "digits": 1, "color": "d1" },
+    { "label": "t = 30 時的量", "expr": "100*e^(30*a)", "digits": 0, "color": "f" }
+  ]
+}
+</script>
+<figcaption>拉動 k。k 變成兩倍，翻倍時間就剩一半。不管 k 是多少，曲線都從 Q₀ = 100 出發，而且越往右越陡。</figcaption>
+</figure>
+<details class="peek"><summary>例：細菌每 20 分鐘數量加倍，一開始 100 隻。求公式，以及多久會變成 100 萬隻</summary>
+<p>$Q(t) = 100e^{kt}$。「20 分鐘加倍」就是 $200 = 100e^{20k}$，所以 $e^{20k} = 2$。兩邊取 $\ln$：$20k = \ln 2$，$k = \dfrac{\ln 2}{20} \approx 0.0347$。</p>
+<p>要到 100 萬：$100e^{kt} = 1{,}000{,}000$，$e^{kt} = 10000$，$t = \dfrac{\ln 10000}{k} \approx 266$ 分鐘。</p>
+</details>
+
+<h2 id="decay">模型二：指數衰退與半衰期</h2>
+<div class="key" data-title="指數衰退">
+$$Q(t) = Q_0\,e^{-kt} \qquad (k \gt 0) \qquad\qquad \text{半衰期} = \frac{\ln 2}{k}$$
+<p>指數多了負號，量越來越少，最後趨近 0。<strong>半衰期</strong>是「剩下一半」要花的時間。</p>
+</div>
+<p>半衰期怎麼來：令 $Q_0e^{-kt} = \tfrac12 Q_0$，得 $e^{-kt} = \tfrac12$，取 $\ln$ 得 $-kt = \ln\tfrac12 = -\ln 2$，所以 $t = \dfrac{\ln 2}{k}$。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 60], "y": [0, 110], "h": 300,
+  "xlabel": "時間 t", "ylabel": "剩下的量 Q",
+  "fns": [{ "f": "100*e^(-a*x)", "color": "f", "label": "Q(t) = 100 e^(−kt)" }],
+  "points": [
+    { "x": "ln(2)/a", "y": 50, "label": "剩一半（第 1 個半衰期）", "pos": "tr", "color": "d1" },
+    { "x": "2*ln(2)/a", "y": 25, "label": "剩 1/4", "pos": "tr", "color": "d1" },
+    { "x": "3*ln(2)/a", "y": 12.5, "label": "剩 1/8", "pos": "tr", "color": "d1" }
+  ],
+  "hlines": [ { "y": 50, "color": "mute" } ],
+  "slider": { "label": "衰退常數 k", "min": 0.03, "max": 0.2, "step": 0.001, "value": 0.049, "digits": 3, "drag": false,
+    "presets": [ { "label": "k = 0.049（磷 32）", "value": 0.049 }, { "label": "k = 0.1", "value": 0.1 }, { "label": "k = 0.2", "value": 0.2 } ] },
+  "readouts": [
+    { "label": "半衰期 ln2 / k", "expr": "ln(2)/a", "digits": 1, "color": "d1" },
+    { "label": "t = 20 時剩下", "expr": "100*e^(-20*a)", "digits": 1, "color": "f" }
+  ]
+}
+</script>
+<figcaption>每過一個半衰期就再少一半：100 → 50 → 25 → 12.5。橘點之間的水平距離都一樣長。</figcaption>
+</figure>
+<details class="peek"><summary>例：磷 32 的半衰期是 14.2 天，一開始有 100 克。求 7.1 天後剩多少、當時衰退多快</summary>
+<p>$k = \dfrac{\ln 2}{14.2} \approx 0.0488$，所以 $Q(t) = 100e^{-0.0488t}$。</p>
+<p>$Q(7.1) = 100e^{-0.3466} \approx 70.7$ 克。</p>
+<p>速率：$Q'(t) = -0.0488\cdot 100e^{-0.0488t} = -0.0488\,Q(t)$，所以 $Q'(7.1) \approx -0.0488 \times 70.7 \approx -3.45$，也就是每天減少約 3.45 克。</p>
+</details>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">某放射性物質 $Q(t) = 80e^{-0.1t}$（$t$ 是年）。下列哪一個是對的？</p>
+<button>一開始有 80，每年固定減少 0.1</button>
+<button>一開始有 80，半衰期大約 6.9 年</button>
+<button>一開始有 0.1，最後會到 80</button>
+<p class="quiz-why">$t = 0$ 時 $Q = 80$。半衰期 $= \dfrac{\ln 2}{0.1} \approx 6.93$ 年。指數衰退不是每年減固定的量，而是每年減固定的比例。</p>
+</div>
+
+<h2 id="learning">模型三：學習曲線</h2>
+<div class="key" data-title="學習曲線">
+$$Q(t) = C - A\,e^{-kt} \qquad (C,\ A,\ k \gt 0)$$
+<p>起點 $Q(0) = C - A$；上限是 $C$（水平漸近線 $y = C$）。</p>
+</div>
+<div class="say">
+<p>剛開始學的時候進步很快，越接近極限進步越慢，永遠碰不到天花板 $C$。公式長得像「$C$ 減掉一個會消失的東西」或 $C(1 - e^{-kt})$ 的，都是這一型。指定題 #16、#19 就是。</p>
+</div>
+<p>微分：$Q'(t) = -A\cdot(-k)e^{-kt} = Ak\,e^{-kt}$。永遠是正的（一直在進步），但是越來越小（進步越來越慢）。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 60], "y": [0, 115], "h": 300,
+  "xlabel": "時間 t", "ylabel": "Q",
+  "fns": [{ "f": "100-80*e^(-0.06*x)", "color": "f", "label": "Q(t) = 100 − 80 e^(−0.06t)" }],
+  "tangent": { "fn": 0 },
+  "hlines": [ { "y": 100, "label": "上限 C = 100（水平漸近線）", "color": "neg", "left": true } ],
+  "points": [ { "x": 0, "y": 20, "label": "起點 C − A = 20", "pos": "br", "color": "ink" } ],
+  "slider": { "label": "時間 t", "min": 0, "max": 58, "step": 0.5, "value": 5, "digits": 1, "play": true,
+    "presets": [ { "label": "t = 0", "value": 0 }, { "label": "t = 20", "value": 20 }, { "label": "t = 50", "value": 50 } ] },
+  "readouts": [
+    { "label": "Q(t)", "f": 0, "digits": 1, "color": "f" },
+    { "label": "進步速度 Q′(t)", "d": 0, "digits": 2, "color": "d1" },
+    { "label": "離上限還差", "expr": "80*e^(-0.06*a)", "digits": 1 }
+  ]
+}
+</script>
+<figcaption>按播放看切線：一開始很陡（進步快），後來幾乎水平（進步慢）。曲線一直往紅色虛線靠近但不會超過。</figcaption>
+</figure>
+
+<h2 id="logistic">模型四：邏輯斯成長</h2>
+<div class="key" data-title="邏輯斯成長（logistic）">
+$$Q(t) = \frac{A}{1 + B\,e^{-kt}} \qquad (A,\ B,\ k \gt 0)$$
+<p>起點 $Q(0) = \dfrac{A}{1 + B}$；上限是 $A$（承載量）。圖形是 S 形。</p>
+</div>
+<div class="say">
+<p>傳染病、謠言、有限食物下的族群都是這一型：一開始人少所以傳得慢，中間最快，最後大家都中了就停下來。$t$ 很大時分母的 $Be^{-kt}$ 變成 0，所以 $Q \to \dfrac{A}{1} = A$。指定題 #22、#23、#24 都是。</p>
+</div>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 14], "y": [0, 1100], "h": 320,
+  "xlabel": "天數 t", "ylabel": "染病人數 Q",
+  "fns": [{ "f": "1000/(1+199*e^(-0.8*x))", "color": "f", "label": "Q(t) = 1000 / (1 + 199 e^(−0.8t))" }],
+  "tangent": { "fn": 0 },
+  "hlines": [ { "y": 1000, "label": "上限 A = 1000", "color": "neg", "left": true } ],
+  "points": [ { "x": 6.617, "y": 500, "label": "長最快的時刻（剛好一半）", "pos": "br", "color": "d2" } ],
+  "slider": { "label": "天數 t", "min": 0, "max": 13.5, "step": 0.05, "value": 1, "digits": 2, "play": true,
+    "presets": [ { "label": "第 1 天", "value": 1 }, { "label": "長最快", "value": 6.62 }, { "label": "第 10 天", "value": 10 } ] },
+  "readouts": [
+    { "label": "Q(t)", "f": 0, "digits": 0, "unit": " 人", "color": "f" },
+    { "label": "每天新增 Q′(t)", "d": 0, "digits": 1, "unit": " 人/天", "color": "d1" }
+  ]
+}
+</script>
+<figcaption>這是指定題 #22 的流感模型。切線斜率（每天新增人數）先變大，在一半（500 人）的地方最大，之後變小。那一點就是反曲點。</figcaption>
+</figure>
+<div class="trap">
+<p>邏輯斯的起點不是 $A$，也不是 $B$，而是 $\dfrac{A}{1 + B}$（因為 $e^0 = 1$）。上限才是 $A$。</p>
+</div>
+<div class="quiz" data-answer="3">
+<p class="quiz-q">$N(t) = \dfrac{400}{1 + 39e^{-0.16t}}$。一開始有幾隻？最多會到幾隻？</p>
+<button>一開始 400，最多 39</button>
+<button>一開始 39，最多 400</button>
+<button>一開始 10，最多 400</button>
+<p class="quiz-why">$N(0) = \dfrac{400}{1 + 39} = 10$。$t \to \infty$ 時 $e^{-0.16t} \to 0$，$N \to 400$。這就是指定題 #23 的 (a)(b)。</p>
+</div>
+
+<h2 id="summary">四種模型對照</h2>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>模型</th><th>公式</th><th>$t = 0$</th><th>$t \to \infty$</th><th>微分</th></tr></thead>
+<tbody>
+<tr><td>指數成長</td><td>$Q_0e^{kt}$</td><td>$Q_0$</td><td>無限大</td><td>$kQ_0e^{kt}$</td></tr>
+<tr><td>指數衰退</td><td>$Q_0e^{-kt}$</td><td>$Q_0$</td><td>$0$</td><td>$-kQ_0e^{-kt}$</td></tr>
+<tr><td>學習曲線</td><td>$C - Ae^{-kt}$</td><td>$C - A$</td><td>$C$</td><td>$Ake^{-kt}$</td></tr>
+<tr><td>邏輯斯成長</td><td>$\dfrac{A}{1 + Be^{-kt}}$</td><td>$\dfrac{A}{1 + B}$</td><td>$A$</td><td>$\dfrac{ABk\,e^{-kt}}{(1 + Be^{-kt})^2}$</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="calc">計算機怎麼按</h2>
+<div class="how" data-title="以 1000 ÷ (1 + 199e^(−0.8)) 為例">
+<ol>
+<li>先算 $e^{-0.8}$：按 <span class="mono">SHIFT</span> <span class="mono">ln</span>（上面印著 $e^x$），輸入 <span class="mono">(−0.8)</span>，得到 0.449329。負的指數一定要用括號包起來。</li>
+<li>乘 199，得到 89.4165。</li>
+<li>加 1，得到 90.4165。這是整個分母。</li>
+<li>用 1000 去除它：按 <span class="mono">1000 ÷ Ans =</span>，得到 11.06。</li>
+</ol>
+<p>也可以一次輸入 <span class="mono">1000 ÷ ( 1 + 199 × e^( −0.8 ) )</span>，重點是<strong>分母要整個括起來</strong>。中間的數字不要自己四捨五入再輸入，用 <span class="mono">Ans</span> 接著算。</p>
+</div>
+
+<h2 id="problems">指定題</h2>
+<p>每一題先判斷是哪一種模型，再看它問的是三件事裡的哪一件。</p>
+
+<article class="prob" data-prob="5.6-15" data-extra>
+<h3>公司銷售額的指數成長</h3>
+<div class="prob-q">
+<p>（老師公布的清單把 16 寫了兩次，其中一個可能是 15，所以這題一起附上。）</p>
+<p>某公司的銷售額預計在 2010 年（$t = 0$）到 2015 年（$t = 5$）之間呈指數成長，從 1 億美元（100 百萬美元）成長到 1.5 億美元（150 百萬美元）。</p>
+<p>(a) 求銷售額的模型 $S(t)$。<br>(b) 2013 年的銷售額是多少？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>指數成長 $S(t) = S_0e^{kt}$。$S_0$ 就是 2010 年的 100。再用「$t = 5$ 時是 150」求 $k$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>寫出模型，代起點</h4>
+<p>以百萬美元為單位，$S(t) = S_0e^{kt}$，$S_0 = S(0) = 100$，所以 $S(t) = 100e^{kt}$。</p>
+</div>
+<div class="step">
+<h4>用 t = 5 求 k</h4>
+$$150 = 100e^{5k} \quad\Rightarrow\quad e^{5k} = 1.5 \quad\Rightarrow\quad 5k = \ln 1.5 \quad\Rightarrow\quad k = \frac{\ln 1.5}{5} \approx 0.0811$$
+<p>計算機：<span class="mono">ln 1.5 = 0.405465</span>，再 <span class="mono">÷ 5 = 0.081093</span>。</p>
+</div>
+<div class="step">
+<h4>(b) 代 t = 3</h4>
+<p>2013 年是 $t = 3$：</p>
+$$S(3) = 100e^{0.0811 \times 3} = 100e^{0.2433} \approx 127.5$$
+<p class="answer"><span>(a) $S(t) = 100e^{0.0811t}$（百萬美元）。(b) 2013 年約 1.275 億美元（127.5 百萬美元）。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="5.6-16">
+<h3>速記課的學習曲線</h3>
+<div class="prob-q">
+<p>某速記課程為期 20 週。平均來說，學生上課 $t$ 週後每分鐘能記下的字數是</p>
+$$Q(t) = 120\left(1 - e^{-0.05t}\right) + 60 \qquad (0 \le t \le 20)$$
+<p>畫出 $Q$ 的圖形，並回答：<br>(a) 剛開始上課時的速度？<br>(b) 課程上到一半時的速度？<br>(c) 結業時每分鐘能記幾個字？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>三小題都是代入：$t = 0$、$t = 10$、$t = 20$。展開來看 $Q(t) = 180 - 120e^{-0.05t}$，是學習曲線，上限 180。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>(a) 代 t = 0</h4>
+$$Q(0) = 120(1 - e^0) + 60 = 120(1 - 1) + 60 = 60$$
+</div>
+<div class="step">
+<h4>(b) 代 t = 10</h4>
+<p>$e^{-0.05 \times 10} = e^{-0.5} \approx 0.6065$</p>
+$$Q(10) = 120(1 - 0.6065) + 60 = 120(0.3935) + 60 \approx 107.2$$
+</div>
+<div class="step">
+<h4>(c) 代 t = 20</h4>
+<p>$e^{-0.05 \times 20} = e^{-1} \approx 0.3679$</p>
+$$Q(20) = 120(1 - 0.3679) + 60 = 120(0.6321) + 60 \approx 135.9$$
+</div>
+<div class="step">
+<h4>圖形</h4>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 22], "y": [0, 200], "h": 280,
+  "xlabel": "週數 t", "ylabel": "字 / 分",
+  "fns": [{ "f": "120*(1-e^(-0.05*x))+60", "color": "f", "label": "Q(t) = 120(1 − e^(−0.05t)) + 60", "domain": [0, 20] }],
+  "hlines": [ { "y": 180, "label": "若一直上下去的上限 180", "color": "mute", "left": true } ],
+  "points": [
+    { "x": 0, "y": 60, "label": "(0, 60)", "pos": "br", "color": "ink" },
+    { "x": 10, "on": 0, "label": "(10, 107)", "pos": "br", "color": "d1" },
+    { "x": 20, "on": 0, "label": "(20, 136)", "pos": "tl", "color": "d1" }
+  ]
+}
+</script>
+<figcaption>從 60 出發，遞增、凹向下：一直進步，但越來越慢。課程只到第 20 週，所以圖形畫到 t = 20。</figcaption>
+</figure>
+<p class="answer"><span>(a) 每分鐘 60 字。(b) 約每分鐘 107 字。(c) 約每分鐘 136 字。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="5.6-19">
+<h3>新電腦的每月需求</h3>
+<div class="prob-q">
+<p>某公司的新款家用電腦上市 $t$ 個月後，每月的需求量是</p>
+$$D(t) = 2000 - 1500e^{-0.05t} \qquad (t \gt 0)$$
+<p>畫出圖形，並回答：<br>(a) 上市 1 個月、1 年、2 年、5 年後的需求量？<br>(b) 需求量最後會穩定在多少？<br>(c) 第 10 個月時，需求量成長多快？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>$t$ 的單位是月，1 年要代 12，2 年代 24，5 年代 60。(b) 是 $t \to \infty$。(c) 要先微分。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>(a) 代入四個時間</h4>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>時間</th><th class="n">$t$</th><th class="n">$e^{-0.05t}$</th><th class="n">$D(t) = 2000 - 1500e^{-0.05t}$</th></tr></thead>
+<tbody>
+<tr><td>1 個月</td><td class="n">1</td><td class="n">0.9512</td><td class="n">573</td></tr>
+<tr><td>1 年</td><td class="n">12</td><td class="n">0.5488</td><td class="n">1177</td></tr>
+<tr><td>2 年</td><td class="n">24</td><td class="n">0.3012</td><td class="n">1548</td></tr>
+<tr><td>5 年</td><td class="n">60</td><td class="n">0.0498</td><td class="n">1925</td></tr>
+</tbody>
+</table>
+</div>
+<p>例如 1 年：$2000 - 1500 \times 0.5488 = 2000 - 823.2 \approx 1177$。</p>
+</div>
+<div class="step">
+<h4>(b) 讓 t → ∞</h4>
+<p>$t$ 很大時 $e^{-0.05t} \to 0$，所以</p>
+$$\lim_{t \to \infty} D(t) = 2000 - 1500 \times 0 = 2000$$
+</div>
+<div class="step">
+<h4>(c) 先微分，再代 t = 10</h4>
+$$D'(t) = -1500\cdot(-0.05)\,e^{-0.05t} = 75e^{-0.05t}$$
+$$D'(10) = 75e^{-0.5} = 75 \times 0.6065 \approx 45.5$$
+<p>常數 2000 微分是 0；$e^{-0.05t}$ 微分要多乘 $-0.05$，負負得正。</p>
+</div>
+<div class="step">
+<h4>圖形</h4>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 66], "y": [0, 2300], "h": 290,
+  "xlabel": "月數 t", "ylabel": "台 / 月",
+  "fns": [{ "f": "2000-1500*e^(-0.05*x)", "color": "f", "label": "D(t) = 2000 − 1500 e^(−0.05t)" }],
+  "hlines": [ { "y": 2000, "label": "穩定在 2000", "color": "neg", "left": true } ],
+  "points": [
+    { "x": 1, "on": 0, "label": "573", "pos": "r", "color": "d1" },
+    { "x": 12, "on": 0, "label": "1177", "pos": "br", "color": "d1" },
+    { "x": 24, "on": 0, "label": "1548", "pos": "br", "color": "d1" },
+    { "x": 60, "on": 0, "label": "1925", "pos": "b", "color": "d1" }
+  ]
+}
+</script>
+<figcaption>學習曲線的形狀：起點 2000 − 1500 = 500，往水平漸近線 y = 2000 靠近。</figcaption>
+</figure>
+<p class="answer"><span>(a) 約每月 573、1177、1548、1925 台。(b) 每月 2000 台。(c) 第 10 個月時，每月需求量正以約每月 46 台的速度增加。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="5.6-22">
+<h3>流感的傳播</h3>
+<div class="prob-q">
+<p>流感流行期間，某學區在 $t$ 天後染病的學童人數是</p>
+$$Q(t) = \frac{1000}{1 + 199e^{-0.8t}}$$
+<p>(a) 第 1 天後有多少學童染病？<br>(b) 第 10 天後有多少？<br>(c) 最後總共會有多少學童染病？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>邏輯斯成長。分母先算完再用 1000 去除。(c) 是上限 $A$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>(a) 代 t = 1</h4>
+<p>$e^{-0.8} \approx 0.4493$，分母 $= 1 + 199 \times 0.4493 = 1 + 89.42 = 90.42$</p>
+$$Q(1) = \frac{1000}{90.42} \approx 11.06$$
+</div>
+<div class="step">
+<h4>(b) 代 t = 10</h4>
+<p>$e^{-8} \approx 0.000335$，分母 $= 1 + 199 \times 0.000335 = 1.0668$</p>
+$$Q(10) = \frac{1000}{1.0668} \approx 937.4$$
+</div>
+<div class="step">
+<h4>(c) 讓 t → ∞</h4>
+<p>$e^{-0.8t} \to 0$，分母趨近 1：</p>
+$$\lim_{t \to \infty} Q(t) = \frac{1000}{1 + 0} = 1000$$
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 14], "y": [0, 1100], "h": 270,
+  "xlabel": "天數 t", "ylabel": "人",
+  "fns": [{ "f": "1000/(1+199*e^(-0.8*x))", "color": "f", "label": "Q(t)" }],
+  "hlines": [ { "y": 1000, "label": "最後 1000 人", "color": "neg", "left": true } ],
+  "points": [
+    { "x": 1, "on": 0, "label": "第 1 天：11 人", "pos": "tr", "color": "d1" },
+    { "x": 10, "on": 0, "label": "第 10 天：937 人", "pos": "br", "color": "d1" }
+  ]
+}
+</script>
+<figcaption>S 形曲線：前幾天很少，第 5 到 8 天暴增，之後趨近 1000。</figcaption>
+</figure>
+<p class="answer"><span>(a) 約 11 人。(b) 約 937 人。(c) 1000 人。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="5.6-23">
+<h3>果蠅族群的成長</h3>
+<div class="prob-q">
+<p>在食物有限的實驗中，果蠅的數量可以用下面的模型描述，$t$ 是實驗開始後的天數：</p>
+$$N(t) = \frac{400}{1 + 39e^{-0.16t}}$$
+<p>(a) 實驗一開始有幾隻果蠅？<br>(b) 在這個實驗條件下，最多會有幾隻？<br>(c) 第 20 天有幾隻？<br>(d) 第 20 天時，族群數量變化多快？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>(d) 要微分。把 $N(t)$ 改寫成 $400\left(1 + 39e^{-0.16t}\right)^{-1}$，用連鎖律，比除法規則好算。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>(a) 代 t = 0</h4>
+$$N(0) = \frac{400}{1 + 39e^0} = \frac{400}{40} = 10$$
+</div>
+<div class="step">
+<h4>(b) 讓 t → ∞</h4>
+<p>$e^{-0.16t} \to 0$，所以 $N \to \dfrac{400}{1} = 400$。</p>
+</div>
+<div class="step">
+<h4>(c) 代 t = 20</h4>
+<p>$e^{-0.16 \times 20} = e^{-3.2} \approx 0.04076$，分母 $= 1 + 39 \times 0.04076 = 2.5897$</p>
+$$N(20) = \frac{400}{2.5897} \approx 154.5$$
+</div>
+<div class="step">
+<h4>(d) 微分</h4>
+<p>改寫 $N(t) = 400\left(1 + 39e^{-0.16t}\right)^{-1}$。外層是 $-1$ 次方；裡面 $1 + 39e^{-0.16t}$ 的微分是 $39\cdot(-0.16)e^{-0.16t} = -6.24e^{-0.16t}$：</p>
+$$N'(t) = 400\cdot(-1)\left(1 + 39e^{-0.16t}\right)^{-2}\cdot\left(-6.24e^{-0.16t}\right) = \frac{2496\,e^{-0.16t}}{\left(1 + 39e^{-0.16t}\right)^2}$$
+<p>兩個負號相乘變正；$400 \times 6.24 = 2496$。</p>
+</div>
+<div class="step">
+<h4>(d) 代 t = 20</h4>
+<p>分子 $2496 \times 0.04076 = 101.74$；分母 $2.5897^2 = 6.7067$</p>
+$$N'(20) = \frac{101.74}{6.7067} \approx 15.17$$
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 50], "y": [0, 440], "h": 270,
+  "xlabel": "天數 t", "ylabel": "隻",
+  "fns": [{ "f": "400/(1+39*e^(-0.16*x))", "color": "f", "label": "N(t)" }],
+  "tangent": { "fn": 0, "at": 20 },
+  "hlines": [ { "y": 400, "label": "最多 400 隻", "color": "neg", "left": true } ],
+  "points": [
+    { "x": 0, "y": 10, "label": "一開始 10 隻", "pos": "tr", "color": "ink" },
+    { "x": 20, "on": 0, "label": "第 20 天：154 隻，切線斜率 15", "pos": "br", "color": "d1" }
+  ]
+}
+</script>
+<figcaption>橘線是第 20 天的切線，斜率約 15，代表當時每天大約增加 15 隻。</figcaption>
+</figure>
+<p class="answer"><span>(a) 10 隻。(b) 400 隻。(c) 約 154 隻。(d) 每天約增加 15 隻。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="5.6-24">
+<h3>45 到 64 歲的人口</h3>
+<div class="prob-q">
+<p>45 到 64 歲的國民人數（百萬人）可以用下面的函數估計，$t$ 以年為單位，$t = 0$ 代表 1990 年初：</p>
+$$P(t) = \frac{197.9}{1 + 3.274e^{-0.0361t}} \qquad (0 \le t \le 20)$$
+<p>2010 年這個年齡層預計有多少人？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>2010 − 1990 = 20，代 $t = 20$。指數是 $-0.0361 \times 20 = -0.722$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>算指數那一項</h4>
+<p>$e^{-0.0361 \times 20} = e^{-0.722} \approx 0.4858$</p>
+</div>
+<div class="step">
+<h4>算分母，再相除</h4>
+<p>分母 $= 1 + 3.274 \times 0.4858 = 1 + 1.5904 = 2.5904$</p>
+$$P(20) = \frac{197.9}{2.5904} \approx 76.4$$
+<p class="answer"><span>2010 年約有 7640 萬人（76.4 百萬人）。</span></p>
+</div>
+</div>
+</article>
+
+<div class="exam">
+<p>這一節的分數幾乎都掉在計算機上。三個提醒：$t$ 的單位要跟題目一致（月就代月、年就代年）；指數是負的要加括號；人數、台數最後要四捨五入成整數，並寫上單位。問「多快」的小題一定要先微分，不能直接代原函數。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

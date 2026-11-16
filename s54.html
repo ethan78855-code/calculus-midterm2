@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5.4–5.5 指數與對數的微分｜微積分期中考二衝刺</title>
+<meta name="description" content="e 的 x 次方與 ln x 的微分公式、連鎖律版本、對數微分法，以及用一階二階導數分析含 e 的函數，附六題逐步例題。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="s54">
+<main class="page">
+
+<p class="kicker">第 5 章 · Sections 5.4–5.5</p>
+<h1>指數與對數的微分</h1>
+<p class="lead">這兩節只多了四條公式，其中兩條還只是另外兩條加上連鎖律。學會之後，乘法、除法、連鎖律和第 4 章的遞增遞減、極值、反曲點全部照舊，只是函數裡多了 $e^x$ 和 $\ln x$。</p>
+<div data-toc></div>
+
+<div class="key" data-title="這一頁的四條公式">
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>函數</th><th>微分</th><th>口訣</th></tr></thead>
+<tbody>
+<tr><td>$e^x$</td><td>$e^x$</td><td>微完還是自己</td></tr>
+<tr><td>$e^{f(x)}$</td><td>$e^{f(x)}\cdot f'(x)$</td><td>整個照抄，再乘指數的微分</td></tr>
+<tr><td>$\ln x$</td><td>$\dfrac{1}{x}$</td><td>變成倒數</td></tr>
+<tr><td>$\ln f(x)$</td><td>$\dfrac{f'(x)}{f(x)}$</td><td>裡面的微分放上面，裡面照抄放下面</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<h2 id="ex">eˣ 微分之後還是 eˣ</h2>
+<div class="key" data-title="公式 1">
+$$\frac{d}{dx}\,e^x = e^x$$
+</div>
+<div class="say">
+<p>這就是 $e$ 特別的地方：$e^x$ 這條曲線<mark>在每一點的切線斜率，剛好等於那一點的高度</mark>。高度是 1 的地方斜率是 1，高度是 5 的地方斜率就是 5。</p>
+</div>
+<p>拖曳下面的圖，比較「高度」和「切線斜率」兩個數字：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-2.5, 2.5], "y": [-1, 10], "h": 330,
+  "xlabel": "x", "ylabel": "y",
+  "fns": [{ "f": "e^x", "color": "f", "label": "f(x) = eˣ" }],
+  "tangent": { "fn": 0 },
+  "slider": { "label": "x", "min": -2.3, "max": 2.2, "step": 0.01, "value": 0, "digits": 2, "play": true,
+    "presets": [ { "label": "x = 0", "value": 0 }, { "label": "x = 1", "value": 1 }, { "label": "x = 2", "value": 2 } ] },
+  "readouts": [
+    { "label": "高度 eˣ", "f": 0, "digits": 3, "color": "f" },
+    { "label": "切線斜率", "d": 0, "digits": 3, "color": "d1" }
+  ]
+}
+</script>
+<figcaption>兩個數字永遠一樣。x = 0 時高度 1、斜率 1；x = 1 時高度和斜率都是 e ≈ 2.718。</figcaption>
+</figure>
+<div class="trap">
+<p>$e^x$ <strong>不能用冪次規則</strong>。冪次規則 $(x^n)' = nx^{n-1}$ 是變數在下面；$e^x$ 的變數在上面，是另一種函數。</p>
+<p>$(e^x)' = x\,e^{x-1}$ 是錯的，正確是 $(e^x)' = e^x$。</p>
+</div>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">$f(x) = 5e^x + x^5$，$f'(x)$ 是？</p>
+<button>$5x\,e^{x-1} + 5x^4$</button>
+<button>$5e^x + 5x^4$</button>
+<button>$e^x + 5x^4$</button>
+<p class="quiz-why">$5e^x$ 是常數倍，微分還是 $5e^x$。$x^5$ 才用冪次規則，得 $5x^4$。兩種函數不要混用規則。</p>
+</div>
+
+<h2 id="chain-e">e 的上面是一包東西：連鎖律</h2>
+<p>考試很少只考 $e^x$，指數通常是 $2x$、$-0.05t$、$-x^2$ 這種式子。這時候要多乘一項：</p>
+<div class="key" data-title="公式 2（連鎖律）">
+$$\frac{d}{dx}\,e^{f(x)} = e^{f(x)}\cdot f'(x)$$
+<p>口訣：<mark>整個 $e^{\cdots}$ 原封不動抄下來，再乘上「指數」的微分</mark>。指數本身不會變。</p>
+</div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>函數</th><th>指數的微分</th><th>結果</th></tr></thead>
+<tbody>
+<tr><td>$e^{2x}$</td><td>$2$</td><td>$2e^{2x}$</td></tr>
+<tr><td>$e^{-3x}$</td><td>$-3$</td><td>$-3e^{-3x}$</td></tr>
+<tr><td>$e^{-x^2}$</td><td>$-2x$</td><td>$-2x\,e^{-x^2}$</td></tr>
+<tr><td>$e^{2t^2+t}$</td><td>$4t+1$</td><td>$(4t+1)\,e^{2t^2+t}$</td></tr>
+<tr><td>$1500e^{-0.05t}$</td><td>$-0.05$</td><td>$1500\cdot(-0.05)\,e^{-0.05t} = -75e^{-0.05t}$</td></tr>
+</tbody>
+</table>
+</div>
+<p>最後一列是 5.6 指定題的型式：$e^{kt}$ 微分就是前面多乘一個 $k$。下圖用滑桿改 $k$，看 $x = 0$ 那一點的切線斜率：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-2, 2], "y": [-0.6, 6], "h": 310,
+  "xlabel": "x", "ylabel": "y",
+  "fns": [{ "f": "e^(a*x)", "color": "f", "label": "f(x) = e^(kx)" }],
+  "tangent": { "fn": 0, "at": 0 },
+  "slider": { "label": "k", "min": -2, "max": 2, "step": 0.05, "value": 1, "digits": 2, "drag": false,
+    "presets": [ { "label": "k = 1", "value": 1 }, { "label": "k = 2", "value": 2 }, { "label": "k = 0.5", "value": 0.5 }, { "label": "k = −1", "value": -1 } ] },
+  "readouts": [
+    { "label": "在 x = 0 量到的切線斜率", "d": 0, "at": 0, "digits": 2, "color": "d1" },
+    { "label": "公式 f′(0) = k·e⁰ = k", "expr": "a", "digits": 2 },
+    { "label": "曲線", "expr": "a", "pos": "k > 0：成長", "neg": "k < 0：衰退", "zero": "k = 0：水平線", "eps": 0.02 }
+  ]
+}
+</script>
+<figcaption>所有 e^(kx) 都通過 (0, 1)，但在那一點的斜率剛好是 k。這就是連鎖律多乘出來的那個 k。</figcaption>
+</figure>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">$y = e^{-x^2}$，$y'$ 是？</p>
+<button>$e^{-x^2}$</button>
+<button>$-2x\,e^{-x^2}$</button>
+<button>$-x^2\,e^{-x^2-1}$</button>
+<p class="quiz-why">整個 $e^{-x^2}$ 照抄，再乘指數 $-x^2$ 的微分 $-2x$。指數不會減 1，那是冪次規則。</p>
+</div>
+
+<h2 id="mix-e">和乘法、除法規則合用</h2>
+<p>規則和以前完全一樣，只是其中一塊換成 $e$。</p>
+<p><strong>乘法：</strong>$y = x^2e^x$。前面 $x^2$，後面 $e^x$：</p>
+$$y' = 2x\cdot e^x + x^2\cdot e^x = x\,e^x\,(x + 2)$$
+<p><strong>除法：</strong>$y = \dfrac{e^x}{1 + e^x}$。上面微分是 $e^x$，下面微分也是 $e^x$：</p>
+$$y' = \frac{e^x(1 + e^x) - e^x\cdot e^x}{(1 + e^x)^2} = \frac{e^x}{(1 + e^x)^2}$$
+<p><strong>一般冪次規則：</strong>$y = (e^t + 2)^{3/2}$。外層是 $\tfrac32$ 次方，裡面 $e^t + 2$ 的微分是 $e^t$：</p>
+$$y' = \tfrac32\,(e^t + 2)^{1/2}\cdot e^t$$
+<div class="say">
+<p>微分完一定要<mark>把 $e^{\cdots}$ 提出來</mark>，像上面的 $x\,e^x(x+2)$。因為 $e^{\cdots}$ 永遠是正的、不可能等於 0，所以解 $y' = 0$ 或判斷正負號時，只要看剩下的那個因式就好。</p>
+</div>
+
+<h2 id="lnx">ln x 的微分是 1/x</h2>
+<div class="key" data-title="公式 3">
+$$\frac{d}{dx}\,\ln x = \frac{1}{x} \qquad (x \gt 0)$$
+<p>課本寫成 $\dfrac{d}{dx}\ln|x| = \dfrac1x$（$x \ne 0$），公式長得一樣。</p>
+</div>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-0.5, 6.5], "y": [-3, 2.6], "h": 310,
+  "xlabel": "x", "ylabel": "y",
+  "fns": [{ "f": "ln(x)", "color": "f", "label": "f(x) = ln x", "domain": [0.02, 6.5] }],
+  "tangent": { "fn": 0 },
+  "points": [ { "x": 1, "y": 0, "label": "(1, 0)", "pos": "br", "color": "ink" } ],
+  "slider": { "label": "x", "min": 0.2, "max": 6, "step": 0.01, "value": 1, "digits": 2, "play": true,
+    "presets": [ { "label": "x = 0.5", "value": 0.5 }, { "label": "x = 1", "value": 1 }, { "label": "x = 4", "value": 4 } ] },
+  "readouts": [
+    { "label": "高度 ln x", "f": 0, "digits": 3, "color": "f" },
+    { "label": "切線斜率", "d": 0, "digits": 3, "color": "d1" },
+    { "label": "1 ÷ x", "expr": "1/a", "digits": 3 }
+  ]
+}
+</script>
+<figcaption>切線斜率永遠等於 1/x。x 越大，1/x 越小，所以 ln x 雖然一直上升，但越來越平。</figcaption>
+</figure>
+<p>從公式可以直接讀出兩件事：$\dfrac1x \gt 0$，所以 $\ln x$ 永遠遞增；再微一次是 $-\dfrac{1}{x^2} \lt 0$，所以圖形永遠凹向下。</p>
+
+<h2 id="chain-ln">ln 裡面是一包東西：連鎖律</h2>
+<div class="key" data-title="公式 4（連鎖律）">
+$$\frac{d}{dx}\,\ln f(x) = \frac{f'(x)}{f(x)}$$
+<p>口訣：畫一條分數線，<mark>下面抄裡面那包，上面放它的微分</mark>。</p>
+</div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>函數</th><th>裡面那包</th><th>裡面的微分</th><th>結果</th></tr></thead>
+<tbody>
+<tr><td>$\ln(x^2+1)$</td><td>$x^2+1$</td><td>$2x$</td><td>$\dfrac{2x}{x^2+1}$</td></tr>
+<tr><td>$\ln(3x - 4)$</td><td>$3x-4$</td><td>$3$</td><td>$\dfrac{3}{3x-4}$</td></tr>
+<tr><td>$\ln(5x)$</td><td>$5x$</td><td>$5$</td><td>$\dfrac{5}{5x} = \dfrac1x$</td></tr>
+</tbody>
+</table>
+</div>
+<p>第三列的結果和 $\ln x$ 的微分一樣，這不是巧合：$\ln(5x) = \ln 5 + \ln x$，而 $\ln 5$ 是常數，微分是 0。</p>
+<p>和乘法、除法規則合用也是同樣的做法：</p>
+$$\frac{d}{dx}\big(x\ln x\big) = 1\cdot\ln x + x\cdot\frac1x = \ln x + 1 \qquad\qquad \frac{d}{dx}\Big(\frac{\ln x}{x}\Big) = \frac{\frac1x\cdot x - \ln x\cdot 1}{x^2} = \frac{1 - \ln x}{x^2}$$
+<div class="quiz" data-answer="3">
+<p class="quiz-q">$y = \ln(x^3 + 2)$，$y'$ 是？</p>
+<button>$\dfrac{1}{x^3+2}$</button>
+<button>$\dfrac{1}{3x^2}$</button>
+<button>$\dfrac{3x^2}{x^3+2}$</button>
+<p class="quiz-why">下面抄裡面的 $x^3+2$，上面放它的微分 $3x^2$。第一個選項忘了乘裡面的微分，是最常見的錯。</p>
+</div>
+
+<h2 id="split-first">先用對數律拆開，再微分</h2>
+<p>$\ln$ 裡面如果是乘、除、次方、根號，<strong>先拆再微</strong>會簡單非常多。</p>
+<p><strong>例：</strong>$y = \ln\big[(x^2+1)(x^3+2)^6\big]$。硬用連鎖律要先對裡面用乘法規則，很長。先拆：</p>
+$$y = \ln(x^2+1) + 6\ln(x^3+2) \quad\Rightarrow\quad y' = \frac{2x}{x^2+1} + 6\cdot\frac{3x^2}{x^3+2} = \frac{2x}{x^2+1} + \frac{18x^2}{x^3+2}$$
+<p><strong>例：</strong>$y = \ln\sqrt{x+1}$。根號是 $\tfrac12$ 次方，搬到前面：</p>
+$$y = \tfrac12\ln(x+1) \quad\Rightarrow\quad y' = \frac12\cdot\frac{1}{x+1} = \frac{1}{2(x+1)}$$
+<div class="trap">
+<p>只有乘、除、次方能拆。$\ln(x^2 + 1)$ 裡面是<strong>加法</strong>，不能拆成 $\ln x^2 + \ln 1$，只能直接用公式 4。</p>
+</div>
+
+<h2 id="logdiff">對數微分法</h2>
+<p>有些函數是一長串因式乘除，或是像 $x^x$ 這種底數和指數都有變數的怪東西。直接微很痛苦，可以<strong>先兩邊取 $\ln$</strong>。</p>
+<div class="how" data-title="對數微分法四步驟">
+<ol>
+<li>兩邊取 $\ln$：$\ln y = \ln(\cdots)$。</li>
+<li>用對數律把右邊拆成一項一項相加減。</li>
+<li>兩邊對 $x$ 微分。左邊 $\ln y$ 的微分是 $\dfrac{y'}{y}$（$y$ 是 $x$ 的函數，所以用公式 4）。</li>
+<li>兩邊乘上 $y$，再把 $y$ 換回原來的式子。</li>
+</ol>
+</div>
+<p><strong>例：</strong>$y = x^x$（$x \gt 0$）。冪次規則和指數規則都不能用，因為底數和指數都在變。</p>
+$$\ln y = x\ln x \quad\Rightarrow\quad \frac{y'}{y} = \ln x + 1 \quad\Rightarrow\quad y' = y\,(\ln x + 1) = x^x(\ln x + 1)$$
+<p>右邊 $x\ln x$ 的微分用乘法規則，上一段剛算過是 $\ln x + 1$。</p>
+
+<h2 id="ch4">接上第 4 章：分析 f(x) = xe⁻ˣ</h2>
+<p>考試範圍同時有第 4 章和第 5 章，所以很可能要你對含 $e$ 的函數找極值和反曲點。步驟和第 4 章一模一樣。</p>
+<p><strong>一階導數</strong>（乘法規則，$e^{-x}$ 的微分是 $-e^{-x}$）：</p>
+$$f'(x) = 1\cdot e^{-x} + x\cdot(-e^{-x}) = (1 - x)\,e^{-x}$$
+<p>$e^{-x}$ 永遠是正的，所以 $f'(x) = 0$ 只有 $x = 1$，而且 $f'$ 的正負號完全由 $(1 - x)$ 決定：</p>
+<div class="signline" data-label="f′(x) = (1 − x)e⁻ˣ" data-marks="1=0" data-signs="+ -" data-kind="mono"></div>
+<p>先升後降，所以 $x = 1$ 有<strong>相對極大值</strong> $f(1) = e^{-1} = \dfrac1e \approx 0.368$。</p>
+<p><strong>二階導數</strong>（對 $(1-x)e^{-x}$ 再用一次乘法規則）：</p>
+$$f''(x) = (-1)\cdot e^{-x} + (1 - x)\cdot(-e^{-x}) = (x - 2)\,e^{-x}$$
+<div class="signline" data-label="f″(x) = (x − 2)e⁻ˣ" data-marks="2=0" data-signs="- +" data-kind="concave"></div>
+<p>凹向在 $x = 2$ 改變，所以<strong>反曲點</strong>是 $\left(2,\ 2e^{-2}\right) \approx (2,\ 0.271)$。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-1, 6.5], "y": [-1.7, 0.9], "h": 340,
+  "xlabel": "x", "ylabel": "y",
+  "fns": [
+    { "f": "x*e^(-x)", "color": "f", "label": "f(x) = xe⁻ˣ" },
+    { "f": "(1-x)*e^(-x)", "color": "d1", "dash": true, "label": "f′(x) = (1 − x)e⁻ˣ", "toggle": true, "show": false },
+    { "f": "(x-2)*e^(-x)", "color": "d2", "dash": true, "label": "f″(x) = (x − 2)e⁻ˣ", "toggle": true, "show": false }
+  ],
+  "tangent": { "fn": 0 },
+  "points": [
+    { "x": 1, "y": 0.3679, "label": "相對極大 (1, 1/e)", "pos": "t", "color": "neg" },
+    { "x": 2, "y": 0.2707, "label": "反曲點 (2, 2/e²)", "pos": "tr", "color": "d2" }
+  ],
+  "slider": { "label": "x", "min": -0.8, "max": 6.2, "step": 0.01, "value": 0, "digits": 2, "play": true,
+    "presets": [ { "label": "x = 1（極大）", "value": 1 }, { "label": "x = 2（反曲點）", "value": 2 }, { "label": "x = 5", "value": 5 } ] },
+  "readouts": [
+    { "label": "f(x)", "f": 0, "digits": 3, "color": "f" },
+    { "label": "f′(x)", "d": 0, "digits": 3, "color": "d1" },
+    { "label": "f″(x)", "d2": 0, "digits": 3, "color": "d2" },
+    { "label": "曲線正在", "d": 0, "pos": "上升 ↗", "neg": "下降 ↘", "zero": "水平（極大值）", "eps": 0.004 }
+  ]
+}
+</script>
+<figcaption>過了 x = 1 之後曲線下降並貼近 x 軸（y = 0 是水平漸近線）。x = 2 之前是凹向下，之後變成凹向上。點圖例可以把 f′、f″ 疊上來對照。</figcaption>
+</figure>
+<div class="quiz" data-answer="1">
+<p class="quiz-q">某函數的導數是 $f'(x) = (x^2 - 4)\,e^{3x}$。臨界數有哪些？</p>
+<button>$x = -2$ 和 $x = 2$</button>
+<button>$x = -2$、$x = 2$ 和 $x = 0$</button>
+<button>沒有臨界數</button>
+<p class="quiz-why">$e^{3x}$ 永遠大於 0，不會讓 $f'$ 變成 0。只要解 $x^2 - 4 = 0$，得 $x = \pm 2$。</p>
+</div>
+
+<div class="how" data-title="計算機怎麼按：把數字代進含 e、ln 的式子">
+<ol>
+<li>算 $2e^{-2}$：按 <span class="mono">2 × eˣ ( (−) 2 ) =</span>，得 0.2707。負的指數要用括號包起來。</li>
+<li>算 $\dfrac{1}{e}$：按 <span class="mono">eˣ ( (−) 1 ) =</span>，得 0.3679。$\dfrac1e$ 就是 $e^{-1}$。</li>
+<li>算 $e^{-1/2}$：按 <span class="mono">eˣ ( (−) 1 ÷ 2 ) =</span>，得 0.6065。</li>
+<li>算 $\ln 8$：按 <span class="mono">ln 8 =</span>，得 2.0794。<span class="mono">ln</span> 和 <span class="mono">log</span> 是不同的鍵，微積分幾乎都用 <span class="mono">ln</span>。</li>
+<li>答案先保留 $\dfrac1e$、$\ln 8$ 這種精確寫法，題目要小數時最後才按計算機。</li>
+</ol>
+</div>
+
+<h2 id="examples">例題</h2>
+<p>這兩節沒有指定題，但都在考試範圍裡，5.6 的指定題也要用到這些微分。由淺到深共六題。</p>
+
+<article class="prob">
+<h3>例題 1：逐項微分</h3>
+<div class="prob-q">
+<p>求 $f(x) = 3e^{2x} - 4e^{-x} + x^2$ 的導數。</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>每一項各自處理</h4>
+<p>$3e^{2x}$：照抄，再乘指數的微分 2，得 $6e^{2x}$。<br>
+$-4e^{-x}$：照抄，再乘指數的微分 $-1$，得 $+4e^{-x}$。<br>
+$x^2$：冪次規則，得 $2x$。</p>
+</div>
+<div class="step">
+<h4>合起來</h4>
+$$f'(x) = 6e^{2x} + 4e^{-x} + 2x$$
+<p class="answer"><span>$f'(x) = 6e^{2x} + 4e^{-x} + 2x$</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 2：乘法規則，找水平切線</h3>
+<div class="prob-q">
+<p>$y = x\,e^{-2x}$。(a) 求 $y'$。(b) 圖形在哪一點有水平切線？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>水平切線就是斜率為 0，也就是解 $y' = 0$。微分完記得把 $e^{-2x}$ 提出來。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>(a) 乘法規則</h4>
+<p>前面 $x$ 的微分是 1；後面 $e^{-2x}$ 的微分是 $-2e^{-2x}$。</p>
+$$y' = 1\cdot e^{-2x} + x\cdot(-2e^{-2x}) = (1 - 2x)\,e^{-2x}$$
+</div>
+<div class="step">
+<h4>(b) 解 y′ = 0</h4>
+<p>$e^{-2x}$ 不可能是 0，所以只要 $1 - 2x = 0$，得 $x = \tfrac12$。</p>
+</div>
+<div class="step">
+<h4>求那一點的高度</h4>
+$$y\left(\tfrac12\right) = \tfrac12\,e^{-1} = \frac{1}{2e} \approx 0.184$$
+<p class="answer"><span>$y' = (1 - 2x)e^{-2x}$；水平切線在 $\left(\tfrac12,\ \tfrac{1}{2e}\right) \approx (0.5,\ 0.184)$。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 3：ln 的連鎖律與切線方程式</h3>
+<div class="prob-q">
+<p>$f(x) = \ln(x^2 + 4)$。求圖形在 $x = 2$ 的切線斜率與切線方程式。</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>微分</h4>
+<p>下面抄 $x^2 + 4$，上面放它的微分 $2x$：</p>
+$$f'(x) = \frac{2x}{x^2 + 4}$$
+</div>
+<div class="step">
+<h4>代入 x = 2 得斜率</h4>
+$$f'(2) = \frac{4}{8} = \frac12$$
+</div>
+<div class="step">
+<h4>切點與切線</h4>
+<p>切點高度 $f(2) = \ln 8 \approx 2.079$。用點斜式：</p>
+$$y - \ln 8 = \tfrac12\,(x - 2) \quad\Rightarrow\quad y = \tfrac12 x - 1 + \ln 8 \approx 0.5x + 1.079$$
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-4, 6], "y": [0, 4.2], "h": 260,
+  "xlabel": "x",
+  "fns": [{ "f": "ln(x^2+4)", "color": "f", "label": "f(x) = ln(x² + 4)" }],
+  "tangent": { "fn": 0, "at": 2 },
+  "points": [ { "x": 2, "y": 2.0794, "label": "(2, ln 8)，斜率 1/2", "pos": "br", "color": "d1" } ]
+}
+</script>
+<figcaption>橘色是 x = 2 的切線。</figcaption>
+</figure>
+<p class="answer"><span>斜率 $\tfrac12$；切線 $y = \tfrac12 x - 1 + \ln 8$。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 4：含 ln 的函數找相對極值</h3>
+<div class="prob-q">
+<p>求 $g(x) = x^2\ln x$ 的相對極值。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>定義域是 $x \gt 0$。乘法規則微分後把 $x$ 提出來。解 $\ln x = c$ 的方法是 $x = e^c$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>微分（乘法規則）</h4>
+$$g'(x) = 2x\cdot\ln x + x^2\cdot\frac1x = 2x\ln x + x = x\,(2\ln x + 1)$$
+</div>
+<div class="step">
+<h4>找臨界數</h4>
+<p>定義域是 $x \gt 0$，所以 $x$ 這個因式不會是 0。只要解</p>
+$$2\ln x + 1 = 0 \quad\Rightarrow\quad \ln x = -\tfrac12 \quad\Rightarrow\quad x = e^{-1/2} \approx 0.607$$
+</div>
+<div class="step">
+<h4>判斷是極大還是極小</h4>
+<div class="signline" data-label="g′(x) = x(2 ln x + 1)，只看 x > 0" data-marks="0.607=0" data-signs="- +" data-kind="mono"></div>
+<p>也可以用二階導數檢定：$g''(x) = 2\ln x + 3$，代入得 $g''(e^{-1/2}) = -1 + 3 = 2 \gt 0$，所以是相對極小。</p>
+</div>
+<div class="step">
+<h4>求極小值</h4>
+$$g\left(e^{-1/2}\right) = \left(e^{-1/2}\right)^2\cdot\ln e^{-1/2} = e^{-1}\cdot\left(-\tfrac12\right) = -\frac{1}{2e} \approx -0.184$$
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-0.2, 2.1], "y": [-0.45, 1.6], "h": 260,
+  "xlabel": "x",
+  "fns": [{ "f": "x^2*ln(x)", "color": "f", "label": "g(x) = x² ln x", "domain": [0.001, 2.1] }],
+  "points": [
+    { "x": 0.6065, "y": -0.1839, "label": "相對極小 (0.607, −0.184)", "pos": "br", "color": "pos" },
+    { "x": 1, "y": 0, "label": "(1, 0)", "pos": "tl", "color": "ink" }
+  ]
+}
+</script>
+<figcaption>0 到 1 之間 ln x 是負的，所以圖形在 x 軸下方，最低點在 x ≈ 0.607。</figcaption>
+</figure>
+<p class="answer"><span>相對極小值 $g\left(e^{-1/2}\right) = -\dfrac{1}{2e} \approx -0.184$；沒有相對極大值。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 5：對數微分法</h3>
+<div class="prob-q">
+<p>用對數微分法求 $y = (x+1)^2\,(x^2+3)^5$ 的導數。</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>兩邊取 ln，拆開</h4>
+$$\ln y = 2\ln(x+1) + 5\ln(x^2+3)$$
+</div>
+<div class="step">
+<h4>兩邊對 x 微分</h4>
+<p>左邊是 $\dfrac{y'}{y}$，右邊每一項用公式 4：</p>
+$$\frac{y'}{y} = \frac{2}{x+1} + \frac{5\cdot 2x}{x^2+3} = \frac{2}{x+1} + \frac{10x}{x^2+3}$$
+</div>
+<div class="step">
+<h4>乘回 y</h4>
+$$y' = (x+1)^2(x^2+3)^5\left[\frac{2}{x+1} + \frac{10x}{x^2+3}\right]$$
+<p>寫到這裡就可以了。想化簡的話，把括號通分後約掉：</p>
+$$y' = (x+1)(x^2+3)^4\big[2(x^2+3) + 10x(x+1)\big] = 2(x+1)(x^2+3)^4(6x^2 + 5x + 3)$$
+<p class="answer"><span>$y' = (x+1)^2(x^2+3)^5\left[\dfrac{2}{x+1} + \dfrac{10x}{x^2+3}\right]$</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 6：鐘形曲線的極值與反曲點</h3>
+<div class="prob-q">
+<p>$f(x) = e^{-x^2/2}$。求遞增、遞減區間，相對極值，以及反曲點。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>指數 $-\tfrac{x^2}{2}$ 的微分是 $-x$。求 $f''$ 時要對 $-x\cdot e^{-x^2/2}$ 用乘法規則。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>一階導數</h4>
+$$f'(x) = e^{-x^2/2}\cdot(-x) = -x\,e^{-x^2/2}$$
+<p>$e^{-x^2/2} \gt 0$，所以正負號只看 $-x$：</p>
+<div class="signline" data-label="f′(x) = −x·e^(−x²/2)" data-marks="0=0" data-signs="+ -" data-kind="mono"></div>
+<p>在 $(-\infty, 0)$ 遞增、$(0, \infty)$ 遞減，$x = 0$ 有相對極大值 $f(0) = e^0 = 1$。</p>
+</div>
+<div class="step">
+<h4>二階導數</h4>
+<p>前面 $-x$ 的微分是 $-1$；後面 $e^{-x^2/2}$ 的微分是 $-x\,e^{-x^2/2}$：</p>
+$$f''(x) = (-1)\,e^{-x^2/2} + (-x)(-x)\,e^{-x^2/2} = (x^2 - 1)\,e^{-x^2/2}$$
+</div>
+<div class="step">
+<h4>凹向與反曲點</h4>
+<p>$f''(x) = 0$ 的解是 $x^2 - 1 = 0$，也就是 $x = \pm 1$：</p>
+<div class="signline" data-label="f″(x) = (x² − 1)·e^(−x²/2)" data-marks="-1=0, 1=0" data-signs="+ - +" data-kind="concave"></div>
+<p>兩邊都變號，所以反曲點有兩個，高度是 $f(\pm 1) = e^{-1/2} \approx 0.607$。</p>
+</div>
+<div class="step">
+<h4>圖形</h4>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-3.5, 3.5], "y": [-0.15, 1.25], "h": 260,
+  "xlabel": "x",
+  "fns": [{ "f": "e^(-x^2/2)", "color": "f", "label": "f(x) = e^(−x²/2)" }],
+  "points": [
+    { "x": 0, "y": 1, "label": "相對極大 (0, 1)", "pos": "t", "color": "neg" },
+    { "x": -1, "y": 0.6065, "label": "反曲點 (−1, 0.607)", "pos": "tl", "color": "d2" },
+    { "x": 1, "y": 0.6065, "label": "反曲點 (1, 0.607)", "pos": "tr", "color": "d2" }
+  ]
+}
+</script>
+<figcaption>兩個反曲點之間凹向下，外側凹向上，兩邊都貼近 x 軸。</figcaption>
+</figure>
+<p class="answer"><span>在 $(-\infty, 0)$ 遞增、$(0, \infty)$ 遞減；相對極大值 $f(0) = 1$；反曲點 $\left(\pm 1,\ e^{-1/2}\right) \approx (\pm 1,\ 0.607)$。</span></p>
+</div>
+</div>
+</article>
+
+<div class="exam">
+<p>這兩節最容易失分的地方：$e^{f(x)}$ 和 $\ln f(x)$ 忘了乘「裡面的微分」；把 $e^x$ 當成冪次規則；解 $f'(x) = 0$ 時白花時間去解 $e^{\cdots} = 0$（它沒有解，直接丟掉）。寫答案時，$\dfrac1e$、$\ln 8$ 這種精確值先留著，旁邊再補小數。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

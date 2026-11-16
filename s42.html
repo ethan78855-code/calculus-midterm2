@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.2 二階導數：凹性與反曲點｜微積分期中考二衝刺</title>
+<meta name="description" content="用二階導數判斷凹向上、凹向下、反曲點，以及二階導數檢定法，含指定題 4.2 #65、#70、#88、#96、#100 逐步解答。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="s42">
+<main class="page">
+
+<p class="kicker">第 4 章 · Section 4.2</p>
+<h1>二階導數：凹性與反曲點</h1>
+<p class="lead">4.1 用 $f'$ 看曲線「往上還是往下」。這一節多微分一次，用 $f''$ 看曲線「往哪邊彎」。會求 $f''$、會畫符號圖，這一節的題目就都做得出來。</p>
+<div data-toc></div>
+
+<h2 id="concave">凹向上、凹向下是什麼</h2>
+<div class="say">
+<p><strong>凹向上</strong>：開口朝上，像一個碗 ∪，裝得住水。<br><strong>凹向下</strong>：開口朝下，像倒蓋的碗 ∩，水會流掉。</p>
+</div>
+<p>怎麼用微分判斷？看<mark>切線斜率的變化</mark>。拖曳下面的圖，注意橘色切線是怎麼轉的：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-1.5, 3.5], "y": [-5.2, 4.2], "h": 340,
+  "fns": [
+    { "f": "x^3-3*x^2+1", "color": "f", "label": "f(x) = x³ − 3x² + 1" },
+    { "f": "3*x^2-6*x", "color": "d1", "dash": true, "label": "f′(x) = 3x² − 6x", "toggle": true, "show": false },
+    { "f": "6*x-6", "color": "d2", "dash": true, "label": "f″(x) = 6x − 6", "toggle": true, "show": false }
+  ],
+  "tangent": { "fn": 0 },
+  "vlines": [ { "x": 1, "label": "x = 1", "color": "mute", "low": true } ],
+  "slider": { "label": "x", "min": -1.3, "max": 3.3, "step": 0.01, "value": -0.8, "digits": 2, "play": true,
+    "presets": [ { "label": "x = 0（山頂）", "value": 0 }, { "label": "x = 1（彎的方向改變）", "value": 1 }, { "label": "x = 2（谷底）", "value": 2 } ] },
+  "readouts": [
+    { "label": "切線斜率 f′(x)", "d": 0, "digits": 2, "color": "d1" },
+    { "label": "f″(x)", "expr": "6*a-6", "digits": 2, "color": "d2" },
+    { "label": "這裡的形狀", "expr": "6*a-6", "pos": "凹向上 ∪（斜率越來越大）", "neg": "凹向下 ∩（斜率越來越小）", "zero": "正在換邊", "eps": 0.05 }
+  ]
+}
+</script>
+<figcaption>按「播放」從左看到右。x &lt; 1 時切線一直順時針轉（斜率變小），曲線是 ∩ 形；x &gt; 1 時切線逆時針轉（斜率變大），曲線是 ∪ 形。</figcaption>
+</figure>
+<p>「斜率越來越大」就是 $f'$ 在遞增。而 4.1 學過：一個函數在遞增，它的導數是正的。$f'$ 的導數就是 $f''$，所以：</p>
+<div class="key" data-title="用 f″ 判斷凹性">
+<p>在某個區間上 $f''(x) \gt 0$ → $f'$ 遞增 → 圖形<strong>凹向上</strong> ∪<br>
+在某個區間上 $f''(x) \lt 0$ → $f'$ 遞減 → 圖形<strong>凹向下</strong> ∩</p>
+</div>
+<p>$f''$ 叫做<strong>二階導數</strong>，就是把 $f$ 微分兩次（3.5 節）。記法：$f''$ 是正的，像笑臉 ∪；是負的，像哭臉 ∩。</p>
+
+<h2 id="four">凹性和遞增遞減是兩回事</h2>
+<p>$f'$ 管「上升或下降」，$f''$ 管「彎的方向」，兩個互不相干，所以一共有四種組合：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "panels": [
+    { "title": "f′ > 0、f″ > 0：越漲越快", "x": [0, 2], "y": [0, 4.4], "h": 170, "fns": [ { "f": "x^2", "color": "f" } ] },
+    { "title": "f′ > 0、f″ < 0：越漲越慢", "x": [0, 4], "y": [0, 2.2], "h": 170, "fns": [ { "f": "sqrt(x)", "color": "f" } ] },
+    { "title": "f′ < 0、f″ > 0：越跌越慢", "x": [0.3, 3], "y": [0, 3.6], "h": 170, "fns": [ { "f": "1/x", "color": "f" } ] },
+    { "title": "f′ < 0、f″ < 0：越跌越快", "x": [0, 2], "y": [0, 4.4], "h": 170, "fns": [ { "f": "4-x^2", "color": "f" } ] }
+  ]
+}
+</script>
+<figcaption>上排都在上升（f′ &gt; 0），下排都在下降（f′ &lt; 0）。左上、左下是 ∪ 形（f″ &gt; 0），右上、右下是 ∩ 形（f″ &lt; 0）。</figcaption>
+</figure>
+<div class="trap">
+<p>不要把「凹向上」想成「上升」。凹向上的曲線可以正在下降（左下那張圖），凹向下的曲線也可以正在上升（右上那張圖）。</p>
+</div>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">在某個區間上 $f'(x) \gt 0$ 而且 $f''(x) \lt 0$。這段圖形長什麼樣子？</p>
+<button>上升，而且越來越陡</button>
+<button>上升，但是越來越平</button>
+<button>下降，而且越來越陡</button>
+<p class="quiz-why">$f' \gt 0$ 是上升。$f'' \lt 0$ 表示斜率在變小，所以越來越平，是 ∩ 形的左半邊。</p>
+</div>
+
+<h2 id="intervals">怎麼求凹性區間</h2>
+<p>做法和 4.1 求遞增遞減一模一樣，只是把 $f'$ 換成 $f''$：</p>
+<div class="how" data-title="求凹向上、凹向下的區間">
+<ol>
+<li>微分兩次，求出 $f''(x)$。</li>
+<li>找出 $f''(x) = 0$ 或 $f''(x)$ 不存在的 $x$，用這些點把數線切成幾段。</li>
+<li>每一段挑一個數代進 $f''$，看正負，畫出 $f''$ 的符號圖。</li>
+<li>正的那幾段凹向上，負的那幾段凹向下。</li>
+</ol>
+</div>
+<p><strong>例：</strong>$f(x) = x^3 - 3x^2 + 1$（上面那張圖的函數）。</p>
+$$f'(x) = 3x^2 - 6x \qquad f''(x) = 6x - 6 = 6(x - 1)$$
+<p>$f''(x) = 0$ 得到 $x = 1$。左邊代 $x = 0$：$f''(0) = -6 \lt 0$；右邊代 $x = 2$：$f''(2) = 6 \gt 0$。</p>
+<div class="signline" data-label="f″(x) = 6(x − 1)" data-marks="1=0" data-signs="- +" data-kind="concave"></div>
+<p>結論：在 $(-\infty, 1)$ 凹向下，在 $(1, \infty)$ 凹向上。</p>
+
+<h2 id="inflection">反曲點</h2>
+<div class="key" data-title="反曲點">
+<p>圖形上<strong>凹性改變</strong>的那一點叫做反曲點（inflection point）。也就是 $f''$ 在那一點的左右兩邊<strong>正負號不同</strong>。</p>
+</div>
+<p>上面的例子裡，$f''$ 在 $x = 1$ 由負變正，所以有反曲點。反曲點是「一個點」，要寫出座標：$f(1) = 1 - 3 + 1 = -1$，反曲點是 $(1, -1)$。</p>
+<div class="how" data-title="求反曲點">
+<ol>
+<li>求 $f''(x)$，找出定義域裡 $f''(x) = 0$ 或 $f''(x)$ 不存在的 $x$。這些只是<strong>候選人</strong>。</li>
+<li>畫 $f''$ 的符號圖，檢查每個候選人的左右兩邊有沒有變號。</li>
+<li>有變號的才是反曲點，把 $x$ 代回<strong>原函數</strong> $f$ 求 $y$ 座標。</li>
+</ol>
+</div>
+<div class="trap">
+<p>$f''(c) = 0$ <strong>不保證</strong>是反曲點，一定要檢查兩邊有沒有變號。看下面的 $f(x) = x^4$：$f''(x) = 12x^2$，$f''(0) = 0$，但是 $0$ 的左右兩邊 $f''$ 都是正的，整條曲線都凹向上，所以沒有反曲點。</p>
+</div>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-1.6, 1.6], "y": [-1, 6], "h": 260,
+  "fns": [
+    { "f": "x^4", "color": "f", "label": "f(x) = x⁴" },
+    { "f": "12*x^2", "color": "d2", "dash": true, "label": "f″(x) = 12x²", "toggle": true }
+  ],
+  "points": [ { "x": 0, "y": 0, "label": "f″(0) = 0，但兩邊都是 ∪", "pos": "b", "color": "d2" } ]
+}
+</script>
+<figcaption>紫色虛線 f″ 碰到 x 軸又彈回去，沒有穿過去（沒有變號），所以 (0, 0) 不是反曲點。</figcaption>
+</figure>
+<p>另一個要小心的情況：候選人必須<strong>在定義域裡</strong>。例如 $f(x) = \dfrac1x$，$f''(x) = \dfrac{2}{x^3}$ 在 $x = 0$ 的兩邊確實變號，但是 $f(0)$ 根本不存在，圖形上沒有那個點，所以也沒有反曲點。</p>
+<div class="quiz" data-answer="3">
+<p class="quiz-q">算出 $f''(2) = 0$。可以直接說 $(2, f(2))$ 是反曲點嗎？</p>
+<button>可以，$f'' = 0$ 的地方就是反曲點</button>
+<button>不行，反曲點要 $f'(2) = 0$ 才對</button>
+<button>還不行，要再確認 $f''$ 在 $x = 2$ 的左右兩邊正負號不同</button>
+<p class="quiz-why">$f'' = 0$ 只是候選人。反曲點的定義是凹性改變，所以一定要看符號圖有沒有變號。</p>
+</div>
+
+<h2 id="sdt">二階導數檢定法：找相對極值的第二種方法</h2>
+<p>4.1 的一階導數檢定法是看 $f'$ 在臨界數兩邊的正負。這一節多一個更快的方法：只要把臨界數代進 $f''$ 看正負。</p>
+<div class="key" data-title="二階導數檢定法">
+<p>先求出滿足 $f'(c) = 0$ 的臨界數 $c$，再算 $f''(c)$：</p>
+<p>$f''(c) \lt 0$ → 那附近是 ∩ 形 → $f(c)$ 是<strong>相對極大值</strong><br>
+$f''(c) \gt 0$ → 那附近是 ∪ 形 → $f(c)$ 是<strong>相對極小值</strong><br>
+$f''(c) = 0$ 或不存在 → <strong>檢定失效</strong>，改用一階導數檢定法</p>
+</div>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-1.5, 3.5], "y": [-5.2, 4.2], "h": 290,
+  "fns": [ { "f": "x^3-3*x^2+1", "color": "f", "label": "f(x) = x³ − 3x² + 1" } ],
+  "shapes": [
+    { "type": "line", "x1": -0.7, "y1": 1, "x2": 0.7, "y2": 1, "color": "d1", "w": 2.4 },
+    { "type": "line", "x1": 1.3, "y1": -3, "x2": 2.7, "y2": -3, "color": "d1", "w": 2.4 }
+  ],
+  "points": [
+    { "x": 0, "y": 1, "label": "f′(0) = 0、f″(0) = −6 < 0：山頂", "pos": "t", "color": "d2" },
+    { "x": 2, "y": -3, "label": "f′(2) = 0、f″(2) = 6 > 0：谷底", "pos": "b", "color": "d2" },
+    { "x": 1, "y": -1, "label": "反曲點 (1, −1)", "pos": "r", "color": "ink" }
+  ]
+}
+</script>
+<figcaption>切線水平（f′ = 0）的地方，如果曲線是 ∩ 形就是山頂，是 ∪ 形就是谷底。f″ 的正負號就是在告訴你是哪一種形狀。</figcaption>
+</figure>
+<p><strong>例：</strong>同一個函數 $f(x) = x^3 - 3x^2 + 1$。$f'(x) = 3x(x - 2) = 0$ 得到臨界數 $x = 0$ 和 $x = 2$。$f''(x) = 6x - 6$：</p>
+<ul>
+<li>$f''(0) = -6 \lt 0$，所以 $f(0) = 1$ 是相對極大值。</li>
+<li>$f''(2) = 6 \gt 0$，所以 $f(2) = -3$ 是相對極小值。</li>
+</ul>
+<div class="trap">
+<p>符號容易記反：$f'' \lt 0$ 是極<strong>大</strong>，$f'' \gt 0$ 是極<strong>小</strong>。不要死背，想形狀：負的是 ∩，頂端當然是最高點。</p>
+</div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th></th><th>一階導數檢定法（4.1）</th><th>二階導數檢定法（4.2）</th></tr></thead>
+<tbody>
+<tr><td>做法</td><td>畫 $f'$ 的符號圖，看臨界數兩邊</td><td>把臨界數代進 $f''$</td></tr>
+<tr><td>優點</td><td>任何臨界數都能用</td><td>快，不用畫符號圖</td></tr>
+<tr><td>限制</td><td>要多代幾個數</td><td>$f''(c) = 0$ 時失效；$f'(c)$ 不存在的臨界數不能用</td></tr>
+</tbody>
+</table>
+</div>
+<div class="quiz" data-answer="1">
+<p class="quiz-q">已知 $f'(3) = 0$，$f''(3) = 5$。那麼 $f(3)$ 是？</p>
+<button>相對極小值</button>
+<button>相對極大值</button>
+<button>反曲點的高度</button>
+<p class="quiz-why">$f''(3) = 5 \gt 0$，在 $x = 3$ 附近是 ∪ 形，切線又是水平的，所以是谷底，相對極小值。</p>
+</div>
+
+<h2 id="words">應用題：把正負號翻成一句話</h2>
+<p>這一節的應用題幾乎都是「算完之後解釋意思」。把下面這張表記熟，直接套：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>$f'$</th><th>$f''$</th><th>可以這樣寫</th></tr></thead>
+<tbody>
+<tr><td class="c-pos">正</td><td class="c-pos">正</td><td>在增加，而且<strong>增加得越來越快</strong></td></tr>
+<tr><td class="c-pos">正</td><td class="c-neg">負</td><td>還在增加，但<strong>增加得越來越慢</strong>（成長趨緩）</td></tr>
+<tr><td class="c-neg">負</td><td class="c-pos">正</td><td>在減少，但<strong>減少得越來越慢</strong>（跌勢趨緩）</td></tr>
+<tr><td class="c-neg">負</td><td class="c-neg">負</td><td>在減少，而且<strong>減少得越來越快</strong></td></tr>
+</tbody>
+</table>
+</div>
+<div class="say">
+<p>$f'$ 是「變化率」，$f''$ 是「變化率的變化率」。所以<mark>反曲點就是變化率最大或最小的時刻</mark>：由 ∪ 變 ∩ 的反曲點是成長最快的時候（之後開始趨緩）；由 ∩ 變 ∪ 的反曲點是成長最慢的時候（之後開始加速）。</p>
+</div>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">某公司營收 $R(t)$ 目前滿足 $R'(t) \gt 0$、$R''(t) \lt 0$。哪一句描述正確？</p>
+<button>營收在衰退</button>
+<button>營收還在成長，但成長的速度在放慢</button>
+<button>營收成長得越來越快</button>
+<p class="quiz-why">$R' \gt 0$：營收增加中。$R'' \lt 0$：成長率 $R'$ 在變小。合起來就是「成長趨緩」。</p>
+</div>
+
+<h2 id="problems">指定題</h2>
+<p>先自己動手算，卡住再一步一步打開解答。</p>
+
+<article class="prob" data-prob="4.2-65">
+<h3>用二階導數檢定法求相對極值（多項式）</h3>
+<div class="prob-q">
+<p>求下列函數的相對極值，可以的話請用二階導數檢定法：</p>
+$$f(x) = \frac13x^3 - 2x^2 - 5x - 5$$
+</div>
+<details class="hint"><summary>提示</summary>
+<p>先解 $f'(x) = 0$ 找臨界數（可以因式分解），再把臨界數一個一個代進 $f''(x)$ 看正負。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>求 f′ 並找臨界數</h4>
+$$f'(x) = x^2 - 4x - 5 = (x - 5)(x + 1)$$
+<p>$f'(x) = 0$ 得到 $x = -1$ 和 $x = 5$。</p>
+</div>
+<div class="step">
+<h4>求 f″</h4>
+$$f''(x) = 2x - 4$$
+</div>
+<div class="step">
+<h4>代入 x = −1</h4>
+$$f''(-1) = -2 - 4 = -6 \lt 0$$
+<p>是 ∩ 形，所以有相對極大值：</p>
+$$f(-1) = -\frac13 - 2 + 5 - 5 = -\frac73$$
+</div>
+<div class="step">
+<h4>代入 x = 5</h4>
+$$f''(5) = 10 - 4 = 6 \gt 0$$
+<p>是 ∪ 形，所以有相對極小值：</p>
+$$f(5) = \frac{125}{3} - 50 - 25 - 5 = \frac{125}{3} - 80 = -\frac{115}{3}$$
+</div>
+<div class="step">
+<h4>看圖確認</h4>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-5, 9], "y": [-50, 20], "h": 280,
+  "fns": [ { "f": "x^3/3-2*x^2-5*x-5", "color": "f", "label": "f(x) = ⅓x³ − 2x² − 5x − 5" } ],
+  "points": [
+    { "x": -1, "y": -2.3333, "label": "相對極大 (−1, −7/3)", "pos": "t", "color": "neg" },
+    { "x": 5, "y": -38.3333, "label": "相對極小 (5, −115/3)", "pos": "b", "color": "pos" }
+  ]
+}
+</script>
+<figcaption>−7/3 ≈ −2.33，−115/3 ≈ −38.33。</figcaption>
+</figure>
+<p class="answer"><span>相對極大值 $f(-1) = -\dfrac73$；相對極小值 $f(5) = -\dfrac{115}{3}$。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.2-70">
+<h3>用二階導數檢定法求相對極值（分式）</h3>
+<div class="prob-q">
+<p>求下列函數的相對極值，可以的話請用二階導數檢定法：</p>
+$$f(x) = \frac{2x}{x^2 + 1}$$
+</div>
+<details class="hint"><summary>提示</summary>
+<p>用除法規則求 $f'$。分母 $(x^2+1)^2$ 永遠是正的，所以只要看分子什麼時候等於 0。$f''$ 要再用一次除法規則，記得先約掉一個 $(x^2+1)$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>除法規則求 f′</h4>
+<p>上面 $2x$ 微分是 $2$，下面 $x^2+1$ 微分是 $2x$：</p>
+$$f'(x) = \frac{2(x^2+1) - 2x\cdot 2x}{(x^2+1)^2} = \frac{2 - 2x^2}{(x^2+1)^2} = \frac{2(1-x)(1+x)}{(x^2+1)^2}$$
+<p>分母不會是 0，所以臨界數只有分子為 0 的地方：$x = -1$ 和 $x = 1$。</p>
+</div>
+<div class="step">
+<h4>再用一次除法規則求 f″</h4>
+<p>上面 $2 - 2x^2$ 微分是 $-4x$；下面 $(x^2+1)^2$ 微分是 $2(x^2+1)\cdot 2x = 4x(x^2+1)$：</p>
+$$f''(x) = \frac{-4x(x^2+1)^2 - (2 - 2x^2)\cdot 4x(x^2+1)}{(x^2+1)^4}$$
+<p>分子每一項都有 $(x^2+1)$，先約掉一個：</p>
+$$f''(x) = \frac{-4x(x^2+1) - 4x(2 - 2x^2)}{(x^2+1)^3} = \frac{4x^3 - 12x}{(x^2+1)^3} = \frac{4x(x^2 - 3)}{(x^2+1)^3}$$
+</div>
+<div class="step">
+<h4>代入 x = 1</h4>
+$$f''(1) = \frac{4(1)(1 - 3)}{2^3} = \frac{-8}{8} = -1 \lt 0$$
+<p>相對極大值：$f(1) = \dfrac{2}{1 + 1} = 1$。</p>
+</div>
+<div class="step">
+<h4>代入 x = −1</h4>
+$$f''(-1) = \frac{4(-1)(1 - 3)}{2^3} = \frac{8}{8} = 1 \gt 0$$
+<p>相對極小值：$f(-1) = \dfrac{-2}{1 + 1} = -1$。</p>
+</div>
+<div class="step">
+<h4>用一階導數檢定法驗算</h4>
+<p>如果考試時 $f''$ 算不出來，可以改畫 $f'$ 的符號圖，答案一樣。$f'$ 的正負只看分子 $2(1-x)(1+x)$：</p>
+<div class="signline" data-label="f′(x)" data-marks="-1=0, 1=0" data-signs="- + -" data-kind="mono"></div>
+<p>在 $x = -1$ 由遞減變遞增（極小），在 $x = 1$ 由遞增變遞減（極大），和上面一致。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-6, 6], "y": [-1.5, 1.5], "h": 260,
+  "fns": [ { "f": "2*x/(x^2+1)", "color": "f", "label": "f(x) = 2x / (x² + 1)" } ],
+  "points": [
+    { "x": 1, "y": 1, "label": "相對極大 (1, 1)", "pos": "t", "color": "neg" },
+    { "x": -1, "y": -1, "label": "相對極小 (−1, −1)", "pos": "b", "color": "pos" }
+  ]
+}
+</script>
+<figcaption>圖形對原點對稱，一個山頂、一個谷底。</figcaption>
+</figure>
+<p class="answer"><span>相對極大值 $f(1) = 1$；相對極小值 $f(-1) = -1$。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.2-88">
+<h3>開車成本：證明圖形凹向上</h3>
+<div class="prob-q">
+<p>一項針對 2012 年中型房車的研究發現，每英里的平均開車成本（車貸、油錢、保險、保養、折舊，單位：美分）大約是</p>
+$$C(x) = \frac{1910.5}{x^{1.72}} + 42.9 \qquad (5 \le x \le 20)$$
+<p>其中 $x$ 是每年行駛的里程（單位：千英里）。證明 $C$ 的圖形在 $(5, 20)$ 上凹向上，並說明這個結果代表什麼。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>先改寫成 $C(x) = 1910.5\,x^{-1.72} + 42.9$。小數次方一樣用冪次規則：次方搬下來乘，次方再減 1。「證明凹向上」就是證明 $C''(x) \gt 0$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>改寫成次方</h4>
+$$C(x) = 1910.5\,x^{-1.72} + 42.9$$
+</div>
+<div class="step">
+<h4>微分第一次</h4>
+$$C'(x) = 1910.5\cdot(-1.72)\,x^{-2.72} = -3286.06\,x^{-2.72}$$
+<p>次方 $-1.72 - 1 = -2.72$。</p>
+</div>
+<div class="step">
+<h4>微分第二次</h4>
+$$C''(x) = -3286.06\cdot(-2.72)\,x^{-3.72} = 8938.0832\,x^{-3.72} = \frac{8938.0832}{x^{3.72}}$$
+<p>負負得正。</p>
+</div>
+<div class="step">
+<h4>判斷正負</h4>
+<p>$x$ 在 $(5, 20)$ 裡是正數，所以 $x^{3.72} \gt 0$，於是 $C''(x) \gt 0$。因此 $C$ 的圖形在 $(5, 20)$ 上<strong>凹向上</strong>。</p>
+</div>
+<div class="step">
+<h4>解釋</h4>
+<p>$C'(x) \lt 0$：一年開得越多，每英里的平均成本越低。$C''(x) \gt 0$：$C'$ 在遞增（從很負慢慢接近 0），也就是成本<strong>下降的速度越來越慢</strong>。多開的那些里程能省下的錢越來越少。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [4, 21], "y": [30, 180], "h": 300,
+  "xlabel": "每年里程 x（千英里）", "ylabel": "每英里成本（美分）",
+  "fns": [ { "f": "1910.5/x^1.72+42.9", "color": "f", "label": "C(x) = 1910.5 / x^1.72 + 42.9", "domain": [5, 20] } ],
+  "tangent": { "fn": 0 },
+  "slider": { "label": "x", "min": 5, "max": 20, "step": 0.1, "value": 6, "digits": 1, "play": true,
+    "presets": [ { "label": "x = 5", "value": 5 }, { "label": "x = 10", "value": 10 }, { "label": "x = 20", "value": 20 } ] },
+  "readouts": [
+    { "label": "C(x)", "f": 0, "digits": 2, "color": "f" },
+    { "label": "C′(x)", "expr": "-3286.06*a^(-2.72)", "digits": 2, "color": "d1" },
+    { "label": "C″(x)", "expr": "8938.0832*a^(-3.72)", "digits": 3, "color": "d2" }
+  ]
+}
+</script>
+<figcaption>切線一直是往右下斜的（C′ &lt; 0），但越往右越平：C′ 從 −41.26 升到 −0.95。這就是「下降、凹向上」。</figcaption>
+</figure>
+<p class="answer"><span>$C''(x) = \dfrac{8938.0832}{x^{3.72}} \gt 0$，所以凹向上。意思是：開越多每英里成本越低，但成本下降得越來越慢。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.2-96">
+<h3>玻璃公司的利潤預測</h3>
+<div class="prob-q">
+<p>一家成立 4 年的玻璃公司因為能源成本上漲，利潤的成長率開始下滑。管理階層決定實施節能措施，總經理估計利潤的成長率會在 4 年內重新開始上升。如果 $t$ 年後公司的利潤（單位：百美元）是</p>
+$$P(t) = t^3 - 9t^2 + 40t + 50 \qquad (0 \le t \le 8)$$
+<p>判斷總經理的預測是否正確。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>「利潤的成長率」是 $P'(t)$。成長率下滑表示 $P'$ 遞減（凹向下），成長率上升表示 $P'$ 遞增（凹向上）。所以要找的是 $P$ 的反曲點。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>把題目翻成數學</h4>
+<p>成長率 = $P'(t)$。「成長率由下滑轉為上升」= $P'$ 由遞減變遞增 = 圖形由凹向下變凹向上 = <strong>反曲點</strong>。只要反曲點的 $t$ 小於 4，預測就正確。</p>
+</div>
+<div class="step">
+<h4>微分兩次</h4>
+$$P'(t) = 3t^2 - 18t + 40 \qquad P''(t) = 6t - 18 = 6(t - 3)$$
+</div>
+<div class="step">
+<h4>畫 P″ 的符號圖</h4>
+<p>$P''(t) = 0$ 得到 $t = 3$。代 $t = 1$：$P''(1) = -12 \lt 0$；代 $t = 5$：$P''(5) = 12 \gt 0$。</p>
+<div class="signline" data-label="P″(t) = 6(t − 3)" data-marks="3=0" data-signs="- +" data-kind="concave"></div>
+<p>在 $(0, 3)$ 凹向下，在 $(3, 8)$ 凹向上。</p>
+</div>
+<div class="step">
+<h4>反曲點</h4>
+$$P(3) = 27 - 81 + 120 + 50 = 116$$
+<p>反曲點是 $(3, 116)$。</p>
+</div>
+<div class="step">
+<h4>下結論</h4>
+<p>前 3 年圖形凹向下，利潤成長率 $P'$ 一直在下降；$t = 3$ 之後凹向上，成長率開始回升。$3 \lt 4$，所以成長率確實會在 4 年內重新上升，總經理的預測<strong>正確</strong>。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 8], "y": [0, 320], "h": 300,
+  "xlabel": "t（年）", "ylabel": "百美元",
+  "fns": [
+    { "f": "x^3-9*x^2+40*x+50", "color": "f", "label": "利潤 P(t)" },
+    { "f": "3*x^2-18*x+40", "color": "d1", "dash": true, "label": "成長率 P′(t)", "toggle": true }
+  ],
+  "vlines": [ { "x": 3, "label": "t = 3", "color": "mute" } ],
+  "points": [
+    { "x": 3, "y": 116, "label": "反曲點 (3, 116)", "pos": "tl", "color": "ink" },
+    { "x": 3, "y": 13, "label": "成長率最低 P′(3) = 13", "pos": "tr", "color": "d1" }
+  ]
+}
+</script>
+<figcaption>橘色虛線是成長率 P′。它在 t = 3 降到最低點 13，之後回升。利潤本身（藍線）一直在增加，只是前 3 年越漲越慢、之後越漲越快。</figcaption>
+</figure>
+<p class="answer"><span>$P''(t) = 6t - 18$，反曲點 $(3, 116)$。成長率在 $t = 3$ 年後開始上升，早於 4 年，預測正確。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.2-100">
+<h3>大眾運輸預算赤字</h3>
+<div class="prob-q">
+<p>某都會區運輸局估計，累計預算赤字（單位：十億美元）在有 1.6 億美元紓困方案時是</p>
+$$D_1(t) = 0.0275t^2 + 0.081t + 0.07 \qquad (0 \le t \le 3)$$
+<p>沒有紓困方案時是</p>
+$$D_2(t) = 0.035t^2 + 0.211t + 0.24 \qquad (0 \le t \le 3)$$
+<p>$t$ 的單位是年，$t = 0$ 代表 2011 年。令 $D = D_2 - D_1$。</p>
+<p>(a) 證明 $D$ 在 $(0, 3)$ 上遞增，並解釋。<br>(b) 證明 $D$ 的圖形在 $(0, 3)$ 上凹向上，並解釋。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>先把兩個式子相減，同類項合併，得到一個新的二次函數 $D(t)$。遞增看 $D'$，凹向上看 $D''$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>先算出 D(t)</h4>
+$$\begin{aligned}D(t) &= D_2(t) - D_1(t)\\ &= (0.035 - 0.0275)t^2 + (0.211 - 0.081)t + (0.24 - 0.07)\\ &= 0.0075t^2 + 0.13t + 0.17\end{aligned}$$
+<p>$D$ 代表「沒有紓困比有紓困<strong>多出來</strong>的赤字」。</p>
+</div>
+<div class="step">
+<h4>(a) 一階導數</h4>
+$$D'(t) = 0.015t + 0.13$$
+<p>在 $(0, 3)$ 上 $t \gt 0$，所以 $D'(t) \gt 0.13 \gt 0$，$D$ 遞增。</p>
+<p>解釋：兩種情況的赤字差距逐年擴大。時間拖得越久，沒有紓困方案的赤字比有紓困方案的多越多。</p>
+</div>
+<div class="step">
+<h4>(b) 二階導數</h4>
+$$D''(t) = 0.015 \gt 0$$
+<p>所以 $D$ 的圖形在 $(0, 3)$ 上凹向上。</p>
+<p>解釋：$D'$ 在遞增，表示赤字差距不只是在擴大，而且<strong>擴大的速度越來越快</strong>。</p>
+</div>
+<div class="step">
+<h4>看圖確認</h4>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 3], "y": [0, 1.3], "h": 290,
+  "xlabel": "t（年，t = 0 是 2011）", "ylabel": "十億美元",
+  "fns": [
+    { "f": "0.035*x^2+0.211*x+0.24", "color": "neg", "label": "D₂：沒有紓困", "toggle": true },
+    { "f": "0.0275*x^2+0.081*x+0.07", "color": "pos", "label": "D₁：有紓困", "toggle": true },
+    { "f": "0.0075*x^2+0.13*x+0.17", "color": "f", "label": "D = D₂ − D₁（差距）" }
+  ],
+  "vlines": [ { "x": "a", "color": "mute" } ],
+  "points": [ { "x": "a", "on": 0, "color": "neg" }, { "x": "a", "on": 1, "color": "pos" }, { "x": "a", "on": 2, "color": "f" } ],
+  "slider": { "label": "t", "min": 0, "max": 3, "step": 0.05, "value": 1, "digits": 2 },
+  "readouts": [
+    { "label": "差距 D(t)", "f": 2, "digits": 4, "color": "f" },
+    { "label": "D′(t)", "expr": "0.015*a+0.13", "digits": 4, "color": "d1" },
+    { "label": "D″(t)", "expr": "0.015", "digits": 3, "color": "d2" }
+  ]
+}
+</script>
+<figcaption>紅線和綠線之間的垂直距離就是藍線 D。往右拖，距離從 0.17 一路拉大到 0.6275。</figcaption>
+</figure>
+<p class="answer"><span>$D(t) = 0.0075t^2 + 0.13t + 0.17$。(a) $D'(t) = 0.015t + 0.13 \gt 0$，遞增：赤字差距持續擴大。(b) $D''(t) = 0.015 \gt 0$，凹向上：差距擴大得越來越快。</span></p>
+</div>
+</div>
+</article>
+
+<div class="exam">
+<p>三件事最容易被扣分：一、反曲點要寫成座標 $(x, y)$，$y$ 是代回<strong>原函數</strong> $f$，不是代 $f''$。二、$f''(c) = 0$ 之後一定要畫符號圖確認有變號。三、應用題算完要補一句白話解釋，例如「成本下降得越來越慢」「差距擴大得越來越快」。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

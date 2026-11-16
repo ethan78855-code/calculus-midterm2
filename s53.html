@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5.3 複利｜微積分期中考二衝刺</title>
+<meta name="description" content="複利公式、有效年利率、現值、連續複利，以及用對數求時間與利率，含計算機按法與六個例題。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="s53">
+<main class="page">
+
+<p class="kicker">第 5 章 · Section 5.3</p>
+<h1>複利</h1>
+<p class="lead">這一節不用微分，只有兩條公式（一般複利、連續複利）和它們的變形。題目會給四個量裡的三個，要你求第四個。會按計算機的次方、$e^x$、$\ln$ 三個鍵，這一節就是送分題。這一節沒有指定題，但在考試範圍內。</p>
+<div data-toc></div>
+
+<h2 id="idea">單利和複利差在哪</h2>
+<div class="say">
+<p><strong>單利</strong>：利息只算在本金上，每年領一樣多。<strong>複利</strong>：利息會併進本金，下一期連利息一起生利息，所以越滾越快。</p>
+</div>
+<p>存 1000 元、年利率 8%。單利每年固定多 80 元，是一條直線；複利是指數曲線。拖曳看看差距怎麼拉開：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 30], "y": [0, 11500], "h": 320,
+  "xlabel": "年數 t", "ylabel": "本利和（元）",
+  "fns": [
+    { "f": "1000*(1+0.08*x)", "color": "mute", "dash": true, "label": "單利 1000(1 + 0.08t)" },
+    { "f": "1000*(1+0.08/12)^(12*x)", "color": "f", "label": "每月複利 1000(1 + 0.08/12)^(12t)" }
+  ],
+  "points": [ { "x": "a", "on": 0, "color": "mute" }, { "x": "a", "on": 1, "color": "f" } ],
+  "vlines": [ { "x": "a", "color": "mute" } ],
+  "slider": { "label": "年數 t", "min": 0, "max": 30, "step": 0.5, "value": 10, "digits": 1, "play": true,
+    "presets": [ { "label": "3 年", "value": 3 }, { "label": "10 年", "value": 10 }, { "label": "30 年", "value": 30 } ] },
+  "readouts": [
+    { "label": "單利", "f": 0, "digits": 2 },
+    { "label": "每月複利", "f": 1, "digits": 2, "color": "f" },
+    { "label": "複利多賺", "expr": "1000*(1+0.08/12)^(12*a)-1000*(1+0.08*a)", "digits": 2, "color": "pos" }
+  ]
+}
+</script>
+<figcaption>前幾年差不多，時間一長差很多：30 年後單利是 3400 元，每月複利超過 10,000 元。</figcaption>
+</figure>
+
+<h2 id="formula">複利公式</h2>
+<div class="key" data-title="複利（一年複利 m 次）">
+$$A = P\left(1 + \frac{r}{m}\right)^{mt}$$
+<p>$A$：到期的本利和（終值）　　$P$：本金　　$r$：年利率，<strong>要換成小數</strong>（8% 寫 0.08）<br>
+$m$：一年複利幾次　　$t$：存幾年</p>
+</div>
+<p>怎麼記：每一期的利率是 $\dfrac{r}{m}$，總共滾了 $mt$ 期。每滾一期就乘一次 $\left(1 + \dfrac{r}{m}\right)$。</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>題目的說法</th><th>英文</th><th class="n">$m$</th></tr></thead>
+<tbody>
+<tr><td>每年複利一次</td><td>annually</td><td class="n">1</td></tr>
+<tr><td>每半年複利一次</td><td>semiannually</td><td class="n">2</td></tr>
+<tr><td>每季複利一次</td><td>quarterly</td><td class="n">4</td></tr>
+<tr><td>每月複利一次</td><td>monthly</td><td class="n">12</td></tr>
+<tr><td>每天複利一次</td><td>daily</td><td class="n">365</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>例：</strong>1000 元、年利率 8%、存 3 年。複利越頻繁，拿到的越多，但是增加的幅度越來越小：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>複利方式</th><th>算式</th><th class="n">本利和</th></tr></thead>
+<tbody>
+<tr><td>每年</td><td>$1000(1.08)^{3}$</td><td class="n">1259.71</td></tr>
+<tr><td>每半年</td><td>$1000(1.04)^{6}$</td><td class="n">1265.32</td></tr>
+<tr><td>每季</td><td>$1000(1.02)^{12}$</td><td class="n">1268.24</td></tr>
+<tr><td>每月</td><td>$1000\left(1 + \frac{0.08}{12}\right)^{36}$</td><td class="n">1270.24</td></tr>
+<tr><td>每天</td><td>$1000\left(1 + \frac{0.08}{365}\right)^{1095}$</td><td class="n">1271.22</td></tr>
+<tr><td>連續複利</td><td>$1000e^{0.24}$</td><td class="n">1271.25</td></tr>
+</tbody>
+</table>
+</div>
+<div class="trap">
+<ul>
+<li>利率忘記換成小數：8% 要代 0.08，不是 8。</li>
+<li>忘記除以 $m$，或次方忘記乘 $m$。每季複利 3 年是 $(1 + \tfrac{0.08}{4})^{4 \times 3}$，兩個地方都要改。</li>
+<li>$\tfrac{0.08}{12}$ 先四捨五入成 0.0067 再算。差一點點，36 次方之後就差很多。括號內直接讓計算機算。</li>
+</ul>
+</div>
+
+<div class="quiz" data-answer="2">
+<p class="quiz-q">本金 2000 元，年利率 6%，每季複利，存 5 年。正確的算式是？</p>
+<button>$2000(1 + 0.06)^{5}$</button>
+<button>$2000\left(1 + \dfrac{0.06}{4}\right)^{20}$</button>
+<button>$2000\left(1 + \dfrac{6}{4}\right)^{20}$</button>
+<p class="quiz-why">每季複利 $m = 4$，每期利率 $\tfrac{0.06}{4} = 0.015$，共 $4 \times 5 = 20$ 期。6% 要寫成 0.06。</p>
+</div>
+
+<h2 id="continuous">連續複利與 e</h2>
+<p>如果複利次數 $m$ 一直增加（每小時、每秒、每一瞬間），本利和不會無限變大，而是趨近一個固定的值。原因是下面這個式子會趨近 $e$：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 62], "y": [1.9, 2.85], "h": 280,
+  "xlabel": "一年複利次數 m", "ylabel": "(1 + 1/m)^m",
+  "fns": [{ "f": "(1+1/x)^x", "color": "f", "label": "(1 + 1/m)^m", "domain": [1, 62] }],
+  "hlines": [ { "y": 2.71828, "label": "e ≈ 2.71828", "color": "neg", "left": true } ],
+  "points": [ { "x": "a", "y": "(1+1/a)^a", "color": "d1" } ],
+  "slider": { "label": "m", "min": 1, "max": 60, "step": 1, "value": 4, "digits": 0,
+    "presets": [ { "label": "每年 m = 1", "value": 1 }, { "label": "每季 m = 4", "value": 4 }, { "label": "每月 m = 12", "value": 12 }, { "label": "m = 60", "value": 60 } ] },
+  "readouts": [
+    { "label": "(1 + 1/m)^m", "expr": "(1+1/a)^a", "digits": 5, "color": "d1" },
+    { "label": "離 e 還差", "expr": "e-(1+1/a)^a", "digits": 5 }
+  ]
+}
+</script>
+<figcaption>存 1 元、年利率 100%，一年複利 m 次的本利和。m = 1 是 2 元，m 越大越接近 e ≈ 2.718，但不會超過。</figcaption>
+</figure>
+<div class="key" data-title="連續複利">
+$$A = Pe^{rt}$$
+<p>題目出現「連續複利」（compounded continuously）就用這一條，不用管 $m$。</p>
+</div>
+
+<h2 id="eff">有效年利率</h2>
+<div class="say">
+<p>銀行說「年利率 8%，每季複利」。因為利滾利，一年下來實際賺的比 8% 多一點。<mark>實際一年賺幾 %</mark>，就叫有效年利率。它讓不同複利方式的方案可以放在一起比。</p>
+</div>
+<div class="key" data-title="有效年利率">
+$$r_{\text{eff}} = \left(1 + \frac{r}{m}\right)^{m} - 1 \qquad\qquad \text{連續複利：} r_{\text{eff}} = e^{r} - 1$$
+<p>題目給的 $r$ 叫做名目利率（nominal rate）。</p>
+</div>
+<p><strong>例：</strong>名目利率 8%、每季複利：$r_{\text{eff}} = (1.02)^4 - 1 = 0.08243$，也就是 8.243%。</p>
+
+<h2 id="pv">現值：倒過來算本金</h2>
+<div class="say">
+<p>「3 年後要有 20,000 元，現在要存多少？」已知終值 $A$ 求本金 $P$，這個 $P$ 叫做<strong>現值</strong>。</p>
+</div>
+<div class="key" data-title="現值">
+$$P = A\left(1 + \frac{r}{m}\right)^{-mt} \qquad\qquad \text{連續複利：} P = Ae^{-rt}$$
+<p>就是把複利公式的 $P$ 解出來：除過去等於次方變負號。</p>
+</div>
+
+<div class="quiz" data-answer="1">
+<p class="quiz-q">5 年後需要 10,000 元，年利率 4%、連續複利。現在要存多少的算式是？</p>
+<button>$10000e^{-0.2}$</button>
+<button>$10000e^{0.2}$</button>
+<button>$10000(1.04)^{5}$</button>
+<p class="quiz-why">求現值，指數是負的：$P = Ae^{-rt} = 10000e^{-0.04 \times 5} = 10000e^{-0.2} \approx 8187.31$。現在存的一定比 10,000 少。</p>
+</div>
+
+<h2 id="log">求時間或利率：兩邊取 ln</h2>
+<p>未知數在次方上（求 $t$）的時候，一定要用對數把它「搬下來」。用到的就是 5.2 的 $\ln a^n = n\ln a$ 和 $\ln e^x = x$。</p>
+<div class="how" data-title="求時間的步驟">
+<ol>
+<li>把數字代進公式，兩邊同除以 $P$，讓次方那一項單獨留在一邊。</li>
+<li>兩邊取 $\ln$。</li>
+<li>一般複利：用 $\ln a^n = n\ln a$ 把次方搬下來。連續複利：$\ln e^{rt} = rt$ 直接消掉。</li>
+<li>解出 $t$。</li>
+</ol>
+</div>
+<div class="key" data-title="翻倍時間（常考）">
+$$\text{連續複利：} t = \frac{\ln 2}{r} \qquad\qquad \text{一年複利 } m \text{ 次：} t = \frac{\ln 2}{m\,\ln\left(1 + \frac{r}{m}\right)}$$
+</div>
+
+<div class="quiz" data-answer="3">
+<p class="quiz-q">解 $e^{0.05t} = 3$，$t$ 等於？</p>
+<button>$\dfrac{3}{0.05}$</button>
+<button>$\dfrac{e^3}{0.05}$</button>
+<button>$\dfrac{\ln 3}{0.05}$</button>
+<p class="quiz-why">兩邊取 $\ln$：$0.05t = \ln 3$，所以 $t = \dfrac{\ln 3}{0.05} \approx 21.97$。</p>
+</div>
+
+<h2 id="calc">計算機怎麼按</h2>
+<div class="how" data-title="三種最常按的算式">
+<ol>
+<li><strong>$5000\left(1 + \tfrac{0.05}{12}\right)^{120}$</strong>：輸入 <span class="mono">5000 × ( 1 + 0.05 ÷ 12 ) ^ 120 =</span>，得到 8235.05。次方鍵通常印著 <span class="mono">^</span> 或 <span class="mono">x<sup>y</sup></span>。</li>
+<li><strong>$1000e^{0.24}$</strong>：輸入 <span class="mono">1000 × SHIFT ln ( 0.24 ) =</span>，得到 1271.25。<span class="mono">SHIFT</span> + <span class="mono">ln</span> 就是 $e^x$。</li>
+<li><strong>$\dfrac{\ln 2}{4\ln 1.015}$</strong>：輸入 <span class="mono">ln 2 ÷ ( 4 × ln 1.015 ) =</span>，得到 11.64。分母要整個括起來。</li>
+</ol>
+<p>注意 <span class="mono">ln</span> 和 <span class="mono">log</span> 是兩個不同的鍵。這一節用 <span class="mono">ln</span>。考前先用上面三題確認自己的計算機按得出一樣的答案。</p>
+</div>
+
+<h2 id="examples">例題</h2>
+<p>先判斷題目要求的是 $A$、$P$、$r$ 還是 $t$，再選公式。</p>
+
+<article class="prob">
+<h3>例題 1：求終值</h3>
+<div class="prob-q">
+<p>存入 5000 美元，年利率 5%，每月複利。10 年後帳戶裡有多少錢？</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>列出已知</h4>
+<p>$P = 5000$，$r = 0.05$，$m = 12$，$t = 10$。要求 $A$。</p>
+</div>
+<div class="step">
+<h4>代公式</h4>
+$$A = 5000\left(1 + \frac{0.05}{12}\right)^{12 \times 10} = 5000\left(1 + \frac{0.05}{12}\right)^{120} \approx 8235.05$$
+<p class="answer"><span>約 8235.05 美元。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 2：用有效年利率比較方案</h3>
+<div class="prob-q">
+<p>甲銀行：年利率 8%，每季複利。乙銀行：年利率 8.2%，每年複利一次。哪一家比較划算？</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>算甲的有效年利率</h4>
+$$r_{\text{eff}} = \left(1 + \frac{0.08}{4}\right)^4 - 1 = (1.02)^4 - 1 \approx 0.08243$$
+<p>也就是 8.243%。</p>
+</div>
+<div class="step">
+<h4>算乙的有效年利率</h4>
+<p>每年複利一次（$m = 1$），有效年利率就是名目利率本身：8.2%。</p>
+</div>
+<div class="step">
+<h4>比較</h4>
+<p>$8.243\% \gt 8.2\%$。</p>
+<p class="answer"><span>甲銀行比較划算（有效年利率 8.243% 比 8.2% 高）。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 3：求現值</h3>
+<div class="prob-q">
+<p>3 年後需要 20,000 美元。年利率 6%，每月複利。現在要存多少？</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>列出已知</h4>
+<p>$A = 20000$，$r = 0.06$，$m = 12$，$t = 3$。要求 $P$。每期利率 $\tfrac{0.06}{12} = 0.005$，共 36 期。</p>
+</div>
+<div class="step">
+<h4>代現值公式</h4>
+$$P = 20000(1.005)^{-36} \approx 16712.90$$
+<p>計算機：<span class="mono">20000 × 1.005 ^ ( −36 ) =</span>，或 <span class="mono">20000 ÷ 1.005 ^ 36 =</span>，兩種按法答案一樣。</p>
+<p class="answer"><span>現在要存約 16,712.90 美元。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 4：連續複利的終值與現值</h3>
+<div class="prob-q">
+<p>(a) 1000 美元以年利率 8% 連續複利，3 年後是多少？<br>(b) 3 年後需要 20,000 美元，年利率 6% 連續複利，現在要存多少？</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>(a) 終值</h4>
+$$A = Pe^{rt} = 1000e^{0.08 \times 3} = 1000e^{0.24} \approx 1271.25$$
+</div>
+<div class="step">
+<h4>(b) 現值</h4>
+$$P = Ae^{-rt} = 20000e^{-0.06 \times 3} = 20000e^{-0.18} \approx 16705.40$$
+<p>和例題 3 的每月複利（16,712.90）比，連續複利滾得稍微快一點，所以現在可以少存一點點。</p>
+<p class="answer"><span>(a) 約 1271.25 美元。(b) 約 16,705.40 美元。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 5：多久會翻倍</h3>
+<div class="prob-q">
+<p>年利率 6%。一筆錢要多久才會變成兩倍？分別就 (a) 每季複利、(b) 連續複利 計算。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>不知道本金沒關係，設本金是 $P$、終值是 $2P$，兩邊的 $P$ 會約掉。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>(a) 列式並約掉 P</h4>
+$$2P = P\left(1 + \frac{0.06}{4}\right)^{4t} \quad\Rightarrow\quad 2 = (1.015)^{4t}$$
+</div>
+<div class="step">
+<h4>(a) 兩邊取 ln，把次方搬下來</h4>
+$$\ln 2 = 4t\,\ln 1.015 \quad\Rightarrow\quad t = \frac{\ln 2}{4\ln 1.015} = \frac{0.693147}{4 \times 0.014889} \approx 11.64$$
+</div>
+<div class="step">
+<h4>(b) 連續複利</h4>
+$$2P = Pe^{0.06t} \quad\Rightarrow\quad 2 = e^{0.06t} \quad\Rightarrow\quad \ln 2 = 0.06t \quad\Rightarrow\quad t = \frac{\ln 2}{0.06} \approx 11.55$$
+<p class="answer"><span>(a) 約 11.64 年。(b) 約 11.55 年。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 6：求利率</h3>
+<div class="prob-q">
+<p>10,000 美元在 5 年後變成 15,000 美元。如果是連續複利，年利率是多少？</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>列式</h4>
+$$15000 = 10000e^{5r} \quad\Rightarrow\quad e^{5r} = 1.5$$
+</div>
+<div class="step">
+<h4>兩邊取 ln</h4>
+$$5r = \ln 1.5 \quad\Rightarrow\quad r = \frac{\ln 1.5}{5} = \frac{0.405465}{5} \approx 0.0811$$
+<p>這和 5.6 #15 求成長常數 $k$ 是完全一樣的算法：連續複利就是指數成長。</p>
+<p class="answer"><span>年利率約 8.11%。</span></p>
+</div>
+</div>
+</article>
+
+<div class="exam">
+<p>拿到題目先圈出四個量：本金 $P$、利率 $r$、期數（$m$ 和 $t$）、終值 $A$，看缺哪一個。金額四捨五入到小數兩位（分），利率寫成百分比，時間寫上單位「年」。未知數在次方上就取 $\ln$。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

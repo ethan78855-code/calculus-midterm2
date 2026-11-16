@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>5.1–5.2 指數函數與對數函數｜微積分期中考二衝刺</title>
+<meta name="description" content="指數律、指數函數的圖形、e 是什麼、對數的定義與對數律、用 ln 解方程，以及計算機 e 與 log 鍵的按法。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="s51">
+<main class="page">
+
+<p class="kicker">第 5 章 · Sections 5.1–5.2</p>
+<h1>指數函數與對數函數</h1>
+<p class="lead">第 5 章的主角是 $e^x$ 和 $\ln x$。這一頁不用微分，只做三件事：把次方的規則複習好、弄懂「對數就是反過來問次方」、學會用 $\ln$ 解方程。後面的複利、微分、5.6 的指定題全部靠這一頁。</p>
+<div data-toc></div>
+
+<h2 id="exp-laws">指數律：次方的運算規則</h2>
+<p>$b^x$ 讀作「$b$ 的 $x$ 次方」，$b$ 叫<strong>底數</strong>，$x$ 叫<strong>指數</strong>。底數相同時，可以用下面的規則合併：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>情況</th><th>規則</th><th>例子</th></tr></thead>
+<tbody>
+<tr><td>同底相乘，指數相加</td><td>$b^x\cdot b^y = b^{x+y}$</td><td>$2^3\cdot 2^4 = 2^7$</td></tr>
+<tr><td>同底相除，指數相減</td><td>$\dfrac{b^x}{b^y} = b^{x-y}$</td><td>$\dfrac{3^5}{3^2} = 3^3$</td></tr>
+<tr><td>次方再次方，指數相乘</td><td>$(b^x)^y = b^{xy}$</td><td>$(e^{2})^3 = e^{6}$</td></tr>
+<tr><td>乘積的次方，各自次方</td><td>$(ab)^x = a^x\,b^x$</td><td>$(2x)^3 = 8x^3$</td></tr>
+<tr><td>零次方</td><td>$b^0 = 1$</td><td>$e^0 = 1$</td></tr>
+<tr><td>負次方，倒過來</td><td>$b^{-x} = \dfrac{1}{b^x}$</td><td>$2^{-3} = \dfrac18$</td></tr>
+<tr><td>分數次方，開根號</td><td>$b^{1/n} = \sqrt[n]{b}$</td><td>$16^{1/2} = 4$</td></tr>
+</tbody>
+</table>
+</div>
+<div class="say">
+<p>不用硬背。$2^3\cdot 2^4$ 就是 3 個 2 乘上 4 個 2，總共 7 個 2，所以指數<mark>相加</mark>。$(2^3)^4$ 是「3 個 2」重複 4 組，總共 12 個 2，所以指數<mark>相乘</mark>。</p>
+</div>
+<div class="trap">
+<p>指數律只管<strong>乘除</strong>，不管加減。$2^3 + 2^4 \ne 2^7$，$(a+b)^2 \ne a^2 + b^2$。另外 $e^{2x}\cdot e^{3x} = e^{5x}$（相加），不是 $e^{6x^2}$。</p>
+</div>
+
+<h2 id="exp-fn">指數函數 f(x) = bˣ</h2>
+<p>之前學的 $x^2$、$x^3$ 是變數在<strong>下面</strong>（冪函數）。指數函數反過來，變數在<strong>上面</strong>：</p>
+<div class="key" data-title="指數函數">
+$$f(x) = b^x \qquad (b \gt 0,\ b \ne 1)$$
+</div>
+<p>拉動滑桿改變底數 $b$，看圖形怎麼變：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-3, 3], "y": [-0.6, 8], "h": 330,
+  "xlabel": "x", "ylabel": "y",
+  "fns": [{ "f": "a^x", "color": "f", "label": "f(x) = bˣ" }],
+  "hlines": [ { "y": 0, "label": "水平漸近線 y = 0", "color": "mute", "left": true } ],
+  "points": [
+    { "x": 0, "y": 1, "label": "(0, 1) 一定通過", "pos": "tl", "color": "ink" },
+    { "x": 1, "y": "a", "label": "(1, b)", "pos": "br", "color": "f" }
+  ],
+  "slider": { "label": "底數 b", "min": 0.2, "max": 4, "step": 0.05, "value": 2, "digits": 2, "drag": false,
+    "presets": [ { "label": "b = 2", "value": 2 }, { "label": "b = e ≈ 2.72", "value": 2.718 }, { "label": "b = 0.5", "value": 0.5 }, { "label": "b = 1", "value": 1 } ] },
+  "readouts": [
+    { "label": "f(1) = b", "expr": "a", "digits": 2, "color": "f" },
+    { "label": "f(2) = b²", "expr": "a^2", "digits": 2 },
+    { "label": "f(−1) = 1/b", "expr": "1/a", "digits": 2 },
+    { "label": "圖形", "expr": "a-1", "pos": "b > 1：越往右越高（成長）", "neg": "0 < b < 1：越往右越低（衰退）", "zero": "b = 1：水平線，不算指數函數", "eps": 0.02 }
+  ]
+}
+</script>
+<figcaption>不管 b 是多少，圖形都通過 (0, 1)，而且永遠在 x 軸上方。b 大於 1 時往右衝上去，b 介於 0 和 1 時往右貼近 x 軸。</figcaption>
+</figure>
+<div class="key" data-title="指數函數的五個性質">
+<ol>
+<li>定義域是所有實數，$x$ 代什麼都可以。</li>
+<li>值域是 $(0, \infty)$：$b^x$ <strong>永遠是正的</strong>，不會是 0，也不會是負的。</li>
+<li>圖形通過 $(0, 1)$，因為 $b^0 = 1$。</li>
+<li>$b \gt 1$ 時遞增；$0 \lt b \lt 1$ 時遞減。</li>
+<li>$x$ 軸（$y = 0$）是水平漸近線：圖形會無限貼近，但碰不到。</li>
+</ol>
+</div>
+<p>第 2 點在第 4 章很好用：解 $f'(x) = 0$ 時，如果式子裡有 $e^x$ 這個因式，可以直接丟掉，因為它不可能等於 0。</p>
+<div class="quiz" data-answer="3">
+<p class="quiz-q">$f(x) = \left(\tfrac12\right)^x$ 的圖形，下面哪個敘述正確？</p>
+<button>通過原點 $(0, 0)$</button>
+<button>是遞增函數</button>
+<button>是遞減函數，而且 $f(x)$ 永遠大於 0</button>
+<p class="quiz-why">底數 $\tfrac12$ 介於 0 和 1，所以遞減。所有指數函數都通過 $(0, 1)$ 而不是原點，而且值永遠是正的。</p>
+</div>
+
+<h2 id="e">特別的底數 e</h2>
+<p>微積分幾乎只用一個底數：$e \approx 2.71828$。它跟 $\pi$ 一樣是一個固定的無理數。</p>
+<div class="key" data-title="e 的定義">
+$$e = \lim_{m\to\infty}\left(1 + \frac1m\right)^m \approx 2.71828$$
+</div>
+<p>意思是：把 $m$ 代越來越大的數進去，$\left(1 + \frac1m\right)^m$ 會越來越接近一個固定的值，那個值就叫 $e$。按「播放」看看：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 62], "y": [1.9, 2.85], "h": 280,
+  "xlabel": "m", "ylabel": "(1 + 1/m)^m",
+  "fns": [{ "f": "(1+1/x)^x", "color": "f", "label": "(1 + 1/m)^m", "domain": [1, 62] }],
+  "hlines": [ { "y": 2.71828, "label": "e ≈ 2.71828", "color": "d1" } ],
+  "points": [ { "x": "a", "on": 0, "label": "m = {{a|0}}", "pos": "br", "color": "f" } ],
+  "slider": { "label": "m", "min": 1, "max": 60, "step": 1, "value": 1, "digits": 0, "play": true,
+    "presets": [ { "label": "m = 1", "value": 1 }, { "label": "m = 12", "value": 12 }, { "label": "m = 60", "value": 60 } ] },
+  "readouts": [
+    { "label": "(1 + 1/m)^m", "expr": "(1+1/a)^a", "digits": 5, "color": "f" },
+    { "label": "離 e 還差", "expr": "e-(1+1/a)^a", "digits": 5 }
+  ]
+}
+</script>
+<figcaption>m 越大，數值越貼近橘色虛線 e，但不會超過它。</figcaption>
+</figure>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th class="n">$m$</th><th class="n">10</th><th class="n">100</th><th class="n">1,000</th><th class="n">10,000</th><th class="n">1,000,000</th></tr></thead>
+<tbody><tr><th class="n">$\left(1+\frac1m\right)^m$</th><td class="n">2.59374</td><td class="n">2.70481</td><td class="n">2.71692</td><td class="n">2.71815</td><td class="n">2.71828</td></tr></tbody>
+</table>
+</div>
+<p>這個式子其實就是 5.3 節的複利：一年複利 $m$ 次，$m$ 無限大就變成「連續複利」，所以 $e$ 會出現在所有成長與衰退的模型裡。</p>
+<p>$e^x$ 和 $e^{-x}$ 是最常見的兩條曲線，互為左右鏡射：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-3, 3], "y": [-0.6, 8], "h": 290,
+  "xlabel": "x",
+  "fns": [
+    { "f": "e^x", "color": "pos", "label": "y = eˣ（成長）" },
+    { "f": "e^(-x)", "color": "neg", "label": "y = e⁻ˣ（衰退）" }
+  ],
+  "points": [
+    { "x": 0, "y": 1, "label": "(0, 1)", "pos": "t", "color": "ink" },
+    { "x": 1, "y": 2.718, "label": "(1, e)", "pos": "br", "color": "pos" },
+    { "x": -1, "y": 2.718, "label": "(−1, e)", "pos": "bl", "color": "neg" }
+  ]
+}
+</script>
+<figcaption>指數是正的（eˣ）代表成長，指數帶負號（e⁻ˣ）代表衰退。5.6 節的四種模型都是從這兩條線變出來的。</figcaption>
+</figure>
+
+<div class="how" data-title="計算機怎麼按：e 的次方">
+<ol>
+<li>找到 $e^x$ 鍵。多數工程計算機印在 <span class="mono">ln</span> 鍵的上方，要先按 <span class="mono">SHIFT</span>（或 <span class="mono">2nd</span>）再按 <span class="mono">ln</span>。</li>
+<li>算 $e^2$：按 <span class="mono">eˣ</span>、<span class="mono">2</span>、<span class="mono">=</span>，得到 7.389。</li>
+<li>指數是負數或一串算式時，<strong>一定要加括號</strong>。算 $e^{-0.05\times 10}$：按 <span class="mono">eˣ ( (−) 0.05 × 10 ) =</span>，得到 0.6065。</li>
+<li>要 $e$ 本身就算 $e^1$，得到 2.71828。</li>
+</ol>
+<p>先拿這三個數字試機：$e^2 \approx 7.389$、$e^{-1} \approx 0.3679$、$e^{-0.5} \approx 0.6065$。按出來不一樣，就是括號或負號按錯了。</p>
+</div>
+
+<h2 id="exp-eq">解指數方程：兩邊化成同底</h2>
+<div class="key" data-title="同底比指數">
+<p>如果 $b^m = b^n$，那麼 $m = n$。</p>
+</div>
+<p><strong>例：</strong>解 $2^{2x-1} = 16$。把 16 寫成 $2^4$：</p>
+$$2^{2x-1} = 2^4 \quad\Rightarrow\quad 2x - 1 = 4 \quad\Rightarrow\quad x = \frac52$$
+<p><strong>例：</strong>解 $9^x = 27$。兩邊都是 3 的次方：$9^x = (3^2)^x = 3^{2x}$，$27 = 3^3$，所以 $2x = 3$，$x = \tfrac32$。</p>
+<p>如果兩邊<strong>沒辦法</strong>化成同底，例如 $e^{0.2t} = 4$，就需要下面的對數。</p>
+
+<h2 id="log">對數：反過來問「幾次方」</h2>
+<div class="say">
+<p>$2^3 = 8$ 是問「2 的 3 次方是多少」。對數反過來問：「<mark>2 的幾次方會是 8</mark>？」答案是 3，寫成 $\log_2 8 = 3$。</p>
+</div>
+<div class="key" data-title="對數的定義">
+$$y = \log_b x \quad\Longleftrightarrow\quad b^y = x \qquad (x \gt 0)$$
+<p>兩個式子講同一件事，只是寫法不同。$\log_b x$ 就是「$b$ 要幾次方才會變成 $x$」。</p>
+</div>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>指數的寫法</th><th>對數的寫法</th><th>唸法</th></tr></thead>
+<tbody>
+<tr><td>$2^3 = 8$</td><td>$\log_2 8 = 3$</td><td>2 的 3 次方是 8</td></tr>
+<tr><td>$10^2 = 100$</td><td>$\log 100 = 2$</td><td>10 的 2 次方是 100</td></tr>
+<tr><td>$2^{-3} = \tfrac18$</td><td>$\log_2 \tfrac18 = -3$</td><td>答案可以是負的</td></tr>
+<tr><td>$e^0 = 1$</td><td>$\ln 1 = 0$</td><td>任何底數的 0 次方都是 1</td></tr>
+<tr><td>$e^1 = e$</td><td>$\ln e = 1$</td><td>$e$ 的 1 次方是自己</td></tr>
+</tbody>
+</table>
+</div>
+<p>有兩個底數太常用，所以有專屬的寫法，計算機上也各有一個鍵：</p>
+<div class="key" data-title="兩個常用對數">
+<p>$\log x$ 是以 <strong>10</strong> 為底：$\log x = \log_{10} x$（常用對數，計算機的 <span class="mono">log</span> 鍵）<br>
+$\ln x$ 是以 <strong>$e$</strong> 為底：$\ln x = \log_e x$（自然對數，計算機的 <span class="mono">ln</span> 鍵）</p>
+</div>
+<div class="trap">
+<p>對數裡面只能放<strong>正數</strong>。$\ln 0$、$\ln(-2)$ 都沒有定義，因為 $e$ 的任何次方都是正的。計算機按出 Math ERROR 通常就是這個原因。</p>
+</div>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">$\log_3 81$ 等於多少？</p>
+<button>27</button>
+<button>4</button>
+<button>$\tfrac14$</button>
+<p class="quiz-why">問的是「3 的幾次方是 81」。$3^4 = 81$，所以答案是 4。</p>
+</div>
+
+<h2 id="log-laws">對數律</h2>
+<p>對數就是指數，所以指數律翻譯過來就是對數律。下面 $m$、$n$ 都是正數：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>口訣</th><th>規則</th><th>例子</th></tr></thead>
+<tbody>
+<tr><td>裡面相乘，拆成相加</td><td>$\log_b (mn) = \log_b m + \log_b n$</td><td>$\ln(3x) = \ln 3 + \ln x$</td></tr>
+<tr><td>裡面相除，拆成相減</td><td>$\log_b \dfrac{m}{n} = \log_b m - \log_b n$</td><td>$\ln\dfrac{x}{2} = \ln x - \ln 2$</td></tr>
+<tr><td>裡面的次方，搬到前面</td><td>$\log_b m^n = n\,\log_b m$</td><td>$\ln x^5 = 5\ln x$</td></tr>
+<tr><td>1 的對數是 0</td><td>$\log_b 1 = 0$</td><td>$\ln 1 = 0$</td></tr>
+<tr><td>底數自己的對數是 1</td><td>$\log_b b = 1$</td><td>$\ln e = 1$</td></tr>
+</tbody>
+</table>
+</div>
+<p>第三條最重要：它能把卡在指數上的未知數「拉下來」，解方程全靠它。根號也是次方，所以 $\ln\sqrt{x} = \ln x^{1/2} = \tfrac12\ln x$。</p>
+<div class="trap">
+<p>對數律只能拆<strong>乘、除、次方</strong>，加減不能拆：</p>
+<p>$\ln(m + n) \ne \ln m + \ln n$　　　$\dfrac{\ln m}{\ln n} \ne \ln\dfrac{m}{n}$　　　$(\ln x)^2 \ne 2\ln x$</p>
+<p>最後一個要看清楚：$\ln x^2$ 是「裡面」平方，可以搬；$(\ln x)^2$ 是「整個對數」平方，不能搬。</p>
+</div>
+<div class="quiz" data-answer="1">
+<p class="quiz-q">把 $\ln\dfrac{x^3}{y}$ 展開，哪一個正確？</p>
+<button>$3\ln x - \ln y$</button>
+<button>$\dfrac{3\ln x}{\ln y}$</button>
+<button>$\ln 3x - \ln y$</button>
+<p class="quiz-why">相除拆成相減：$\ln x^3 - \ln y$。再把次方 3 搬到前面：$3\ln x - \ln y$。</p>
+</div>
+
+<h2 id="ln-e">ln 和 e 互相抵消</h2>
+<p>$\ln$ 和 $e^x$ 是一對相反的動作，就像「平方」和「開根號」。先做一個再做另一個，會回到原來的數：</p>
+<div class="key" data-title="互相抵消">
+$$\ln e^x = x \qquad\qquad e^{\ln x} = x \quad (x \gt 0)$$
+</div>
+<p>圖形上，$y = \ln x$ 就是把 $y = e^x$ 對著直線 $y = x$ 翻過去（$x$、$y$ 座標對調）。拉滑桿看看兩個點怎麼對應：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-3, 6.5], "y": [-3, 6.5], "h": 380, "equal": true,
+  "fns": [
+    { "f": "e^x", "color": "f", "label": "y = eˣ" },
+    { "f": "ln(x)", "color": "d1", "label": "y = ln x", "domain": [0.01, 12] },
+    { "f": "x", "color": "mute", "dash": true, "label": "y = x（鏡子）" }
+  ],
+  "shapes": [ { "type": "line", "x1": "a", "y1": "e^a", "x2": "e^a", "y2": "a", "color": "mute", "dash": true, "w": 1.5 } ],
+  "points": [
+    { "x": "a", "y": "e^a", "label": "({{a|1}}, {{e^a|2}})", "pos": "l", "color": "f" },
+    { "x": "e^a", "y": "a", "label": "({{e^a|2}}, {{a|1}})", "pos": "br", "color": "d1" }
+  ],
+  "slider": { "label": "藍點的 x", "min": -2, "max": 1.8, "step": 0.1, "value": 1, "digits": 1, "drag": false,
+    "presets": [ { "label": "x = 0", "value": 0 }, { "label": "x = 1", "value": 1 }, { "label": "x = −1", "value": -1 } ] },
+  "readouts": [
+    { "label": "先算 eˣ", "expr": "e^a", "digits": 3, "color": "f" },
+    { "label": "再取 ln，回到 x", "expr": "ln(e^a)", "digits": 1, "color": "d1" }
+  ]
+}
+</script>
+<figcaption>藍點 (x, eˣ) 翻過虛線就是橘點 (eˣ, x)。所以 eˣ 通過 (0, 1)，ln x 就通過 (1, 0)。</figcaption>
+</figure>
+<div class="key" data-title="ln x 的圖形重點">
+<ol>
+<li>只定義在 $x \gt 0$（圖形只在 $y$ 軸右邊），$y$ 軸是鉛直漸近線。</li>
+<li>通過 $(1, 0)$，因為 $\ln 1 = 0$。</li>
+<li>一直遞增，但越來越平緩。</li>
+<li>$0 \lt x \lt 1$ 時 $\ln x$ 是<strong>負的</strong>；$x \gt 1$ 時是正的。</li>
+</ol>
+</div>
+
+<h2 id="solve-ln">用 ln 解方程（5.6 節一直會用）</h2>
+<p>未知數卡在 $e$ 的指數上時，取 $\ln$ 就能把它拉下來。</p>
+<div class="how" data-title="解 e 的方程式">
+<ol>
+<li><strong>先把 $e$ 的那一項單獨留在一邊</strong>（係數除過去、常數移過去）。</li>
+<li>兩邊同時取 $\ln$。左邊的 $\ln$ 和 $e$ 抵消，只剩指數。</li>
+<li>解出未知數，最後才按計算機。</li>
+</ol>
+</div>
+<p><strong>例：</strong>解 $5e^{0.2t} = 20$。</p>
+$$e^{0.2t} = 4 \quad\Rightarrow\quad \ln e^{0.2t} = \ln 4 \quad\Rightarrow\quad 0.2t = \ln 4 \quad\Rightarrow\quad t = \frac{\ln 4}{0.2} \approx \frac{1.3863}{0.2} \approx 6.93$$
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 10], "y": [0, 36], "h": 280,
+  "xlabel": "t", "ylabel": "y",
+  "fns": [{ "f": "5*e^(0.2*x)", "color": "f", "label": "y = 5e^(0.2t)" }],
+  "hlines": [ { "y": 20, "label": "y = 20", "color": "d1", "left": true } ],
+  "vlines": [ { "x": 6.931, "color": "mute", "low": true } ],
+  "points": [
+    { "x": 0, "y": 5, "label": "(0, 5)", "pos": "tr", "color": "f" },
+    { "x": 6.931, "y": 20, "label": "t = ln 4 ÷ 0.2 ≈ 6.93", "pos": "tl", "color": "ink" }
+  ]
+}
+</script>
+<figcaption>解方程就是找曲線和水平線 y = 20 的交點。交點的 t 座標就是答案。</figcaption>
+</figure>
+<div class="trap">
+<p>第 1 步不能跳過。$5e^{0.2t} = 20$ 如果直接取 $\ln$，左邊是 $\ln 5 + 0.2t$，不是 $5\times 0.2t$。先除以 5 再取 $\ln$ 最不容易錯。</p>
+</div>
+<p><strong>反過來，未知數在 $\ln$ 裡面：</strong>解 $5\ln x + 3 = 0$。先把 $\ln x$ 單獨留下，再兩邊取 $e$ 的次方：</p>
+$$\ln x = -0.6 \quad\Rightarrow\quad x = e^{-0.6} \approx 0.5488$$
+<p><strong>底數不是 $e$ 也一樣：</strong>解 $2^x = 10$。兩邊取 $\ln$，把 $x$ 搬下來：</p>
+$$x\ln 2 = \ln 10 \quad\Rightarrow\quad x = \frac{\ln 10}{\ln 2} \approx \frac{2.3026}{0.6931} \approx 3.32$$
+<div class="how" data-title="計算機怎麼按：ln 與 log">
+<ol>
+<li><span class="mono">ln</span> 鍵算自然對數：按 <span class="mono">ln 4 =</span> 得 1.3863。<span class="mono">log</span> 鍵是以 10 為底：按 <span class="mono">log 100 =</span> 得 2。兩個鍵不要按錯。</li>
+<li>算 $\dfrac{\ln 4}{0.2}$：按 <span class="mono">ln 4 ) ÷ 0.2 =</span>。有些機型按 <span class="mono">ln</span> 會自動出現左括號，記得把右括號補上，再按除號。</li>
+<li>算 $\dfrac{\ln 10}{\ln 2}$：按 <span class="mono">ln 10 ) ÷ ln 2 ) =</span>。分子分母各自用括號收好。</li>
+<li>中間的小數不要抄到紙上再重新輸入。一次按完，或用 <span class="mono">Ans</span> 鍵接著算，最後才四捨五入。</li>
+</ol>
+</div>
+<div class="quiz" data-answer="3">
+<p class="quiz-q">解 $200e^{-0.05t} = 100$ 的第一步應該是什麼？</p>
+<button>兩邊直接取 $\ln$，得到 $-0.05t\cdot\ln 200 = \ln 100$</button>
+<button>把 200 和 $-0.05$ 相乘</button>
+<button>兩邊除以 200，得到 $e^{-0.05t} = 0.5$</button>
+<p class="quiz-why">先讓 $e$ 的那一項單獨留下。接著取 $\ln$：$-0.05t = \ln 0.5$，所以 $t = \dfrac{\ln 0.5}{-0.05} \approx 13.86$。</p>
+</div>
+
+<h2 id="examples">例題</h2>
+<p>這兩節沒有指定題，但第 5 章後面每一題都會用到這些動作。先自己算，再一步一步打開。</p>
+
+<article class="prob">
+<h3>例題 1：用指數律化簡</h3>
+<div class="prob-q">
+<p>化簡：(a) $16^{3/4}$　(b) $\dfrac{3^5\cdot 3^{-2}}{3^2}$　(c) $(e^{2x})^3\cdot e^{-x}$</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>(a) 分數次方：先開根號再次方</h4>
+$$16^{3/4} = \left(16^{1/4}\right)^3 = 2^3 = 8$$
+<p>$16 = 2^4$，所以開 4 次方根是 2。</p>
+</div>
+<div class="step">
+<h4>(b) 同底：乘是加、除是減</h4>
+$$\frac{3^5\cdot 3^{-2}}{3^2} = 3^{5 + (-2) - 2} = 3^1 = 3$$
+</div>
+<div class="step">
+<h4>(c) 先處理次方的次方</h4>
+$$(e^{2x})^3\cdot e^{-x} = e^{6x}\cdot e^{-x} = e^{6x - x} = e^{5x}$$
+<p class="answer"><span>(a) 8　(b) 3　(c) $e^{5x}$</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 2：化成同底解方程</h3>
+<div class="prob-q">
+<p>解 $3^{x - x^2} = \dfrac{1}{9^x}$。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>$9 = 3^2$，而且「在分母」等於「負次方」。把右邊也寫成 3 的次方。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>右邊改寫成 3 的次方</h4>
+$$\frac{1}{9^x} = \frac{1}{(3^2)^x} = \frac{1}{3^{2x}} = 3^{-2x}$$
+</div>
+<div class="step">
+<h4>同底，指數相等</h4>
+$$3^{x - x^2} = 3^{-2x} \quad\Rightarrow\quad x - x^2 = -2x$$
+</div>
+<div class="step">
+<h4>解二次方程</h4>
+$$x^2 - 3x = 0 \quad\Rightarrow\quad x(x - 3) = 0 \quad\Rightarrow\quad x = 0 \ \text{或}\ x = 3$$
+<p>驗算 $x = 3$：左邊 $3^{3-9} = 3^{-6}$，右邊 $\dfrac{1}{9^3} = 3^{-6}$ ✓。</p>
+<p class="answer"><span>$x = 0$ 或 $x = 3$</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 3：展開與合併對數</h3>
+<div class="prob-q">
+<p>(a) 展開 $\ln\dfrac{x^2\sqrt{x+1}}{e^x}$。<br>(b) 把 $2\ln x - \tfrac12\ln(x+1) + \ln 3$ 合併成一個對數。</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>(a) 乘變加、除變減</h4>
+$$\ln\frac{x^2\sqrt{x+1}}{e^x} = \ln x^2 + \ln (x+1)^{1/2} - \ln e^x$$
+</div>
+<div class="step">
+<h4>(a) 次方搬到前面，ln 和 e 抵消</h4>
+$$= 2\ln x + \tfrac12\ln(x+1) - x$$
+<p>注意 $\ln(x+1)$ 不能再拆成 $\ln x + \ln 1$，裡面是加法就到此為止。</p>
+</div>
+<div class="step">
+<h4>(b) 反過來做：係數搬回去當次方</h4>
+$$2\ln x - \tfrac12\ln(x+1) + \ln 3 = \ln x^2 - \ln\sqrt{x+1} + \ln 3$$
+</div>
+<div class="step">
+<h4>(b) 加變乘、減變除</h4>
+$$= \ln\frac{3x^2}{\sqrt{x+1}}$$
+<p class="answer"><span>(a) $2\ln x + \tfrac12\ln(x+1) - x$　(b) $\ln\dfrac{3x^2}{\sqrt{x+1}}$</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 4：用 ln 解指數方程</h3>
+<div class="prob-q">
+<p>解 $4e^{x-1} = 10$，答案四捨五入到小數第三位。</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>把 e 的那一項單獨留下</h4>
+$$e^{x-1} = \frac{10}{4} = 2.5$$
+</div>
+<div class="step">
+<h4>兩邊取 ln</h4>
+$$x - 1 = \ln 2.5$$
+</div>
+<div class="step">
+<h4>解出 x，再按計算機</h4>
+$$x = 1 + \ln 2.5 \approx 1 + 0.9163 = 1.916$$
+<p class="answer"><span>$x = 1 + \ln 2.5 \approx 1.916$</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 5：應用題裡反求時間</h3>
+<div class="prob-q">
+<p>速記課的學生第 $t$ 週每分鐘能記 $Q(t) = 120\left(1 - e^{-0.05t}\right) + 60$ 個字（這是指定題 5.6 #16 的函數）。第幾週可以達到每分鐘 100 個字？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>令 $Q(t) = 100$。一層一層剝：先減 60，再除以 120，把 $e^{-0.05t}$ 單獨留下之後才取 $\ln$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>列式，一層一層剝開</h4>
+$$120\left(1 - e^{-0.05t}\right) + 60 = 100 \quad\Rightarrow\quad 1 - e^{-0.05t} = \frac{40}{120} = \frac13$$
+</div>
+<div class="step">
+<h4>把 e 的那一項單獨留下</h4>
+$$e^{-0.05t} = 1 - \frac13 = \frac23$$
+</div>
+<div class="step">
+<h4>取 ln，解 t</h4>
+$$-0.05t = \ln\frac23 \quad\Rightarrow\quad t = \frac{\ln\frac23}{-0.05} \approx \frac{-0.4055}{-0.05} \approx 8.1$$
+<p>$\ln\tfrac23$ 是負的（因為 $\tfrac23 \lt 1$），除以 $-0.05$ 剛好負負得正。算出負的時間就代表哪裡的正負號掉了。</p>
+<p class="answer"><span>大約第 8.1 週。</span></p>
+</div>
+</div>
+</article>
+
+<div class="exam">
+<p>這兩節在考卷上通常不會單獨出大題，而是藏在每一題的最後一步。最常掉分的三個地方：把 $\ln(a+b)$ 拆開、沒有先把 $e$ 的那一項單獨留下就取 $\ln$、計算機的負指數沒加括號。考前拿 $e^{-0.5} \approx 0.6065$ 和 $\ln 4 \approx 1.3863$ 試一次自己的計算機。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

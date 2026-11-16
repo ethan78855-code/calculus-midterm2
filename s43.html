@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.3 曲線描繪與漸近線｜微積分期中考二衝刺</title>
+<meta name="description" content="垂直漸近線、水平漸近線與九步驟曲線描繪流程，含指定題 4.3 #55、#56、#60 逐步解答與圖形。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="s43">
+<main class="page">
+
+<p class="kicker">第 4 章 · Section 4.3</p>
+<h1>曲線描繪與漸近線</h1>
+<p class="lead">這一節是 4.1 和 4.2 的總整理：把遞增遞減、極值、凹性、反曲點全部用上，親手把函數的圖畫出來。新東西只有一個，叫做<strong>漸近線</strong>。照著固定流程走，就不會漏掉任何一項。</p>
+<div data-toc></div>
+
+<h2 id="va">垂直漸近線：圖形往上衝或往下掉的地方</h2>
+<div class="say">
+<p>漸近線是一條直線，圖形會越來越貼近它，但是不會真的碰到（至少在遠處不會）。畫圖時先把漸近線用虛線畫出來，圖形就有了骨架。</p>
+</div>
+<p>看 $f(x) = \dfrac{2x - 1}{x - 1}$。$x = 1$ 時分母是 0，不能算。那 $x$ 很靠近 1 的時候呢？</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>$x$</th><th class="n">0.9</th><th class="n">0.99</th><th class="n">0.999</th><th class="n">1</th><th class="n">1.001</th><th class="n">1.01</th><th class="n">1.1</th></tr></thead>
+<tbody>
+<tr><td>$f(x)$</td><td class="n">−8</td><td class="n">−98</td><td class="n">−998</td><td class="n">不存在</td><td class="n">1002</td><td class="n">102</td><td class="n">12</td></tr>
+</tbody>
+</table>
+</div>
+<p>從左邊靠近 1，函數值往 $-\infty$ 掉；從右邊靠近 1，往 $+\infty$ 衝。直線 $x = 1$ 就是<strong>垂直漸近線</strong>。在下圖拖曳或按按鈕，看那個點怎麼跑：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-4, 6], "y": [-8, 12], "h": 340,
+  "fns": [
+    { "f": "(2*x-1)/(x-1)", "color": "f", "label": "f(x) = (2x − 1) / (x − 1)", "domain": [-4, 0.999] },
+    { "f": "(2*x-1)/(x-1)", "color": "f", "domain": [1.001, 6] }
+  ],
+  "vlines": [ { "x": 1, "label": "垂直漸近線 x = 1", "color": "ink" } ],
+  "hlines": [ { "y": 2, "label": "水平漸近線 y = 2", "color": "ink" } ],
+  "points": [ { "x": "a", "y": "(2*a-1)/(a-1)", "color": "d1" } ],
+  "slider": { "label": "x", "min": -4, "max": 6, "step": 0.01, "value": 3, "digits": 2,
+    "presets": [ { "label": "x = 0.9", "value": 0.9 }, { "label": "x = 0.99", "value": 0.99 }, { "label": "x = 1.01", "value": 1.01 }, { "label": "x = 1.1", "value": 1.1 }, { "label": "x = 6", "value": 6 }, { "label": "x = −4", "value": -4 } ] },
+  "readouts": [
+    { "label": "f(x)", "expr": "(2*a-1)/(a-1)", "digits": 2, "color": "f" },
+    { "label": "和 y = 2 的距離", "expr": "abs((2*a-1)/(a-1)-2)", "digits": 3 }
+  ]
+}
+</script>
+<figcaption>橘點太靠近 x = 1 時會衝出畫面，看讀數就知道它跑到多高或多低。往左右兩端拖，橘點會越來越貼近 y = 2。</figcaption>
+</figure>
+<div class="key" data-title="找垂直漸近線（有理函數）">
+<p>$f(x) = \dfrac{P(x)}{Q(x)}$ 是兩個多項式相除時：</p>
+<p>先解<strong>分母</strong> $Q(x) = 0$，得到 $x = a$。如果這時<strong>分子</strong> $P(a) \ne 0$，那麼 $x = a$ 就是垂直漸近線。</p>
+</div>
+<div class="trap">
+<p>分母為 0 還不夠，要確認分子不是 0。例如 $\dfrac{x^2 - 4}{x - 2}$ 在 $x = 2$ 分子分母都是 0，約分後是 $x + 2$，圖形只是一條直線在 $x = 2$ 缺一個洞，<strong>沒有</strong>垂直漸近線。</p>
+</div>
+<h3>往上還是往下？代一個很靠近的數看正負</h3>
+<p>畫圖時要知道漸近線兩側是衝向 $+\infty$ 還是 $-\infty$。不用算極限，代一個很靠近的數，只看正負號就好：</p>
+<ul>
+<li>右邊代 $x = 1.01$：分子 $2(1.01) - 1$ 是正的，分母 $1.01 - 1$ 是正的，正 ÷ 正 = 正 → 往 $+\infty$。</li>
+<li>左邊代 $x = 0.99$：分子是正的，分母 $0.99 - 1$ 是負的，正 ÷ 負 = 負 → 往 $-\infty$。</li>
+</ul>
+<div class="quiz" data-answer="1">
+<p class="quiz-q">$f(x) = \dfrac{x + 3}{x - 2}$ 的垂直漸近線是？</p>
+<button>$x = 2$</button>
+<button>$x = -3$</button>
+<button>$y = 1$</button>
+<p class="quiz-why">垂直漸近線看分母：$x - 2 = 0$ 得 $x = 2$，這時分子 $2 + 3 = 5 \ne 0$。$x = -3$ 是分子為 0 的地方，那是 $x$ 截距。$y = 1$ 是水平漸近線。</p>
+</div>
+
+<h2 id="ha">水平漸近線：x 跑很遠時圖形貼近的高度</h2>
+<p>同一個函數，這次讓 $x$ 變得很大：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>$x$</th><th class="n">10</th><th class="n">100</th><th class="n">1000</th><th class="n">−10</th><th class="n">−100</th><th class="n">−1000</th></tr></thead>
+<tbody>
+<tr><td>$f(x)$</td><td class="n">2.111</td><td class="n">2.0101</td><td class="n">2.001</td><td class="n">1.909</td><td class="n">1.9901</td><td class="n">1.999</td></tr>
+</tbody>
+</table>
+</div>
+<p>不管往右還是往左，函數值都越來越接近 2。直線 $y = 2$ 就是<strong>水平漸近線</strong>。</p>
+<div class="key" data-title="水平漸近線">
+<p>如果 $\displaystyle\lim_{x\to\infty} f(x) = b$ 或 $\displaystyle\lim_{x\to-\infty} f(x) = b$，直線 $y = b$ 就是水平漸近線。</p>
+</div>
+<h3>有理函數的速算法：比最高次方</h3>
+<p>$x$ 很大的時候，多項式裡只有最高次項重要（$x^2$ 是一百萬時，$3x$ 才三千）。所以只要比較分子和分母的<strong>最高次方</strong>：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>情況</th><th>水平漸近線</th><th>例子</th></tr></thead>
+<tbody>
+<tr><td>分子次數 &lt; 分母次數</td><td>$y = 0$</td><td>$\dfrac{3x}{x^2 + 1}$ → $y = 0$</td></tr>
+<tr><td>分子次數 = 分母次數</td><td>$y = $ 最高次項的係數相除</td><td>$\dfrac{2x^2 + 1}{x^2 - 4}$ → $y = \dfrac21 = 2$</td></tr>
+<tr><td>分子次數 &gt; 分母次數</td><td>沒有</td><td>$\dfrac{x^3}{x^2 + 1}$ → 沒有</td></tr>
+</tbody>
+</table>
+</div>
+<p>要寫出計算過程的話，把分子分母同除以分母的最高次方：</p>
+$$\lim_{x\to\infty}\frac{2x - 1}{x - 1} = \lim_{x\to\infty}\frac{2 - \frac1x}{1 - \frac1x} = \frac{2 - 0}{1 - 0} = 2$$
+<div class="say">
+<p>垂直漸近線寫成 $x = $ 某數，水平漸近線寫成 $y = $ 某數。<mark>多項式函數（沒有分母）沒有任何漸近線</mark>，可以直接寫「無」。</p>
+</div>
+<div class="quiz" data-answer="3">
+<p class="quiz-q">$f(x) = \dfrac{4x^2 - 1}{2x^2 + 3}$ 的水平漸近線是？</p>
+<button>$y = 0$</button>
+<button>$y = 4$</button>
+<button>$y = 2$</button>
+<p class="quiz-why">分子分母都是 2 次，最高次項係數相除：$\dfrac42 = 2$。</p>
+</div>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">$g(x) = \dfrac{x^2 - 9}{x^2 - 4}$ 有幾條垂直漸近線？</p>
+<button>1 條</button>
+<button>2 條</button>
+<button>沒有</button>
+<p class="quiz-why">分母 $x^2 - 4 = 0$ 得 $x = 2$ 和 $x = -2$，兩個地方分子都是 $4 - 9 = -5 \ne 0$，所以有兩條。這就是指定題 #56。</p>
+</div>
+
+<h2 id="guide">曲線描繪的固定流程</h2>
+<p>課本把畫圖整理成九個步驟。考試照這個順序寫，每一步都有分數：</p>
+<div class="how" data-title="曲線描繪九步驟">
+<ol>
+<li><strong>定義域</strong>：分母不能是 0，偶次方根裡面不能是負的。</li>
+<li><strong>截距</strong>：$y$ 截距代 $x = 0$；$x$ 截距解 $f(x) = 0$（分式只要讓分子 = 0）。</li>
+<li><strong>$x \to \pm\infty$ 的行為</strong>：圖形的左右兩端往哪裡去。</li>
+<li><strong>漸近線</strong>：垂直、水平各有沒有。</li>
+<li><strong>遞增遞減</strong>：求 $f'$，畫符號圖（4.1）。</li>
+<li><strong>相對極值</strong>：看 $f'$ 在哪裡變號（4.1）。</li>
+<li><strong>凹性</strong>：求 $f''$，畫符號圖（4.2）。</li>
+<li><strong>反曲點</strong>：看 $f''$ 在哪裡變號，而且那個點要在定義域裡（4.2）。</li>
+<li><strong>描點連線</strong>：多代幾個點，把以上資訊連成平滑的曲線。</li>
+</ol>
+</div>
+<div class="trap">
+<p>畫符號圖時，除了導數等於 0 的點，<strong>導數不存在的點（例如垂直漸近線的位置）也要標上去</strong>。函數在漸近線兩側的行為可能完全不同。</p>
+</div>
+<p>下面三題指定題就是照這九步做。先看一張「畫完的樣子」，知道最後要標什麼：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-1.6, 3.6], "y": [-5.2, 4.2], "h": 290,
+  "fns": [ { "f": "x^3-3*x^2+1", "color": "f", "label": "f(x) = x³ − 3x² + 1" } ],
+  "points": [
+    { "x": 0, "y": 1, "label": "相對極大 (0, 1)，也是 y 截距", "pos": "t", "color": "neg" },
+    { "x": 2, "y": -3, "label": "相對極小 (2, −3)", "pos": "b", "color": "pos" },
+    { "x": 1, "y": -1, "label": "反曲點 (1, −1)", "pos": "r", "color": "ink" }
+  ],
+  "shapes": [
+    { "type": "text", "x": -0.9, "y": -4.2, "t": "↗ 遞增", "color": "pos", "size": 12 },
+    { "type": "text", "x": 0.75, "y": 0.3, "t": "↘ 遞減", "color": "neg", "size": 12 },
+    { "type": "text", "x": 3.1, "y": -1.6, "t": "↗ 遞增", "color": "pos", "size": 12 },
+    { "type": "text", "x": -0.2, "y": 3.3, "t": "∩ 凹向下（x < 1）", "color": "d2", "size": 12 },
+    { "type": "text", "x": 2.4, "y": 3.3, "t": "∪ 凹向上（x > 1）", "color": "d2", "size": 12 }
+  ]
+}
+</script>
+<figcaption>多項式的例子（沒有漸近線）。圖上至少要標出：截距、相對極值、反曲點；有漸近線的話要畫虛線。</figcaption>
+</figure>
+
+<h2 id="problems">指定題</h2>
+<p>這三題都是「照九步驟畫圖」。建議先在紙上自己做一遍，再一步一步對答案。</p>
+
+<article class="prob" data-prob="4.3-55">
+<h3>有垂直漸近線的分式函數</h3>
+<div class="prob-q">
+<p>用曲線描繪的流程畫出下列函數的圖形：</p>
+$$g(t) = -\frac{t^2 - 2}{t - 1}$$
+</div>
+<details class="hint"><summary>提示</summary>
+<p>前面有一個負號，全程都要帶著。微分用除法規則；求出 $g'$ 之後，注意分子 $t^2 - 2t + 2 = (t-1)^2 + 1$ 永遠是正的。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>① 定義域</h4>
+<p>分母 $t - 1 \ne 0$，所以定義域是 $t \ne 1$，也就是 $(-\infty, 1) \cup (1, \infty)$。</p>
+</div>
+<div class="step">
+<h4>② 截距</h4>
+<p>$y$ 截距：$g(0) = -\dfrac{0 - 2}{0 - 1} = -\dfrac{-2}{-1} = -2$。</p>
+<p>$t$ 截距：分子 $t^2 - 2 = 0$，得 $t = \pm\sqrt2 \approx \pm 1.41$。</p>
+</div>
+<div class="step">
+<h4>③ t → ±∞ 的行為</h4>
+<p>$t$ 很大時只看最高次項：$g(t) \approx -\dfrac{t^2}{t} = -t$。</p>
+<p>所以 $t \to \infty$ 時 $g(t) \to -\infty$（右端往下），$t \to -\infty$ 時 $g(t) \to +\infty$（左端往上）。</p>
+</div>
+<div class="step">
+<h4>④ 漸近線</h4>
+<p><strong>垂直：</strong>分母在 $t = 1$ 為 0，分子 $1 - 2 = -1 \ne 0$，所以 $t = 1$ 是垂直漸近線。</p>
+<p>右邊代 $t = 1.1$：$g = -\dfrac{1.21 - 2}{0.1} = 7.9$，是正的 → $t \to 1^+$ 時往 $+\infty$。<br>左邊代 $t = 0.9$：$g = -\dfrac{0.81 - 2}{-0.1} = -11.9$，是負的 → $t \to 1^-$ 時往 $-\infty$。</p>
+<p><strong>水平：</strong>分子次數（2）大於分母次數（1），沒有水平漸近線。</p>
+</div>
+<div class="step">
+<h4>⑤ g′ 與遞增遞減</h4>
+<p>除法規則（上面 $t^2 - 2$ 微分是 $2t$，下面 $t - 1$ 微分是 $1$），最前面的負號留著：</p>
+$$g'(t) = -\frac{2t(t - 1) - (t^2 - 2)\cdot 1}{(t - 1)^2} = -\frac{t^2 - 2t + 2}{(t - 1)^2}$$
+<p>分子 $t^2 - 2t + 2 = (t - 1)^2 + 1$ 永遠大於 0，分母是平方也大於 0，前面再加負號，所以 $g'(t) \lt 0$。$g'$ 只在 $t = 1$ 不存在。</p>
+<div class="signline" data-label="g′(t)" data-marks="1=x" data-signs="- -" data-kind="mono"></div>
+<p>$g$ 在 $(-\infty, 1)$ 和 $(1, \infty)$ 上都遞減。</p>
+</div>
+<div class="step">
+<h4>⑥ 相對極值</h4>
+<p>$g'$ 從來不等於 0，$t = 1$ 又不在定義域裡，所以沒有臨界數，<strong>沒有相對極值</strong>。</p>
+</div>
+<div class="step">
+<h4>⑦ g″ 與凹性</h4>
+<p>先把 $g'$ 拆開比較好微分：</p>
+$$g'(t) = -\frac{(t-1)^2 + 1}{(t-1)^2} = -1 - (t - 1)^{-2}$$
+$$g''(t) = 2(t - 1)^{-3} = \frac{2}{(t - 1)^3}$$
+<p>$t \lt 1$ 時 $(t-1)^3$ 是負的，$g'' \lt 0$；$t \gt 1$ 時是正的，$g'' \gt 0$。</p>
+<div class="signline" data-label="g″(t)" data-marks="1=x" data-signs="- +" data-kind="concave"></div>
+<p>在 $(-\infty, 1)$ 凹向下，在 $(1, \infty)$ 凹向上。</p>
+</div>
+<div class="step">
+<h4>⑧ 反曲點</h4>
+<p>凹性雖然在 $t = 1$ 改變，但 $t = 1$ 不在定義域裡，圖形上沒有這個點，所以<strong>沒有反曲點</strong>。</p>
+</div>
+<div class="step">
+<h4>⑨ 描點連線</h4>
+<p>多代幾個點：$g(-2) = \tfrac23$，$g(0.5) = -3.5$，$g(1.5) = -0.5$，$g(2) = -2$，$g(3) = -3.5$。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-5, 7], "y": [-12, 12], "h": 360,
+  "xlabel": "t",
+  "fns": [
+    { "f": "-(x^2-2)/(x-1)", "color": "f", "label": "g(t) = −(t² − 2) / (t − 1)", "domain": [-5, 0.999] },
+    { "f": "-(x^2-2)/(x-1)", "color": "f", "domain": [1.001, 7] },
+    { "f": "-x-1", "color": "mute", "dash": true, "label": "斜線 y = −t − 1（加分觀念）", "toggle": true, "show": false }
+  ],
+  "vlines": [ { "x": 1, "label": "垂直漸近線 t = 1", "color": "ink" } ],
+  "points": [
+    { "x": 0, "y": -2, "label": "(0, −2)", "pos": "bl", "color": "f" },
+    { "x": -1.4142, "y": 0, "label": "(−√2, 0)", "pos": "tr", "color": "f" },
+    { "x": 1.4142, "y": 0, "label": "(√2, 0)", "pos": "tr", "color": "f" }
+  ]
+}
+</script>
+<figcaption>左半邊：一路下降、∩ 形，最後沿著 t = 1 往下掉。右半邊：從 t = 1 的上方掉下來、∪ 形，一路下降。</figcaption>
+</figure>
+<details class="peek"><summary>加分觀念：為什麼兩端看起來像一條斜線？</summary>
+<p>用長除法，$(t^2 - 2) \div (t - 1) = t + 1$ 餘 $-1$，所以 $g(t) = -t - 1 + \dfrac{1}{t - 1}$。$t$ 很大時最後一項趨近 0，圖形就貼近直線 $y = -t - 1$（點一下圖例可以把它疊上去）。這叫斜漸近線，課本這一節沒有要求，不寫也可以。</p>
+</details>
+<p class="answer"><span>定義域 $t \ne 1$；截距 $(0, -2)$、$(\pm\sqrt2, 0)$；垂直漸近線 $t = 1$，無水平漸近線；在 $(-\infty, 1)$、$(1, \infty)$ 遞減，無相對極值；在 $(-\infty, 1)$ 凹向下、$(1, \infty)$ 凹向上，無反曲點。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.3-56">
+<h3>兩條垂直漸近線加一條水平漸近線</h3>
+<div class="prob-q">
+<p>用曲線描繪的流程畫出下列函數的圖形：</p>
+$$f(x) = \frac{x^2 - 9}{x^2 - 4}$$
+</div>
+<details class="hint"><summary>提示</summary>
+<p>分母 $x^2 - 4 = (x-2)(x+2)$。除法規則算 $f'$ 時，分子可以提出 $2x$，括號裡會剩下常數 5。另外 $f(-x) = f(x)$，圖形左右對稱，可以省一半的力氣。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>① 定義域</h4>
+<p>$x^2 - 4 \ne 0$，所以 $x \ne \pm 2$。</p>
+</div>
+<div class="step">
+<h4>② 截距與對稱</h4>
+<p>$y$ 截距：$f(0) = \dfrac{-9}{-4} = \dfrac94$。</p>
+<p>$x$ 截距：分子 $x^2 - 9 = 0$，得 $x = \pm 3$。</p>
+<p>因為 $x$ 只以 $x^2$ 的形式出現，$f(-x) = f(x)$，圖形<strong>對 $y$ 軸對稱</strong>。</p>
+</div>
+<div class="step">
+<h4>③ x → ±∞ 的行為</h4>
+<p>分子分母都是 2 次，最高次項係數相除：</p>
+$$\lim_{x\to\pm\infty}\frac{x^2 - 9}{x^2 - 4} = \frac11 = 1$$
+<p>兩端都貼近高度 1。</p>
+</div>
+<div class="step">
+<h4>④ 漸近線</h4>
+<p><strong>水平：</strong>$y = 1$。</p>
+<p><strong>垂直：</strong>分母在 $x = \pm 2$ 為 0，分子 $4 - 9 = -5 \ne 0$，所以 $x = 2$ 和 $x = -2$ 都是垂直漸近線。</p>
+<p>看 $x = 2$ 附近（分子在這附近都是負的，大約 $-5$）：<br>代 $x = 1.9$：分母 $3.61 - 4 \lt 0$，負 ÷ 負 = 正 → $x \to 2^-$ 時往 $+\infty$。<br>代 $x = 2.1$：分母 $4.41 - 4 \gt 0$，負 ÷ 正 = 負 → $x \to 2^+$ 時往 $-\infty$。</p>
+<p>由對稱性，$x \to -2^+$ 時往 $+\infty$，$x \to -2^-$ 時往 $-\infty$。</p>
+</div>
+<div class="step">
+<h4>⑤ f′ 與遞增遞減</h4>
+$$f'(x) = \frac{2x(x^2 - 4) - (x^2 - 9)(2x)}{(x^2 - 4)^2} = \frac{2x\big[(x^2 - 4) - (x^2 - 9)\big]}{(x^2 - 4)^2} = \frac{10x}{(x^2 - 4)^2}$$
+<p>分母是平方，一定是正的，所以 $f'$ 的正負號就是 $x$ 的正負號。$f' = 0$ 在 $x = 0$；$f'$ 不存在在 $x = \pm 2$。</p>
+<div class="signline" data-label="f′(x)" data-marks="-2=x, 0=0, 2=x" data-signs="- - + +" data-kind="mono"></div>
+<p>在 $(-\infty, -2)$ 和 $(-2, 0)$ 遞減；在 $(0, 2)$ 和 $(2, \infty)$ 遞增。</p>
+</div>
+<div class="step">
+<h4>⑥ 相對極值</h4>
+<p>$f'$ 在 $x = 0$ 由負變正，所以有<strong>相對極小值</strong> $f(0) = \dfrac94$。（$x = \pm 2$ 不在定義域，不算。）</p>
+</div>
+<div class="step">
+<h4>⑦ f″ 與凹性</h4>
+<p>把 $f'$ 寫成 $10x\,(x^2 - 4)^{-2}$，用乘法規則加連鎖律：</p>
+$$\begin{aligned}f''(x) &= 10(x^2 - 4)^{-2} + 10x\cdot(-2)(x^2 - 4)^{-3}\cdot 2x\\ &= \frac{10(x^2 - 4) - 40x^2}{(x^2 - 4)^3} = \frac{-10(3x^2 + 4)}{(x^2 - 4)^3}\end{aligned}$$
+<p>分子 $-10(3x^2 + 4)$ 永遠是負的，所以 $f''$ 的正負號和分母 $(x^2 - 4)^3$ <strong>相反</strong>：<br>$|x| \gt 2$ 時分母為正，$f'' \lt 0$；$|x| \lt 2$ 時分母為負，$f'' \gt 0$。</p>
+<div class="signline" data-label="f″(x)" data-marks="-2=x, 2=x" data-signs="- + -" data-kind="concave"></div>
+<p>在 $(-2, 2)$ 凹向上；在 $(-\infty, -2)$ 和 $(2, \infty)$ 凹向下。</p>
+</div>
+<div class="step">
+<h4>⑧ 反曲點</h4>
+<p>$f''$ 從來不等於 0。凹性在 $x = \pm 2$ 改變，但這兩個數不在定義域，所以<strong>沒有反曲點</strong>。</p>
+</div>
+<div class="step">
+<h4>⑨ 描點連線</h4>
+<p>多代幾個點：$f(1) = \tfrac83 \approx 2.67$，$f(4) = \tfrac{7}{12} \approx 0.58$，$f(5) = \tfrac{16}{21} \approx 0.76$。左半邊用對稱補上。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-7, 7], "y": [-7, 9], "h": 360,
+  "fns": [
+    { "f": "(x^2-9)/(x^2-4)", "color": "f", "label": "f(x) = (x² − 9) / (x² − 4)", "domain": [-7, -2.001] },
+    { "f": "(x^2-9)/(x^2-4)", "color": "f", "domain": [-1.999, 1.999] },
+    { "f": "(x^2-9)/(x^2-4)", "color": "f", "domain": [2.001, 7] }
+  ],
+  "vlines": [ { "x": -2, "label": "x = −2", "color": "ink" }, { "x": 2, "label": "x = 2", "color": "ink" } ],
+  "hlines": [ { "y": 1, "label": "水平漸近線 y = 1", "color": "ink" } ],
+  "points": [
+    { "x": 0, "y": 2.25, "label": "相對極小 (0, 9/4)", "pos": "t", "color": "pos" },
+    { "x": -3, "y": 0, "label": "(−3, 0)", "pos": "bl", "color": "f" },
+    { "x": 3, "y": 0, "label": "(3, 0)", "pos": "br", "color": "f" }
+  ]
+}
+</script>
+<figcaption>中間是一個 ∪ 形，谷底在 (0, 9/4)，兩邊沿著漸近線往上衝。左右兩塊從漸近線下方爬上來，越來越貼近 y = 1，但一直在它下面。</figcaption>
+</figure>
+<p class="answer"><span>定義域 $x \ne \pm2$；截距 $(0, \tfrac94)$、$(\pm3, 0)$；水平漸近線 $y = 1$，垂直漸近線 $x = \pm2$；在 $(-\infty, -2)$、$(-2, 0)$ 遞減，在 $(0, 2)$、$(2, \infty)$ 遞增；相對極小值 $f(0) = \tfrac94$；在 $(-2, 2)$ 凹向上，在 $(-\infty, -2)$、$(2, \infty)$ 凹向下；無反曲點。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.3-60">
+<h3>有分數次方、定義域有起點的函數</h3>
+<div class="prob-q">
+<p>用曲線描繪的流程畫出下列函數的圖形：</p>
+$$g(x) = (x + 2)^{3/2} + 1$$
+</div>
+<details class="hint"><summary>提示</summary>
+<p>$(x+2)^{3/2} = \big(\sqrt{x+2}\,\big)^3$，根號裡面不能是負的，所以圖形有一個起點。這一題很多項目的答案是「沒有」，但每一項都要寫出來並說明理由。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>① 定義域</h4>
+<p>$(x+2)^{3/2}$ 含有平方根，需要 $x + 2 \ge 0$，所以定義域是 $[-2, \infty)$。圖形從 $x = -2$ 才開始。</p>
+</div>
+<div class="step">
+<h4>② 截距</h4>
+<p>$y$ 截距：$g(0) = 2^{3/2} + 1 = 2\sqrt2 + 1 \approx 3.83$。</p>
+<p>$x$ 截距：要 $(x+2)^{3/2} = -1$，但左邊不可能是負的，所以<strong>沒有 $x$ 截距</strong>。</p>
+</div>
+<div class="step">
+<h4>③ x → ∞ 的行為</h4>
+<p>$x \to \infty$ 時 $g(x) \to \infty$，右端一直往上。（定義域沒有左半邊，不用看 $x \to -\infty$。）</p>
+</div>
+<div class="step">
+<h4>④ 漸近線</h4>
+<p>沒有分母，不會有垂直漸近線；$x \to \infty$ 時函數值沒有趨近某個固定的數，也沒有水平漸近線。<strong>沒有漸近線</strong>。</p>
+</div>
+<div class="step">
+<h4>⑤ g′ 與遞增遞減</h4>
+$$g'(x) = \frac32(x + 2)^{1/2} = \frac32\sqrt{x + 2}$$
+<p>$x \gt -2$ 時根號是正的，$g'(x) \gt 0$。</p>
+<div class="signline" data-label="g′(x)" data-marks="" data-signs="+" data-kind="mono" data-notes="在 (−2, ∞) 上：↗ 遞增"></div>
+<p>$g$ 在 $(-2, \infty)$ 上遞增。另外 $g'(-2) = 0$，表示起點的切線是水平的。</p>
+</div>
+<div class="step">
+<h4>⑥ 相對極值</h4>
+<p>在 $(-2, \infty)$ 裡 $g'$ 都不是 0，沒有臨界數。$x = -2$ 是定義域的端點，左邊沒有圖形，不算相對極值。所以<strong>沒有相對極值</strong>。（起點 $(-2, 1)$ 是整個圖形的最低點，屬於 4.4 節的絕對極小值。）</p>
+</div>
+<div class="step">
+<h4>⑦ g″ 與凹性</h4>
+$$g''(x) = \frac32\cdot\frac12(x + 2)^{-1/2} = \frac{3}{4\sqrt{x + 2}}$$
+<p>$x \gt -2$ 時 $g''(x) \gt 0$，所以在 $(-2, \infty)$ 上<strong>凹向上</strong>。</p>
+</div>
+<div class="step">
+<h4>⑧ 反曲點</h4>
+<p>$g''$ 沒有變號，<strong>沒有反曲點</strong>。</p>
+</div>
+<div class="step">
+<h4>⑨ 描點連線</h4>
+<p>多代幾個點：$g(-2) = 1$，$g(-1) = 2$，$g(2) = 4^{3/2} + 1 = 9$。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-3.5, 5], "y": [-1, 17], "h": 330,
+  "fns": [ { "f": "(x+2)^(3/2)+1", "color": "f", "label": "g(x) = (x + 2)^(3/2) + 1", "domain": [-2, 5] } ],
+  "shapes": [ { "type": "line", "x1": -2, "y1": 1, "x2": -1.1, "y2": 1, "color": "d1", "w": 2.4 } ],
+  "points": [
+    { "x": -2, "y": 1, "label": "起點 (−2, 1)，切線水平", "pos": "br", "color": "ink" },
+    { "x": -1, "y": 2, "label": "(−1, 2)", "pos": "tl", "color": "f" },
+    { "x": 0, "y": 3.8284, "label": "(0, 2√2 + 1)", "pos": "br", "color": "f" },
+    { "x": 2, "y": 9, "label": "(2, 9)", "pos": "br", "color": "f" }
+  ]
+}
+</script>
+<figcaption>從 (−2, 1) 水平出發，一路上升而且越來越陡（遞增、凹向上）。x &lt; −2 的地方沒有圖形。</figcaption>
+</figure>
+<p class="answer"><span>定義域 $[-2, \infty)$；$y$ 截距 $2\sqrt2 + 1$，無 $x$ 截距；無漸近線；在 $(-2, \infty)$ 遞增，無相對極值；在 $(-2, \infty)$ 凹向上，無反曲點。</span></p>
+</div>
+</div>
+</article>
+
+<div class="exam">
+<p>畫圖題的分數是一項一項給的。就算最後圖畫得不漂亮，把定義域、截距、漸近線、$f'$ 和 $f''$ 的符號圖、極值、反曲點逐項寫出來，就能拿到大部分的分數。答案是「沒有」的項目也要寫「無」，不要留白。圖上的漸近線用虛線畫，並標出方程式。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

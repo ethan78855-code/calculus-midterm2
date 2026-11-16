@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.4 最佳化 I：絕對極值｜微積分期中考二衝刺</title>
+<meta name="description" content="絕對極大值與絕對極小值、極值定理、閉區間法，以及利潤最大與平均成本最小的例題。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="s44">
+<main class="page">
+
+<p class="kicker">第 4 章 · Section 4.4</p>
+<h1>最佳化 I：絕對極值</h1>
+<p class="lead">4.1 找的是「附近最高、附近最低」的相對極值。這一節要找的是<strong>整個區間裡真正的最大值和最小值</strong>。方法只有一招：把幾個候選點的函數值算出來，比大小。這一節沒有指定題，但它是 4.5 應用題的最後一步。</p>
+<div data-toc></div>
+
+<h2 id="abs">絕對極值和相對極值差在哪</h2>
+<div class="key" data-title="定義">
+<p><strong>絕對極大值</strong>：整個定義範圍內最大的函數值。也就是對範圍內所有 $x$ 都有 $f(x) \le f(c)$。<br>
+<strong>絕對極小值</strong>：整個定義範圍內最小的函數值。</p>
+</div>
+<div class="say">
+<p>相對極值是「這座山的山頂」，絕對極值是「整條路線的最高點」。最高點可能是某座山頂，也可能是<mark>路線的起點或終點</mark>。所以端點一定要檢查。</p>
+</div>
+<p>下面的圖只看 $x$ 從 $-1.8$ 到右端點 $b$ 這一段。拖曳右端點，看「冠軍」什麼時候從山頂換成端點：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-2.3, 2.6], "y": [-3.4, 6.2], "h": 340,
+  "fns": [
+    { "f": "x^3-3*x", "color": "mute", "dash": true, "w": 1.6, "label": "區間外的部分" },
+    { "f": "x^3-3*x", "color": "f", "label": "f(x) = x³ − 3x 在 [−1.8, b]", "domain": [-1.8, "a"] }
+  ],
+  "vlines": [ { "x": -1.8, "color": "mute" }, { "x": "a", "color": "mute", "label": "b = {{a|2}}", "low": true } ],
+  "points": [
+    { "x": -1.8, "y": -0.432, "label": "左端點 −0.43", "pos": "bl", "color": "ink" },
+    { "x": -1, "y": 2, "label": "臨界數 x = −1：高 2", "pos": "t", "color": "d1" },
+    { "x": 1, "y": -2, "label": "臨界數 x = 1：高 −2", "pos": "b", "color": "d1" },
+    { "x": "a", "y": "a^3-3*a", "label": "右端點 {{a^3-3*a|2}}", "pos": "tl", "color": "ink" }
+  ],
+  "slider": { "label": "右端點 b", "min": 1.2, "max": 2.45, "step": 0.01, "value": 1.6, "digits": 2,
+    "presets": [ { "label": "b = 1.5", "value": 1.5 }, { "label": "b = 2（平手）", "value": 2 }, { "label": "b = 2.4", "value": 2.4 } ] },
+  "readouts": [
+    { "label": "f(右端點)", "expr": "a^3-3*a", "digits": 2 },
+    { "label": "絕對極大值", "expr": "max(2, a^3-3*a)", "digits": 2, "color": "neg" },
+    { "label": "發生在", "expr": "a^3-3*a-2", "pos": "右端點（端點贏了）", "neg": "臨界數 x = −1（山頂贏了）", "zero": "兩處一樣高", "eps": 0.02 },
+    { "label": "絕對極小值", "expr": "-2", "digits": 0, "color": "pos" }
+  ]
+}
+</script>
+<figcaption>候選人永遠只有四個：兩個端點、兩個臨界數。b 超過 2 之後，右端點比山頂還高，絕對極大值就換人了。絕對極小值一直是谷底的 −2。</figcaption>
+</figure>
+
+<h2 id="evt">什麼時候保證有最大和最小</h2>
+<div class="key" data-title="極值定理">
+<p>如果 $f$ 在<strong>閉區間</strong> $[a, b]$ 上<strong>連續</strong>，那麼 $f$ 在 $[a, b]$ 上一定有絕對極大值和絕對極小值。</p>
+</div>
+<p>兩個條件都要有。少一個就可能沒有：</p>
+<ul>
+<li>區間不含端點，例如 $f(x) = x$ 在 $(0, 1)$：越靠近 1 越大，但永遠到不了 1，沒有最大值。</li>
+<li>函數不連續，例如 $f(x) = \dfrac1x$ 在 $[-1, 1]$：在 0 附近衝到無限大。</li>
+</ul>
+
+<h2 id="method">閉區間法：列表比大小</h2>
+<div class="how" data-title="求 f 在 [a, b] 上的絕對極值">
+<ol>
+<li>微分，找出 $(a, b)$ 裡面所有的臨界數（$f'(x) = 0$ 或 $f'(x)$ 不存在的點）。<strong>不在區間裡的丟掉。</strong></li>
+<li>把每個臨界數和兩個端點 $a$、$b$ 代回<strong>原函數</strong> $f$，算出函數值。</li>
+<li>最大的就是絕對極大值，最小的就是絕對極小值。</li>
+</ol>
+</div>
+<p>這個方法不用畫符號圖，也不用判斷是相對極大還是極小，直接比數字就好。</p>
+<div class="trap">
+<ul>
+<li>忘記算端點。這是這一節最常見的失分。</li>
+<li>把區間外的臨界數也拿來比。</li>
+<li>代回去的時候代到 $f'$ 而不是 $f$。要比的是「高度」，所以代原函數。</li>
+<li>答案要寫清楚：絕對極大<strong>值</strong>是函數值 $f(c)$，發生<strong>在</strong> $x = c$。兩個都要寫。</li>
+</ul>
+</div>
+
+<div class="quiz" data-answer="3">
+<p class="quiz-q">$f(x) = x^2$ 在 $[-1, 2]$ 上。絕對極大值和絕對極小值分別是？</p>
+<button>極大值 1，極小值 0</button>
+<button>極大值 4，極小值 1</button>
+<button>極大值 4，極小值 0</button>
+<p class="quiz-why">$f'(x) = 2x = 0$ 得臨界數 $x = 0$。比較 $f(-1) = 1$、$f(0) = 0$、$f(2) = 4$：最大是 4（在右端點），最小是 0（在臨界數）。</p>
+</div>
+
+<h2 id="open">不是閉區間的時候</h2>
+<p>應用題的範圍常常是 $(0, \infty)$ 這種沒有端點的區間，例如產量 $x \gt 0$。這時用下面這個判斷：</p>
+<div class="key" data-title="只有一個臨界數的情況">
+<p>如果 $f$ 在區間內<strong>只有一個</strong>臨界數 $c$，而且 $f(c)$ 是相對極小值（例如 $f''(c) \gt 0$），那它就是整個區間的<strong>絕對極小值</strong>。相對極大值同理。</p>
+</div>
+<div class="say">
+<p>只有一個谷底、沒有別的轉彎，曲線往兩邊都只能往上走，所以那個谷底就是全場最低。4.5 的應用題幾乎都是用這一條收尾：微分等於 0 解出唯一的臨界數，再用 $f''$ 的正負號確認。</p>
+</div>
+
+<div class="quiz" data-answer="1">
+<p class="quiz-q">$f(x) = x + \dfrac{4}{x}$ 在 $(0, \infty)$ 上只有一個臨界數 $x = 2$，且 $f''(2) \gt 0$。可以下什麼結論？</p>
+<button>$f(2) = 4$ 是絕對極小值</button>
+<button>$f(2) = 4$ 是絕對極大值</button>
+<button>沒有端點，所以無法判斷</button>
+<p class="quiz-why">唯一的臨界數，而且 $f'' \gt 0$（凹向上、是谷底），所以是絕對極小值。$f(2) = 2 + 2 = 4$。</p>
+</div>
+
+<h2 id="biz">商管題的兩個標準問法</h2>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>題目問</th><th>要做的事</th><th>和 3.4 的關係</th></tr></thead>
+<tbody>
+<tr><td>生產多少利潤最大</td><td>解 $P'(x) = 0$</td><td>等於解 $R'(x) = C'(x)$：邊際收益 = 邊際成本</td></tr>
+<tr><td>生產多少平均成本最低</td><td>解 $\bar{C}'(x) = 0$</td><td>最低點剛好有 $\bar{C}(x) = C'(x)$：平均成本 = 邊際成本</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="quiz" data-answer="2">
+<p class="quiz-q">求 $f$ 在 $[0, 3]$ 的絕對極值，解 $f'(x) = 0$ 得到 $x = -\tfrac23$ 和 $x = 2$。要比較哪些函數值？</p>
+<button>$f\left(-\tfrac23\right)$、$f(2)$</button>
+<button>$f(0)$、$f(2)$、$f(3)$</button>
+<button>$f(0)$、$f\left(-\tfrac23\right)$、$f(2)$、$f(3)$</button>
+<p class="quiz-why">$-\tfrac23$ 不在 $[0, 3]$ 裡，要丟掉。候選人是兩個端點 0、3 和區間內的臨界數 2。</p>
+</div>
+
+<h2 id="examples">例題</h2>
+<p>這一節沒有指定題，下面四題是課本這一節最典型的題型。</p>
+
+<article class="prob">
+<h3>例題 1：多項式在閉區間上</h3>
+<div class="prob-q">
+<p>求 $f(x) = x^3 - 2x^2 - 4x + 4$ 在 $[0, 3]$ 上的絕對極大值與絕對極小值。</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>找臨界數</h4>
+$$f'(x) = 3x^2 - 4x - 4 = (3x + 2)(x - 2)$$
+<p>$f'(x) = 0$ 得 $x = -\tfrac23$ 或 $x = 2$。$-\tfrac23$ 不在 $[0, 3]$ 內，丟掉。只剩 $x = 2$。</p>
+</div>
+<div class="step">
+<h4>列表比大小</h4>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>$x$</th><th>身分</th><th class="n">$f(x)$</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>左端點</td><td class="n">4</td></tr>
+<tr><td>2</td><td>臨界數</td><td class="n">$8 - 8 - 8 + 4 = -4$</td></tr>
+<tr><td>3</td><td>右端點</td><td class="n">$27 - 18 - 12 + 4 = 1$</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="step">
+<h4>下結論</h4>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-0.4, 3.4], "y": [-5.5, 5.5], "h": 270,
+  "fns": [{ "f": "x^3-2*x^2-4*x+4", "color": "f", "label": "f(x) = x³ − 2x² − 4x + 4", "domain": [0, 3] }],
+  "points": [
+    { "x": 0, "y": 4, "label": "絕對極大值 (0, 4)", "pos": "tr", "color": "neg" },
+    { "x": 2, "y": -4, "label": "絕對極小值 (2, −4)", "pos": "b", "color": "pos" },
+    { "x": 3, "y": 1, "label": "(3, 1)", "pos": "tl", "color": "ink" }
+  ]
+}
+</script>
+<figcaption>最高點在左端點，不是任何山頂。只看 f′ = 0 的點會漏掉它。</figcaption>
+</figure>
+<p class="answer"><span>絕對極大值 $f(0) = 4$；絕對極小值 $f(2) = -4$。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 2：導數不存在的臨界數</h3>
+<div class="prob-q">
+<p>求 $f(x) = x^{2/3}$ 在 $[-1, 8]$ 上的絕對極大值與絕對極小值。</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>找臨界數</h4>
+$$f'(x) = \frac23 x^{-1/3} = \frac{2}{3\sqrt[3]{x}}$$
+<p>分子是 2，所以 $f'$ 永遠不會等於 0。但是 $x = 0$ 時分母為 0，$f'(0)$ <strong>不存在</strong>，而 0 在定義域裡，所以 $x = 0$ 是臨界數。</p>
+</div>
+<div class="step">
+<h4>列表比大小</h4>
+<p>$f(-1) = \left(\sqrt[3]{-1}\right)^2 = 1$　　$f(0) = 0$　　$f(8) = \left(\sqrt[3]{8}\right)^2 = 4$</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-2, 9], "y": [-0.8, 4.8], "h": 260,
+  "fns": [{ "f": "cbrt(x)^2", "color": "f", "label": "f(x) = x^(2/3)", "domain": [-1, 8] }],
+  "points": [
+    { "x": -1, "y": 1, "label": "(−1, 1)", "pos": "t", "color": "ink" },
+    { "x": 0, "y": 0, "label": "絕對極小值 (0, 0)，尖點", "pos": "br", "color": "pos" },
+    { "x": 8, "y": 4, "label": "絕對極大值 (8, 4)", "pos": "tl", "color": "neg" }
+  ]
+}
+</script>
+<figcaption>x = 0 是一個尖點，切線斜率不存在，但它確實是最低點。臨界數包含「f′ 不存在」的點就是為了抓到這種情況。</figcaption>
+</figure>
+<p class="answer"><span>絕對極大值 $f(8) = 4$；絕對極小值 $f(0) = 0$。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 3：利潤最大</h3>
+<div class="prob-q">
+<p>某公司每月生產並賣出 $x$ 組音響的利潤（美元）是</p>
+$$P(x) = -0.02x^2 + 300x - 200000 \qquad (0 \le x \le 20000)$$
+<p>每月應該生產幾組，利潤才會最大？最大利潤是多少？</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>找臨界數</h4>
+$$P'(x) = -0.04x + 300 = 0 \quad\Rightarrow\quad x = \frac{300}{0.04} = 7500$$
+</div>
+<div class="step">
+<h4>比較臨界數與端點</h4>
+<p>$P(0) = -200000$（沒賣還是要付固定成本）<br>
+$P(7500) = -0.02(7500)^2 + 300(7500) - 200000 = -1125000 + 2250000 - 200000 = 925000$<br>
+$P(20000) = -8000000 + 6000000 - 200000 = -2200000$</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 20000], "y": [-2400000, 1200000], "h": 280,
+  "xlabel": "x（組）", "ylabel": "利潤（美元）",
+  "fns": [{ "f": "-0.02*x^2+300*x-200000", "color": "f", "label": "P(x) = −0.02x² + 300x − 200,000" }],
+  "tangent": { "fn": 0 },
+  "points": [ { "x": 7500, "y": 925000, "label": "最大利潤 (7500, 925,000)", "pos": "tr", "color": "neg" } ],
+  "slider": { "label": "產量 x", "min": 0, "max": 20000, "step": 100, "value": 3000, "digits": 0,
+    "presets": [ { "label": "x = 7500", "value": 7500 } ] },
+  "readouts": [
+    { "label": "利潤 P(x)", "f": 0, "digits": 0, "color": "f" },
+    { "label": "邊際利潤 P′(x)", "d": 0, "digits": 0, "color": "d1" },
+    { "label": "建議", "d": 0, "pos": "P′ > 0，還可以增產", "neg": "P′ < 0，做太多了", "zero": "P′ = 0，利潤最大", "eps": 2 }
+  ]
+}
+</script>
+<figcaption>開口向下的拋物線，頂點就是利潤最大的產量。切線水平的地方 P′ = 0。</figcaption>
+</figure>
+<p class="answer"><span>每月生產 7500 組，最大利潤 925,000 美元。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob">
+<h3>例題 4：平均成本最低</h3>
+<div class="prob-q">
+<p>每天生產 $x$ 個產品的總成本（美元）是 $C(x) = 0.0001x^2 + 4x + 400$。每天生產幾個，平均成本最低？最低平均成本是多少？</p>
+</div>
+<div class="solution">
+<div class="step">
+<h4>先寫出平均成本</h4>
+$$\bar{C}(x) = \frac{C(x)}{x} = 0.0001x + 4 + \frac{400}{x} \qquad (x \gt 0)$$
+<p>範圍是 $(0, \infty)$，沒有端點，所以用「只有一個臨界數」的判斷。</p>
+</div>
+<div class="step">
+<h4>微分找臨界數</h4>
+$$\bar{C}'(x) = 0.0001 - \frac{400}{x^2} = 0 \quad\Rightarrow\quad x^2 = \frac{400}{0.0001} = 4000000 \quad\Rightarrow\quad x = 2000$$
+<p>$x = -2000$ 不合（產量不能是負的）。</p>
+</div>
+<div class="step">
+<h4>確認是最小</h4>
+$$\bar{C}''(x) = \frac{800}{x^3} \gt 0 \quad (x \gt 0)$$
+<p>凹向上，而且 $(0, \infty)$ 內只有這一個臨界數，所以 $x = 2000$ 給出絕對極小值。</p>
+</div>
+<div class="step">
+<h4>代回去</h4>
+$$\bar{C}(2000) = 0.0001(2000) + 4 + \frac{400}{2000} = 0.2 + 4 + 0.2 = 4.4$$
+<p>順便看邊際成本：$C'(x) = 0.0002x + 4$，$C'(2000) = 4.4$。平均成本最低的時候，剛好等於邊際成本。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 6000], "y": [3.8, 6], "h": 270,
+  "xlabel": "x（個）", "ylabel": "美元 / 個",
+  "fns": [
+    { "f": "0.0001*x+4+400/x", "color": "f", "label": "平均成本 C̄(x)", "domain": [150, 6000] },
+    { "f": "0.0002*x+4", "color": "d1", "dash": true, "label": "邊際成本 C′(x)", "toggle": true, "show": false }
+  ],
+  "points": [ { "x": 2000, "y": 4.4, "label": "最低 (2000, 4.4)", "pos": "t", "color": "pos" } ]
+}
+</script>
+<figcaption>點一下圖例把邊際成本疊上來：兩條線剛好在平均成本的最低點相交。</figcaption>
+</figure>
+<p class="answer"><span>每天生產 2000 個，最低平均成本是每個 4.4 美元。</span></p>
+</div>
+</div>
+</article>
+
+<div class="exam">
+<p>看到「在區間 $[a, b]$ 上」這幾個字，就是閉區間法：臨界數加兩個端點，列表比大小。看到應用題沒有給區間，就是解 $f' = 0$ 找唯一的臨界數，再用 $f''$ 確認。答案要同時寫出「值是多少」和「發生在哪個 $x$」。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

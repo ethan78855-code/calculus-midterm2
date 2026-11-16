@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>暖身：微分從零開始｜微積分期中考二衝刺</title>
+<meta name="description" content="從斜率開始，15 分鐘弄懂導數是什麼，以及冪次、乘法、除法、連鎖律四條微分規則。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="basics">
+<main class="page">
+
+<p class="kicker">暖身 · 考試範圍的地基</p>
+<h1>微分從零開始</h1>
+<p class="lead">這次考的 3.4 到第 5 章，每一題都要先「微分」。這一頁不在考試範圍裡，但是不會這一頁，後面全部看不懂。花 20 分鐘把它弄熟，後面會快很多。</p>
+<div data-toc></div>
+
+<h2 id="slope">先從直線的斜率開始</h2>
+<p>斜率就是「往右走 1 步，高度變多少」。往右走了 $\Delta x$，高度變了 $\Delta y$，斜率就是兩個相除：</p>
+<div class="key" data-title="斜率">
+$$\text{斜率} = \frac{\Delta y}{\Delta x} = \frac{y_2 - y_1}{x_2 - x_1}$$
+</div>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-0.5, 5], "y": [-0.5, 4.5], "h": 280,
+  "fns": [{ "f": "0.5*x+1", "color": "f", "label": "y = 0.5x + 1" }],
+  "shapes": [
+    { "type": "line", "x1": 1, "y1": 1.5, "x2": 3, "y2": 1.5, "color": "pos", "dash": true, "label": "往右 Δx = 2", "lo": [0, 18] },
+    { "type": "line", "x1": 3, "y1": 1.5, "x2": 3, "y2": 2.5, "color": "d1", "dash": true, "label": "往上 Δy = 1", "lo": [10, 4], "anchor": "start" }
+  ],
+  "points": [
+    { "x": 1, "y": 1.5, "label": "(1, 1.5)", "pos": "tl", "color": "f" },
+    { "x": 3, "y": 2.5, "label": "(3, 2.5)", "pos": "tl", "color": "f" }
+  ]
+}
+</script>
+<figcaption>往右 2、往上 1，斜率 = 1 ÷ 2 = 0.5。直線上任何兩點算出來都一樣，所以直線只有一個斜率。</figcaption>
+</figure>
+<p>斜率是正的，線往右上走；斜率是負的，線往右下走；斜率是 0，線是水平的。這三句話之後會一直用到。</p>
+
+<h2 id="tangent">曲線每一點的斜率都不一樣</h2>
+<p>曲線彎來彎去，沒辦法只用一個數字描述它的陡峭程度。做法是：想知道曲線在某一點有多陡，就看那一點的<strong>切線</strong>（剛好貼著曲線的那條直線）的斜率。</p>
+<p>切線斜率怎麼算？先在曲線上取兩個點 $P$、$Q$ 連成一條<strong>割線</strong>，然後讓 $Q$ 一直靠近 $P$。拉動下面的滑桿試試看：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-0.4, 3.3], "y": [-1.5, 9.5], "h": 320,
+  "fns": [
+    { "f": "x^2", "color": "f", "label": "f(x) = x²" },
+    { "f": "1+(2+a)*(x-1)", "color": "d1", "label": "通過 P、Q 的割線" },
+    { "f": "1+2*(x-1)", "color": "mute", "dash": true, "label": "P 點的切線", "toggle": true, "show": false }
+  ],
+  "points": [
+    { "x": 1, "y": 1, "label": "P(1, 1)", "pos": "br", "color": "ink" },
+    { "x": "1+a", "y": "(1+a)^2", "label": "Q", "pos": "tl", "color": "d1" }
+  ],
+  "slider": { "label": "P 和 Q 的水平距離 h", "min": 0.01, "max": 2, "step": 0.01, "value": 1.5, "digits": 2, "drag": false,
+    "presets": [ { "label": "h = 1", "value": 1 }, { "label": "h = 0.5", "value": 0.5 }, { "label": "h = 0.1", "value": 0.1 }, { "label": "h = 0.01", "value": 0.01 } ] },
+  "readouts": [
+    { "label": "Q 的位置", "expr": "1+a", "digits": 2, "pre": "x = " },
+    { "label": "割線斜率 Δy/Δx", "expr": "2+a", "digits": 2, "color": "d1" }
+  ]
+}
+</script>
+<figcaption>h 越小，Q 越靠近 P，割線斜率越接近 2。這個「逼近到的數字」就是曲線在 P 點的切線斜率。</figcaption>
+</figure>
+<p>用式子寫，$P$ 在 $x$，$Q$ 在 $x+h$，割線斜率是 $\dfrac{f(x+h)-f(x)}{h}$。讓 $h$ 趨近 0，就得到<strong>導數</strong>：</p>
+<div class="key" data-title="導數的定義">
+$$f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$$
+</div>
+<div class="say">
+<p>導數 $f'(x)$ 就是「曲線在 $x$ 這一點的切線斜率」。求導數這個動作叫做<strong>微分</strong>。考試不會要你用極限慢慢算，直接套下面的規則就好。</p>
+</div>
+
+<h2 id="meaning">導數告訴你三件事</h2>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>看法</th><th>$f'(x)$ 代表</th><th>哪裡會用到</th></tr></thead>
+<tbody>
+<tr><td>圖形</td><td>切線斜率</td><td>4.1–4.3 畫圖、找極值</td></tr>
+<tr><td>變化</td><td>$x$ 增加一點點時，$f$ 變化得多快（瞬間變化率）</td><td>3.6 相關變率、5.6 成長率</td></tr>
+<tr><td>商管</td><td>多做 1 單位，大約多出多少（邊際）</td><td>3.4 邊際成本、邊際收益</td></tr>
+</tbody>
+</table>
+</div>
+<p>下面這張圖可以直接拖曳。橘色切線的斜率就是 $f'(x)$：斜率是正的時候曲線在上升，負的時候在下降，等於 0 的地方剛好是山頂或谷底。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-2.4, 2.4], "y": [-4.6, 4.6], "h": 340,
+  "fns": [
+    { "f": "x^3-3*x", "color": "f", "label": "f(x) = x³ − 3x" },
+    { "f": "3*x^2-3", "color": "d1", "dash": true, "label": "f′(x) = 3x² − 3", "toggle": true, "show": false }
+  ],
+  "tangent": { "fn": 0 },
+  "slider": { "label": "x", "min": -2.2, "max": 2.2, "step": 0.01, "value": -1.6, "digits": 2, "play": true,
+    "presets": [ { "label": "跳到 x = −1（山頂）", "value": -1 }, { "label": "跳到 x = 0", "value": 0 }, { "label": "跳到 x = 1（谷底）", "value": 1 } ] },
+  "readouts": [
+    { "label": "高度 f(x)", "f": 0, "digits": 2, "color": "f" },
+    { "label": "切線斜率 f′(x)", "d": 0, "digits": 2, "color": "d1" },
+    { "label": "曲線正在", "d": 0, "pos": "上升 ↗", "neg": "下降 ↘", "zero": "水平（斜率 0）", "eps": 0.05 }
+  ]
+}
+</script>
+<figcaption>在圖上左右拖曳，或按「播放」。點一下圖例的 f′(x) 可以把導數的圖形疊上來：導數在 x 軸上方的地方，原函數就在上升。</figcaption>
+</figure>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">在上圖把 x 拖到 0，切線斜率是 −3。這代表什麼？</p>
+<button>曲線在 x = 0 的高度是 −3</button>
+<button>曲線在 x = 0 正在下降，每往右 1 單位大約掉 3 單位</button>
+<button>曲線在 x = 0 有最小值</button>
+<p class="quiz-why">導數是斜率，不是高度。斜率是負的就代表正在下降；有極值的地方斜率要是 0。</p>
+</div>
+
+<h2 id="notation">記號：同一件事有三種寫法</h2>
+<p>如果 $y = f(x)$，下面三個寫法意思完全一樣，都是「把 $y$ 對 $x$ 微分」：</p>
+$$f'(x) \qquad \frac{dy}{dx} \qquad \frac{d}{dx}\big[f(x)\big]$$
+<p>課本三種都會出現。$\dfrac{dy}{dx}$ 不是分數，把它整個當成一個符號看就好。</p>
+
+<h2 id="rules">四條基本規則</h2>
+<p>先把這張表記起來，絕大多數多項式都只需要這四條：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>規則</th><th>公式</th><th>例子</th></tr></thead>
+<tbody>
+<tr><td>常數</td><td>$\dfrac{d}{dx}(c) = 0$</td><td>$(7)' = 0$</td></tr>
+<tr><td>冪次</td><td>$\dfrac{d}{dx}(x^n) = n\,x^{n-1}$</td><td>$(x^5)' = 5x^4$</td></tr>
+<tr><td>常數倍</td><td>$\dfrac{d}{dx}\big[c\,f(x)\big] = c\,f'(x)$</td><td>$(4x^3)' = 12x^2$</td></tr>
+<tr><td>加減</td><td>$\dfrac{d}{dx}\big[f \pm g\big] = f' \pm g'$</td><td>$(x^2 + 3x)' = 2x + 3$</td></tr>
+</tbody>
+</table>
+</div>
+<div class="say">
+<p>冪次規則的口訣：<mark>次方搬下來乘，次方再減 1</mark>。$x$ 本身是 $x^1$，所以 $(x)' = 1$；常數沒有 $x$，微分是 0。</p>
+</div>
+<p><strong>例：</strong>$f(x) = 2x^3 - 5x^2 + 4x - 9$</p>
+$$f'(x) = 2\cdot 3x^2 - 5\cdot 2x + 4 - 0 = 6x^2 - 10x + 4$$
+
+<h3>根號和分數，先改寫成次方再微分</h3>
+<p>這是最常卡住的地方。看到根號或 $x$ 在分母，第一步一定是改寫：</p>
+$$\sqrt{x} = x^{1/2} \qquad \frac{1}{x} = x^{-1} \qquad \frac{1}{x^2} = x^{-2} \qquad \frac{1}{\sqrt{x}} = x^{-1/2}$$
+<p>改寫完一樣用冪次規則：</p>
+$$\frac{d}{dx}\sqrt{x} = \tfrac12 x^{-1/2} = \frac{1}{2\sqrt{x}} \qquad\qquad \frac{d}{dx}\Big(\frac{1}{x}\Big) = -x^{-2} = -\frac{1}{x^2}$$
+<p><strong>例（這次指定題會用到）：</strong>$g(x) = 2x^2 + \dfrac{4000}{x} + 10 = 2x^2 + 4000x^{-1} + 10$</p>
+$$g'(x) = 4x - 4000x^{-2} = 4x - \frac{4000}{x^2}$$
+
+<div class="quiz" data-answer="3">
+<p class="quiz-q">$f(x) = 3x^4 - \dfrac{6}{x}$，$f'(x)$ 是？</p>
+<button>$12x^3 - \dfrac{6}{x^2}$</button>
+<button>$12x^3 - 6$</button>
+<button>$12x^3 + \dfrac{6}{x^2}$</button>
+<p class="quiz-why">$-\dfrac{6}{x} = -6x^{-1}$，微分是 $-6\cdot(-1)x^{-2} = +\dfrac{6}{x^2}$。負負得正，這個正負號很容易錯。</p>
+</div>
+
+<h2 id="product">兩個函數相乘、相除</h2>
+<div class="key" data-title="乘法規則">
+$$\big[f(x)\,g(x)\big]' = f'(x)\,g(x) + f(x)\,g'(x)$$
+<p>口訣：前微後不微，加上前不微後微。</p>
+</div>
+<p><strong>例：</strong>$y = x\sqrt{x+1}$（這是指定題 4.1 #35 的函數）。前面是 $x$，後面是 $(x+1)^{1/2}$：</p>
+$$y' = \underbrace{1}_{\text{前微}}\cdot\sqrt{x+1} + x\cdot\underbrace{\frac{1}{2\sqrt{x+1}}}_{\text{後微}}$$
+
+<div class="key" data-title="除法規則">
+$$\left[\frac{f(x)}{g(x)}\right]' = \frac{f'(x)\,g(x) - f(x)\,g'(x)}{\big[g(x)\big]^2}$$
+<p>口訣：分母平方當分母；分子是「上微下不微，<strong>減</strong>上不微下微」。</p>
+</div>
+<p><strong>例：</strong>$y = \dfrac{2x}{x^2+1}$（指定題 4.2 #70）。上面 $f = 2x$，$f' = 2$；下面 $g = x^2+1$，$g' = 2x$：</p>
+$$y' = \frac{2(x^2+1) - 2x\cdot 2x}{(x^2+1)^2} = \frac{2 - 2x^2}{(x^2+1)^2}$$
+<div class="trap">
+<p>$(fg)' \ne f'g'$，$\left(\dfrac{f}{g}\right)' \ne \dfrac{f'}{g'}$。乘除不能各自微分。另外除法規則分子是<strong>減號</strong>，而且順序不能顛倒（先微上面）。</p>
+</div>
+
+<h2 id="chain">連鎖律：一層包一層的函數</h2>
+<p>像 $(2x+1)^5$、$\sqrt{16 - x^2}$ 這種「裡面還有一包東西」的函數，要用連鎖律。</p>
+<div class="key" data-title="連鎖律（一般冪次規則）">
+$$\frac{d}{dx}\big[g(x)\big]^n = n\,\big[g(x)\big]^{n-1}\cdot g'(x)$$
+<p>口訣：<mark>外面照微、裡面不動，再乘上裡面的微分</mark>。</p>
+</div>
+<div class="how" data-title="連鎖律三步驟">
+<ol>
+<li>把裡面那包東西當成一個整體（先用手遮住它）。</li>
+<li>對外層微分，裡面那包原封不動抄下來。</li>
+<li>再乘上「裡面那包」自己的微分。</li>
+</ol>
+</div>
+<p><strong>例 1：</strong>$y = (2x+1)^5$。外層是 5 次方，裡面是 $2x+1$（微分是 2）：</p>
+$$y' = 5(2x+1)^4 \cdot 2 = 10(2x+1)^4$$
+<p><strong>例 2：</strong>$y = \sqrt{16 - x^2} = (16 - x^2)^{1/2}$（指定題 4.1 #34）。裡面是 $16 - x^2$（微分是 $-2x$）：</p>
+$$y' = \tfrac12 (16 - x^2)^{-1/2}\cdot(-2x) = \frac{-x}{\sqrt{16 - x^2}}$$
+<p><strong>例 3：</strong>$y = \dfrac{90.7}{0.01t^2 + 0.01t + 1} = 90.7\,(0.01t^2 + 0.01t + 1)^{-1}$（指定題 4.1 #89）。分子是常數時，改寫成 $-1$ 次方用連鎖律比除法規則快：</p>
+$$y' = -90.7\,(0.01t^2 + 0.01t + 1)^{-2}\cdot(0.02t + 0.01)$$
+
+<div class="trap">
+<p>最常見的失分：忘記乘「裡面的微分」。$\big[(2x+1)^5\big]'$ 寫成 $5(2x+1)^4$ 就少了後面的 $\times 2$。</p>
+</div>
+
+<div class="quiz" data-answer="1">
+<p class="quiz-q">$y = (x^2 + 3)^4$，$\dfrac{dy}{dx}$ 是？</p>
+<button>$8x\,(x^2+3)^3$</button>
+<button>$4(x^2+3)^3$</button>
+<button>$4(2x)^3$</button>
+<p class="quiz-why">外層：$4(x^2+3)^3$。裡面 $x^2+3$ 的微分是 $2x$。相乘得到 $8x(x^2+3)^3$。</p>
+</div>
+
+<div class="quiz" data-answer="2">
+<p class="quiz-q">$y = \sqrt{3x + 1}$，$y'$ 是？</p>
+<button>$\dfrac{1}{2\sqrt{3x+1}}$</button>
+<button>$\dfrac{3}{2\sqrt{3x+1}}$</button>
+<button>$\dfrac{3}{\sqrt{3x+1}}$</button>
+<p class="quiz-why">$(3x+1)^{1/2}$ 微分：$\tfrac12(3x+1)^{-1/2}\times 3$。裡面 $3x+1$ 的微分是 3，要乘上去。</p>
+</div>
+
+<h2 id="check">過關檢查</h2>
+<p>下面每一題都能在 30 秒內寫出來，就可以進 3.4 了。先自己算，再點開看答案。</p>
+<details class="peek"><summary>$f(x) = 0.000002x^3 - 0.03x^2 + 400x + 80000$，求 $f'(x)$</summary>
+<p>$f'(x) = 0.000006x^2 - 0.06x + 400$。小數看起來可怕，規則完全一樣：次方搬下來乘、次方減 1。這是 3.4 #13 的成本函數。</p>
+</details>
+<details class="peek"><summary>$f(x) = \dfrac{80000}{x}$，求 $f'(x)$</summary>
+<p>$80000x^{-1}$ 微分得 $-80000x^{-2} = -\dfrac{80000}{x^2}$。</p>
+</details>
+<details class="peek"><summary>$g(t) = \left(\tfrac12 t^2 - 1\right)^5$，求 $g'(t)$</summary>
+<p>連鎖律：$5\left(\tfrac12 t^2 - 1\right)^4\cdot t = 5t\left(\tfrac12 t^2 - 1\right)^4$。裡面 $\tfrac12 t^2 - 1$ 的微分是 $t$。這是 3.5 #28 的第一步。</p>
+</details>
+<details class="peek"><summary>$f(x) = \dfrac{x^2 - 9}{x^2 - 4}$，求 $f'(x)$</summary>
+<p>除法規則：$\dfrac{2x(x^2-4) - (x^2-9)(2x)}{(x^2-4)^2} = \dfrac{10x}{(x^2-4)^2}$。這是 4.3 #56 會用到的。</p>
+</details>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

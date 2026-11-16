@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3.4 邊際函數與需求彈性｜微積分期中考二衝刺</title>
+<meta name="description" content="邊際成本、邊際收益、邊際利潤、平均成本與需求彈性，含指定題 3.4 #13、#15、#37 逐步解答。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="s34">
+<main class="page">
+
+<p class="kicker">第 3 章 · Section 3.4</p>
+<h1>邊際函數與需求彈性</h1>
+<p class="lead">這一節沒有新的微分技巧，只是把「導數」換成商管的說法：<strong>邊際 = 微分</strong>。會微分多項式，再記住五個名詞和一條彈性公式，這一節就拿下了。</p>
+<div data-toc></div>
+
+<h2 id="cast">先認識四個主角</h2>
+<p>題目一定是一家公司在賣東西。$x$ 是賣出（生產）的數量，$p$ 是每一個的單價。</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>名稱</th><th>記號</th><th>怎麼來的</th></tr></thead>
+<tbody>
+<tr><td>需求方程式</td><td>$p = f(x)$</td><td>題目給。價格越低賣越多，所以通常是遞減的</td></tr>
+<tr><td>成本函數</td><td>$C(x)$</td><td>題目給。做 $x$ 個總共要花多少</td></tr>
+<tr><td>收益函數</td><td>$R(x) = p\cdot x$</td><td>單價 × 數量，把 $p$ 換成需求方程式</td></tr>
+<tr><td>利潤函數</td><td>$P(x) = R(x) - C(x)$</td><td>收益 − 成本</td></tr>
+</tbody>
+</table>
+</div>
+<div class="trap">
+<p>$R(x)$ 是「收益」不是「利潤」。小寫 $p$ 是單價，大寫 $P$ 是利潤，寫的時候大小寫要分清楚。</p>
+</div>
+
+<h2 id="mc">邊際成本就是 C′(x)</h2>
+<div class="say">
+<p>「邊際成本」問的是：現在已經做了 $x$ 個，<mark>再多做 1 個，大約要多花多少錢</mark>？</p>
+</div>
+<p>真正多花的錢是 $C(x+1) - C(x)$，但這樣算很麻煩。因為「多 1 個」相對整個產量很小，直接用切線斜率 $C'(x)$ 來估就很準：</p>
+<div class="key" data-title="邊際成本">
+$$C'(x) \approx C(x+1) - C(x) = \text{第 } x+1 \text{ 個的實際成本}$$
+</div>
+<p>拖曳下面的圖，比較兩個數字有多接近（這是指定題 #13 的成本函數）：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 12000], "y": [0, 4500000], "h": 320,
+  "xlabel": "產量 x（台）", "ylabel": "總成本 C(x)（美元）",
+  "fns": [{ "f": "0.000002*x^3-0.03*x^2+400*x+80000", "color": "f", "label": "C(x) = 0.000002x³ − 0.03x² + 400x + 80,000" }],
+  "tangent": { "fn": 0 },
+  "slider": { "label": "產量 x", "min": 500, "max": 11500, "step": 50, "value": 2000, "digits": 0, "play": true,
+    "presets": [ { "label": "x = 2000", "value": 2000 }, { "label": "x = 5000", "value": 5000 }, { "label": "x = 10000", "value": 10000 } ] },
+  "readouts": [
+    { "label": "邊際成本 C′(x)", "d": 0, "digits": 2, "color": "d1" },
+    { "label": "實際多做 1 台 C(x+1) − C(x)", "expr": "0.000002*((a+1)^3-a^3)-0.03*((a+1)^2-a^2)+400", "digits": 2 }
+  ]
+}
+</script>
+<figcaption>橘色切線的斜率就是邊際成本。x = 2000 時 C′ = 304，實際做第 2001 台多花 303.98，幾乎一樣。所以考試直接微分就好。</figcaption>
+</figure>
+
+<h2 id="mr">邊際收益與邊際利潤</h2>
+<p>同樣的想法套到收益和利潤上：</p>
+<div class="key" data-title="三個邊際函數">
+<p>邊際成本 $C'(x)$：多做 1 個，成本大約增加多少<br>
+邊際收益 $R'(x)$：多賣 1 個，收益大約增加多少<br>
+邊際利潤 $P'(x) = R'(x) - C'(x)$：多賣 1 個，利潤大約增加多少</p>
+</div>
+<p>邊際利潤的正負號直接告訴老闆該怎麼做：</p>
+<ul>
+<li>$P'(x) \gt 0$：多賣 1 個利潤還會增加，值得<strong>增產</strong>。</li>
+<li>$P'(x) \lt 0$：多賣 1 個利潤反而減少，應該<strong>減產</strong>。</li>
+<li>$P'(x) = 0$：也就是 $R'(x) = C'(x)$，利潤在這裡達到最高點（4.4 節會再用到）。</li>
+</ul>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 8000], "y": [-400000, 2600000], "h": 340,
+  "xlabel": "x（台）", "ylabel": "美元",
+  "fns": [
+    { "f": "600*x-0.05*x^2", "color": "pos", "label": "收益 R(x)", "toggle": true },
+    { "f": "0.000002*x^3-0.03*x^2+400*x+80000", "color": "neg", "label": "成本 C(x)", "toggle": true },
+    { "f": "-0.000002*x^3-0.02*x^2+200*x-80000", "color": "f", "label": "利潤 P(x) = R − C", "toggle": true }
+  ],
+  "tangent": { "fn": 2 },
+  "points": [ { "x": "a", "on": 0, "color": "pos" }, { "x": "a", "on": 1, "color": "neg" } ],
+  "vlines": [ { "x": "a", "color": "mute" } ],
+  "slider": { "label": "產量 x", "min": 200, "max": 7800, "step": 20, "value": 2000, "digits": 0, "play": true,
+    "presets": [ { "label": "x = 2000（題目問的）", "value": 2000 }, { "label": "利潤最高點", "value": 3340 }, { "label": "x = 6000", "value": 6000 } ] },
+  "readouts": [
+    { "label": "R′(x)", "d": 0, "digits": 0, "color": "pos" },
+    { "label": "C′(x)", "d": 1, "digits": 0, "color": "neg" },
+    { "label": "P′(x) = R′ − C′", "d": 2, "digits": 0, "color": "f" },
+    { "label": "建議", "d": 2, "pos": "P′ > 0，增產會更賺", "neg": "P′ < 0，做太多了", "zero": "P′ ≈ 0，利潤最大", "eps": 1.5 }
+  ]
+}
+</script>
+<figcaption>橘色切線貼在利潤曲線上。綠線和紅線的垂直距離就是利潤；兩條線「一樣陡」（R′ = C′）的地方，利潤最大。</figcaption>
+</figure>
+
+<div class="quiz" data-answer="1">
+<p class="quiz-q">某公司在產量 500 時，邊際收益是每單位 3 美元，邊際成本是每單位 2.8 美元。應該增產嗎？</p>
+<button>應該。多做 1 單位大約多賺 0.2 美元</button>
+<button>不應該。成本已經太高</button>
+<button>無法判斷，還要知道總利潤</button>
+<p class="quiz-why">邊際利潤 $P' = R' - C' = 3 - 2.8 = 0.2 \gt 0$，再多做一點利潤還會增加。這是課本 3.4 的觀念題。</p>
+</div>
+
+<h2 id="avg">平均成本與邊際平均成本</h2>
+<div class="key" data-title="平均成本">
+$$\bar{C}(x) = \frac{C(x)}{x} \qquad\text{（每一個平均攤到多少成本）}$$
+<p><strong>邊際平均成本</strong>就是把平均成本再微分一次：$\bar{C}'(x)$。</p>
+</div>
+<div class="trap">
+<p>「邊際成本 $C'(x)$」和「邊際平均成本 $\bar{C}'(x)$」是兩個不同的東西。看到<strong>平均</strong>兩個字，要<mark>先除以 $x$，再微分</mark>，順序不能反過來。</p>
+</div>
+<p>$\bar{C}'(x)$ 的正負號代表：繼續增產，平均每個的成本是在下降（負）還是上升（正）。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 16000], "y": [250, 650], "h": 300,
+  "xlabel": "x（台）", "ylabel": "平均成本（美元 / 台）",
+  "fns": [{ "f": "0.000002*x^2-0.03*x+400+80000/x", "color": "f", "label": "平均成本 C̄(x)", "domain": [300, 16000] }],
+  "tangent": { "fn": 0 },
+  "slider": { "label": "產量 x", "min": 1000, "max": 15500, "step": 50, "value": 5000, "digits": 0,
+    "presets": [ { "label": "x = 5000", "value": 5000 }, { "label": "最低點附近", "value": 7850 }, { "label": "x = 10000", "value": 10000 } ] },
+  "readouts": [
+    { "label": "平均成本 C̄(x)", "f": 0, "digits": 2, "color": "f" },
+    { "label": "邊際平均成本 C̄′(x)", "d": 0, "digits": 4, "color": "d1" },
+    { "label": "平均成本正在", "d": 0, "pos": "上升 ↗", "neg": "下降 ↘", "zero": "最低點", "eps": 0.0004 }
+  ]
+}
+</script>
+<figcaption>指定題 #15 的平均成本曲線。先降後升：產量小時固定成本被攤薄，產量太大時成本又上來。</figcaption>
+</figure>
+
+<h2 id="elastic">需求彈性 E(p)</h2>
+<div class="say">
+<p>彈性問的是：<mark>價格漲 1%，需求量會掉大約百分之幾</mark>？掉超過 1% 叫「有彈性」（客人很敏感），掉不到 1% 叫「無彈性」（客人不太在意）。</p>
+</div>
+<p>算彈性時，需求方程式要寫成「數量是價格的函數」$x = f(p)$（跟前面 $p = f(x)$ 反過來）。</p>
+<div class="key" data-title="需求彈性">
+$$E(p) = -\,\frac{p\,f'(p)}{f(p)}$$
+<p>$E(p) \gt 1$：有彈性（elastic）　　$E(p) = 1$：單一彈性（unitary）　　$E(p) \lt 1$：無彈性（inelastic）</p>
+</div>
+<p>因為 $f'(p)$ 是負的（越貴賣越少），前面那個負號是為了讓 $E$ 變成正數。</p>
+<h3>彈性和收益的關係（必考）</h3>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>需求</th><th>條件</th><th>價格調漲一點</th><th>價格調降一點</th></tr></thead>
+<tbody>
+<tr><td>有彈性</td><td>$E(p) \gt 1$</td><td class="c-neg">收益減少</td><td class="c-pos">收益增加</td></tr>
+<tr><td>無彈性</td><td>$E(p) \lt 1$</td><td class="c-pos">收益增加</td><td class="c-neg">收益減少</td></tr>
+<tr><td>單一彈性</td><td>$E(p) = 1$</td><td colspan="2">收益幾乎不變（此時收益最大）</td></tr>
+</tbody>
+</table>
+</div>
+<p>記法：<strong>有彈性時，價格和收益反方向走；無彈性時，同方向走。</strong>下面是指定題 #37 的需求，拖曳價格看看收益怎麼變：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 6], "y": [0, 14], "h": 320,
+  "xlabel": "租金 p（美元）", "ylabel": "收益 R = p · x（千美元）",
+  "fns": [{ "f": "x*(2/3)*sqrt(36-x^2)", "color": "pos", "label": "收益 R(p) = p · (2/3)√(36 − p²)" }],
+  "points": [ { "x": "a", "on": 0, "color": "pos" } ],
+  "vlines": [ { "x": 4.243, "label": "E = 1", "color": "mute" } ],
+  "shapes": [
+    { "type": "text", "x": 2.1, "y": 1.2, "t": "無彈性 E < 1：漲價 → 收益上升", "color": "pos", "size": 12 },
+    { "type": "text", "x": 5.15, "y": 12.9, "t": "有彈性 E > 1", "color": "neg", "size": 12 }
+  ],
+  "slider": { "label": "租金 p", "min": 0.2, "max": 5.9, "step": 0.01, "value": 2, "digits": 2,
+    "presets": [ { "label": "p = 2（題目問的）", "value": 2 }, { "label": "p = 4.24（E = 1）", "value": 4.243 }, { "label": "p = 5", "value": 5 } ] },
+  "readouts": [
+    { "label": "需求量 x（千片）", "expr": "(2/3)*sqrt(36-a^2)", "digits": 2 },
+    { "label": "彈性 E(p) = p²/(36 − p²)", "expr": "a^2/(36-a^2)", "digits": 3, "color": "d1" },
+    { "label": "判斷", "expr": "a^2/(36-a^2)-1", "pos": "有彈性：再漲價收益會下降", "neg": "無彈性：再漲價收益會上升", "zero": "單一彈性：收益最大", "eps": 0.02 }
+  ]
+}
+</script>
+<figcaption>收益曲線的山頂剛好在 E = 1。山頂左邊（E &lt; 1）漲價會往上爬，右邊（E &gt; 1）漲價會往下掉。</figcaption>
+</figure>
+
+<div class="how" data-title="彈性題的固定步驟">
+<ol>
+<li>把需求方程式整理成 $x = f(p)$。</li>
+<li>微分求 $f'(p)$。</li>
+<li>代公式 $E(p) = -\dfrac{p\,f'(p)}{f(p)}$ 並化簡。</li>
+<li>把題目的 $p$ 代進去，跟 1 比大小，下結論。</li>
+</ol>
+</div>
+<p><strong>暖身例題：</strong>需求方程式 $x = -\tfrac54 p + 20$，求 $p = 10$ 時的彈性。</p>
+<p>$f(p) = -\tfrac54 p + 20$，$f'(p) = -\tfrac54$，所以</p>
+$$E(p) = -\frac{p\cdot\left(-\tfrac54\right)}{-\tfrac54 p + 20} = \frac{\tfrac54 p}{20 - \tfrac54 p} \qquad E(10) = \frac{12.5}{7.5} = \frac53 \gt 1$$
+<p>所以 $p = 10$ 時需求<strong>有彈性</strong>。</p>
+
+<div class="quiz" data-answer="2">
+<p class="quiz-q">某商品在目前價格下 $E(p) = 0.4$。老闆想增加收益，應該？</p>
+<button>降價，因為會賣更多</button>
+<button>漲價，因為需求無彈性，客人流失得不多</button>
+<button>價格不要動，收益已經最大</button>
+<p class="quiz-why">$E \lt 1$ 是無彈性，價格和收益同方向：漲價收益增加。收益最大是在 $E = 1$。</p>
+</div>
+
+<h2 id="problems">指定題</h2>
+<p>先自己動手算，卡住再一步一步打開解答。</p>
+
+<article class="prob" data-prob="3.4-13">
+<h3>LED 電視的邊際成本、收益、利潤</h3>
+<div class="prob-q">
+<p>某款 LED 電視每週的需求方程式為 $p = 600 - 0.05x$（$0 \le x \le 12000$），$p$ 是批發單價（美元），$x$ 是需求量。每週生產 $x$ 台的總成本為</p>
+$$C(x) = 0.000002x^3 - 0.03x^2 + 400x + 80000$$
+<p>(a) 求收益函數 $R$ 與利潤函數 $P$。<br>(b) 求邊際成本 $C'$、邊際收益 $R'$、邊際利潤 $P'$。<br>(c) 計算 $C'(2000)$、$R'(2000)$、$P'(2000)$ 並解釋。<br>(d) 畫出 $C$、$R$、$P$ 的圖形，並用圖形解釋 (b)(c)。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>收益 = 單價 × 數量，把 $p$ 換成 $600 - 0.05x$。利潤 = 收益 − 成本，減的時候成本要整個括起來，每一項都要變號。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>(a) 收益函數</h4>
+$$R(x) = p\cdot x = (600 - 0.05x)\,x = 600x - 0.05x^2$$
+</div>
+<div class="step">
+<h4>(a) 利潤函數</h4>
+$$\begin{aligned}P(x) &= R(x) - C(x)\\ &= 600x - 0.05x^2 - \left(0.000002x^3 - 0.03x^2 + 400x + 80000\right)\\ &= -0.000002x^3 - 0.02x^2 + 200x - 80000\end{aligned}$$
+<p>注意 $-0.05x^2 - (-0.03x^2) = -0.02x^2$，以及 $600x - 400x = 200x$。</p>
+</div>
+<div class="step">
+<h4>(b) 三個都微分</h4>
+$$\begin{aligned}C'(x) &= 0.000006x^2 - 0.06x + 400\\ R'(x) &= 600 - 0.1x\\ P'(x) &= -0.000006x^2 - 0.04x + 200\end{aligned}$$
+<p>檢查：$P' = R' - C'$ 應該成立。$600 - 400 = 200$ ✓，$-0.1x + 0.06x = -0.04x$ ✓。</p>
+</div>
+<div class="step">
+<h4>(c) 代入 x = 2000</h4>
+<p>先算 $2000^2 = 4{,}000{,}000$，所以 $0.000006 \times 4{,}000{,}000 = 24$。</p>
+$$\begin{aligned}C'(2000) &= 24 - 120 + 400 = 304\\ R'(2000) &= 600 - 200 = 400\\ P'(2000) &= -24 - 80 + 200 = 96\end{aligned}$$
+<p>解釋：產量已經是 2000 台時，再多做 1 台（第 2001 台）成本大約增加 304 美元，收益大約增加 400 美元，所以利潤大約增加 96 美元。</p>
+</div>
+<div class="step">
+<h4>(d) 圖形</h4>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 8000], "y": [-400000, 2600000], "h": 300,
+  "xlabel": "x（台）", "ylabel": "美元",
+  "fns": [
+    { "f": "600*x-0.05*x^2", "color": "pos", "label": "R(x)" },
+    { "f": "0.000002*x^3-0.03*x^2+400*x+80000", "color": "neg", "label": "C(x)" },
+    { "f": "-0.000002*x^3-0.02*x^2+200*x-80000", "color": "f", "label": "P(x)" }
+  ],
+  "vlines": [ { "x": 2000, "label": "x = 2000", "color": "mute" } ],
+  "points": [
+    { "x": 2000, "on": 0, "color": "pos", "label": "斜率 400", "pos": "tl" },
+    { "x": 2000, "on": 1, "color": "neg", "label": "斜率 304", "pos": "br" },
+    { "x": 2000, "on": 2, "color": "f", "label": "斜率 96", "pos": "br" }
+  ]
+}
+</script>
+<figcaption>在 x = 2000，三條曲線都在上升（斜率都是正的）。R 比 C 陡，所以兩線的差距（利潤）還在擴大，這就是 P′(2000) = 96 &gt; 0 的意思。</figcaption>
+</figure>
+<p class="answer"><span>$R(x) = 600x - 0.05x^2$，$P(x) = -0.000002x^3 - 0.02x^2 + 200x - 80000$；$C'(2000) = 304$，$R'(2000) = 400$，$P'(2000) = 96$。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="3.4-15">
+<h3>LED 電視的邊際平均成本</h3>
+<div class="prob-q">
+<p>沿用 #13 的成本函數 $C(x) = 0.000002x^3 - 0.03x^2 + 400x + 80000$。</p>
+<p>(a) 求平均成本函數 $\bar{C}$。<br>(b) 求邊際平均成本函數 $\bar{C}'$。<br>(c) 計算 $\bar{C}'(5000)$ 與 $\bar{C}'(10000)$ 並解釋。<br>(d) 畫出 $\bar{C}$ 的圖形。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>先把 $C(x)$ 每一項都除以 $x$，最後一項會變成 $\dfrac{80000}{x} = 80000x^{-1}$，再微分。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>(a) 每一項除以 x</h4>
+$$\bar{C}(x) = \frac{C(x)}{x} = 0.000002x^2 - 0.03x + 400 + \frac{80000}{x}$$
+</div>
+<div class="step">
+<h4>(b) 微分</h4>
+<p>$\dfrac{80000}{x} = 80000x^{-1}$，微分是 $-80000x^{-2}$：</p>
+$$\bar{C}'(x) = 0.000004x - 0.03 - \frac{80000}{x^2}$$
+</div>
+<div class="step">
+<h4>(c) 代入</h4>
+$$\begin{aligned}\bar{C}'(5000) &= 0.02 - 0.03 - \frac{80000}{25{,}000{,}000} = -0.01 - 0.0032 = -0.0132\\[4pt] \bar{C}'(10000) &= 0.04 - 0.03 - \frac{80000}{100{,}000{,}000} = 0.01 - 0.0008 = 0.0092\end{aligned}$$
+<p>解釋：產量 5000 台時邊際平均成本是負的，表示再增產，平均每台成本還在<strong>下降</strong>；產量 10000 台時是正的，表示再增產，平均每台成本會<strong>上升</strong>。</p>
+</div>
+<div class="step">
+<h4>(d) 圖形</h4>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 20000], "y": [200, 700], "h": 280,
+  "xlabel": "x（台）", "ylabel": "美元 / 台",
+  "fns": [{ "f": "0.000002*x^2-0.03*x+400+80000/x", "color": "f", "label": "C̄(x)", "domain": [250, 20000] }],
+  "points": [
+    { "x": 5000, "on": 0, "color": "neg", "label": "斜率 −0.0132（下降中）", "pos": "tr" },
+    { "x": 10000, "on": 0, "color": "pos", "label": "斜率 0.0092（上升中）", "pos": "br" }
+  ]
+}
+</script>
+<figcaption>平均成本先降後升，最低點大約在 x ≈ 7800 台附近。</figcaption>
+</figure>
+<p class="answer"><span>$\bar{C}(x) = 0.000002x^2 - 0.03x + 400 + \dfrac{80000}{x}$；$\bar{C}'(x) = 0.000004x - 0.03 - \dfrac{80000}{x^2}$；$\bar{C}'(5000) = -0.0132$，$\bar{C}'(10000) = 0.0092$。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="3.4-37">
+<h3>DVD 出租的需求彈性</h3>
+<div class="prob-q">
+<p>影片出租店估計，DVD 租金 $p$（美元）和每天出租量 $x$（千片）的關係是</p>
+$$x = \frac23\sqrt{36 - p^2} \qquad (0 \le p \le 6)$$
+<p>目前租金是每片 2 美元。</p>
+<p>(a) 在這個價格下，需求是有彈性還是無彈性？<br>(b) 如果調漲租金，收益會增加還是減少？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>$f(p) = \tfrac23(36 - p^2)^{1/2}$，用連鎖律微分。裡面 $36 - p^2$ 的微分是 $-2p$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>微分 f(p)</h4>
+$$f'(p) = \frac23\cdot\frac12(36 - p^2)^{-1/2}\cdot(-2p) = \frac{-2p}{3\sqrt{36 - p^2}}$$
+</div>
+<div class="step">
+<h4>代彈性公式並化簡</h4>
+$$E(p) = -\frac{p\,f'(p)}{f(p)} = \frac{p\cdot\dfrac{2p}{3\sqrt{36 - p^2}}}{\dfrac23\sqrt{36 - p^2}} = \frac{2p^2}{3\sqrt{36-p^2}}\cdot\frac{3}{2\sqrt{36-p^2}} = \frac{p^2}{36 - p^2}$$
+<p>兩個根號相乘剛好變成 $36 - p^2$，$\tfrac23$ 也約掉了。</p>
+</div>
+<div class="step">
+<h4>(a) 代入 p = 2</h4>
+$$E(2) = \frac{4}{36 - 4} = \frac{4}{32} = \frac18 = 0.125 \lt 1$$
+<p>所以需求<strong>無彈性</strong>。</p>
+</div>
+<div class="step">
+<h4>(b) 判斷收益</h4>
+<p>無彈性時，價格和收益同方向變動。調漲租金，出租量只會少一點點，收益會<strong>增加</strong>。</p>
+<p class="answer"><span>(a) $E(2) = \tfrac18 \lt 1$，無彈性。(b) 調漲租金，收益增加。</span></p>
+</div>
+</div>
+</article>
+
+<div class="exam">
+<p>這一節的題目有固定句型。算完 $C'(2000) = 304$ 之後，一定要補一句解釋：「生產第 2001 台的成本大約是 304 美元」。彈性題最後也要寫出「有彈性／無彈性」和「收益增加／減少」的結論，只寫數字會被扣分。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

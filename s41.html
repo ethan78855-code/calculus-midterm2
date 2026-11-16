@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.1 一階導數：遞增遞減與相對極值｜微積分期中考二衝刺</title>
+<meta name="description" content="用 f′ 的正負號判斷遞增遞減、找臨界數、用一階導數檢定法找相對極值，含指定題 4.1 #34、#35、#71、#84、#89 逐步解答。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="s41">
+<main class="page">
+
+<p class="kicker">第 4 章 · Section 4.1</p>
+<h1>一階導數：遞增遞減與相對極值</h1>
+<p class="lead">第 4 章開始用導數「看圖」。這一節只用一階導數 $f'$，回答兩個問題：函數在哪裡上升、哪裡下降？山頂和谷底在哪裡？整套做法就是<strong>微分、找分段點、畫符號圖</strong>，每一題都一樣。</p>
+<div data-toc></div>
+
+<h2 id="incdec">遞增、遞減看 f′ 的正負號</h2>
+<p>由左往右看圖形：往上爬叫<strong>遞增</strong>，往下走叫<strong>遞減</strong>。暖身頁說過 $f'(x)$ 是切線斜率，斜率是正的線往右上走，所以：</p>
+<div class="key" data-title="用 f′ 判斷遞增遞減">
+<p>在一個區間裡每一點都 $f'(x) \gt 0$：$f$ 在這個區間<strong class="c-pos">遞增</strong><br>
+在一個區間裡每一點都 $f'(x) \lt 0$：$f$ 在這個區間<strong class="c-neg">遞減</strong><br>
+在一個區間裡每一點都 $f'(x) = 0$：$f$ 在這個區間是常數（水平線）</p>
+</div>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-5, 7], "y": [-75, 85], "h": 340,
+  "fns": [
+    { "f": "x^3-3*x^2-24*x+32", "color": "f", "label": "f(x) = x³ − 3x² − 24x + 32" },
+    { "f": "3*x^2-6*x-24", "color": "d1", "dash": true, "label": "f′(x) = 3x² − 6x − 24", "toggle": true, "show": false }
+  ],
+  "tangent": { "fn": 0 },
+  "slider": { "label": "x", "min": -4.6, "max": 6.6, "step": 0.02, "value": -3.5, "digits": 2, "play": true,
+    "presets": [ { "label": "x = −2（山頂）", "value": -2 }, { "label": "x = 1", "value": 1 }, { "label": "x = 4（谷底）", "value": 4 } ] },
+  "readouts": [
+    { "label": "f(x)", "expr": "a^3-3*a^2-24*a+32", "digits": 1, "color": "f" },
+    { "label": "切線斜率 f′(x)", "expr": "3*a^2-6*a-24", "digits": 1, "color": "d1" },
+    { "label": "函數正在", "expr": "3*a^2-6*a-24", "pos": "遞增 ↗（f′ > 0）", "neg": "遞減 ↘（f′ < 0）", "zero": "水平（f′ = 0）", "eps": 0.4 }
+  ]
+}
+</script>
+<figcaption>左右拖曳或按播放。x 小於 −2 時斜率是正的；−2 到 4 之間是負的；超過 4 又變正。點圖例把 f′ 疊上來：f′ 在 x 軸上方的範圍，就是 f 遞增的範圍。</figcaption>
+</figure>
+<p>所以「找遞增遞減區間」這件事，變成<strong>「找 $f'$ 在哪裡是正的、哪裡是負的」</strong>。</p>
+
+<h2 id="steps">找遞增遞減區間的四步驟</h2>
+<div class="say">
+<p>$f'$ 要從正變成負，中間一定要經過 0，或是在某個點斷掉（不存在）。所以只要把這些點找出來，它們就把數線切成幾段，<mark>每一段裡面 $f'$ 的正負號不會變</mark>，挑一個點代進去就知道整段的符號。</p>
+</div>
+<div class="how" data-title="遞增遞減區間">
+<ol>
+<li>先寫出 $f$ 的定義域（根號裡面要 $\ge 0$、分母不能是 0）。</li>
+<li>求 $f'(x)$，盡量因式分解或通分成一個分式。</li>
+<li>找出所有讓 $f'(x) = 0$ 或 $f'(x)$ 不存在的 $x$，標在數線上。</li>
+<li>每一段挑一個<strong>測試點</strong>代入 $f'$，看正負，畫出符號圖，寫結論。</li>
+</ol>
+</div>
+<p><strong>例 1：</strong>$f(x) = x^3 - 3x^2 - 24x + 32$（上面那張圖）。</p>
+$$f'(x) = 3x^2 - 6x - 24 = 3(x^2 - 2x - 8) = 3(x + 2)(x - 4)$$
+<p>$f'(x) = 0$ 的地方是 $x = -2$ 和 $x = 4$，數線被切成三段。每段挑一個好算的數字：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>區間</th><th>測試點</th><th>$f'$ 的值</th><th>符號</th><th>結論</th></tr></thead>
+<tbody>
+<tr><td>$(-\infty, -2)$</td><td>$x = -3$</td><td>$3(-1)(-7) = 21$</td><td class="c-pos">＋</td><td>遞增</td></tr>
+<tr><td>$(-2, 4)$</td><td>$x = 0$</td><td>$3(2)(-4) = -24$</td><td class="c-neg">－</td><td>遞減</td></tr>
+<tr><td>$(4, \infty)$</td><td>$x = 5$</td><td>$3(7)(1) = 21$</td><td class="c-pos">＋</td><td>遞增</td></tr>
+</tbody>
+</table>
+</div>
+<p>把結果畫成<strong>符號圖</strong>。考試時畫這張圖就等於把過程交代清楚了：</p>
+<div class="signline" data-label="f′(x)" data-marks="-2=0, 4=0" data-signs="+ - +" data-kind="mono"></div>
+<p>結論：$f$ 在 $(-\infty, -2)$ 和 $(4, \infty)$ 遞增，在 $(-2, 4)$ 遞減。</p>
+
+<p><strong>例 2（有分母）：</strong>$f(x) = x + \dfrac1x$。定義域是 $x \ne 0$。</p>
+$$f'(x) = 1 - \frac{1}{x^2} = \frac{x^2 - 1}{x^2} = \frac{(x+1)(x-1)}{x^2}$$
+<p>$f'(x) = 0$ 在 $x = \pm 1$；$f'$ 在 $x = 0$ 不存在。<strong>三個點都要標</strong>，數線切成四段。分母 $x^2$ 永遠是正的，所以只要看分子 $(x+1)(x-1)$ 的正負：</p>
+<div class="signline" data-label="f′(x)" data-marks="-1=0, 0=x, 1=0" data-signs="+ - - +" data-kind="mono"></div>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-4, 4], "y": [-6, 6], "h": 300,
+  "fns": [{ "f": "x+1/x", "color": "f", "label": "f(x) = x + 1/x" }],
+  "vlines": [ { "x": 0, "label": "x = 0 沒有定義", "color": "neg", "low": true } ],
+  "points": [
+    { "x": -1, "y": -2, "label": "(−1, −2)", "pos": "t", "color": "ink" },
+    { "x": 1, "y": 2, "label": "(1, 2)", "pos": "b", "color": "ink" }
+  ]
+}
+</script>
+<figcaption>在 (−∞, −1) 和 (1, ∞) 遞增，在 (−1, 0) 和 (0, 1) 遞減。x = 0 的地方圖形斷開，所以遞減區間要分成兩段寫，不能寫成 (−1, 1)。</figcaption>
+</figure>
+<div class="trap">
+<p>分母等於 0、根號裡面小於 0 的地方，函數根本不存在。這些點雖然不是 $f' = 0$，<strong>畫符號圖時一樣要標上去</strong>，寫區間時也要把它們挖掉。</p>
+</div>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">已知 $f'(x) = (x - 1)(x + 3)$。$f$ 在哪個區間遞減？</p>
+<button>$(-\infty, -3)$</button>
+<button>$(-3, 1)$</button>
+<button>$(1, \infty)$</button>
+<p class="quiz-why">分段點是 $-3$ 和 $1$。中間挑 $x = 0$：$f'(0) = (-1)(3) = -3 \lt 0$，所以在 $(-3, 1)$ 遞減。兩邊各代一個點都是正的。</p>
+</div>
+
+<h2 id="extrema">相對極大值與相對極小值</h2>
+<div class="say">
+<p><strong>相對極大值</strong>是「山頂」：跟<mark>附近</mark>的點比，它最高。<strong>相對極小值</strong>是「谷底」：跟附近的點比，它最低。重點是「附近」，不必是整條曲線的最高或最低。</p>
+</div>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-2.2, 3.2], "y": [-3, 3.6], "h": 320,
+  "fns": [{ "f": "-x^4/4+x^3/3+x^2", "color": "f", "label": "f(x) = −x⁴/4 + x³/3 + x²" }],
+  "points": [
+    { "x": -1, "y": 0.4167, "label": "相對極大（小山頂）", "pos": "t", "color": "pos" },
+    { "x": 0, "y": 0, "label": "相對極小（谷底）", "pos": "b", "color": "neg" },
+    { "x": 2, "y": 2.6667, "label": "相對極大（大山頂）", "pos": "t", "color": "pos" }
+  ]
+}
+</script>
+<figcaption>x = −1 的小山頂比右邊那座矮很多，但它比自己附近的點都高，所以一樣是相對極大值。一個函數可以有很多個相對極值。</figcaption>
+</figure>
+<p>說法要精確：「$f$ 在 $x = 2$ 有相對極大值 $f(2) = \tfrac83$」。<strong>極值是 $y$ 的值</strong>，$x = 2$ 是它發生的位置。</p>
+<p>看上圖，山頂和谷底的切線都是水平的，也就是 $f' = 0$。這給了我們找極值的線索。</p>
+
+<h2 id="critical">臨界數：極值的候選名單</h2>
+<div class="key" data-title="臨界數">
+<p>$c$ 是 $f$ 的<strong>臨界數</strong>，如果 $c$ <strong>在 $f$ 的定義域裡</strong>，而且</p>
+$$f'(c) = 0 \qquad\text{或}\qquad f'(c) \text{ 不存在}$$
+<p>相對極值<strong>只會</strong>發生在臨界數。</p>
+</div>
+<p>但是反過來不一定：臨界數只是「候選人」，不保證真的有極值。下面兩張圖是兩種要小心的情況。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "panels": [
+    { "title": "f(x) = x³：f′(0) = 0，但沒有極值", "x": [-2, 2], "y": [-4, 4], "h": 250,
+      "fns": [ { "f": "x^3", "color": "f" } ],
+      "tangent": { "fn": 0, "at": 0 },
+      "points": [ { "x": 0, "y": 0, "label": "水平切線", "pos": "tl", "color": "d1" } ] },
+    { "title": "f(x) = x^(2/3)：f′(0) 不存在，卻有極小值", "x": [-3, 3], "y": [-0.6, 2.6], "h": 250,
+      "fns": [ { "f": "cbrt(x)^2", "color": "f" } ],
+      "points": [ { "x": 0, "y": 0, "label": "尖點", "pos": "b", "color": "neg" } ] }
+  ]
+}
+</script>
+<figcaption>左：x³ 在 0 的切線是水平的，可是曲線左右都在上升，只是「停一下」，不是山頂也不是谷底。右：x^(2/3) 在 0 是尖的，切線斜率不存在，但它確實是谷底。</figcaption>
+</figure>
+<div class="trap">
+<p>不在定義域裡的點<strong>不是</strong>臨界數。例如 $f(x) = x + \dfrac1x$，$f'(0)$ 不存在，但 $f(0)$ 本身就沒有定義，所以 $0$ 不是臨界數，那裡也不可能有極值。</p>
+</div>
+<div class="quiz" data-answer="3">
+<p class="quiz-q">$f(x) = \dfrac1x$，$f'(x) = -\dfrac{1}{x^2}$。$x = 0$ 是臨界數嗎？</p>
+<button>是，因為 $f'(0)$ 不存在</button>
+<button>是，因為 $f'(0) = 0$</button>
+<button>不是，因為 $0$ 不在 $f$ 的定義域裡</button>
+<p class="quiz-why">臨界數的第一個條件是「在定義域裡」。$\dfrac10$ 沒有意義，所以 $0$ 不算。這個函數沒有任何臨界數。</p>
+</div>
+
+<h2 id="fdt">一階導數檢定法</h2>
+<p>候選人找到了，怎麼確定它是山頂、谷底，還是都不是？看 $f'$ 在它<strong>左右兩邊</strong>的符號：</p>
+<div class="key" data-title="一階導數檢定法">
+<p>設 $c$ 是臨界數。由左到右經過 $c$ 時：</p>
+<p>$f'$ 由 <span class="c-pos">＋</span> 變 <span class="c-neg">－</span>（先上後下）：$f(c)$ 是<strong>相對極大值</strong><br>
+$f'$ 由 <span class="c-neg">－</span> 變 <span class="c-pos">＋</span>（先下後上）：$f(c)$ 是<strong>相對極小值</strong><br>
+$f'$ 沒有變號：$f(c)$ <strong>不是</strong>相對極值</p>
+</div>
+<div class="how" data-title="找相對極值">
+<ol>
+<li>求 $f'$，找出所有臨界數（要在定義域裡）。</li>
+<li>畫 $f'$ 的符號圖（不在定義域的分段點也要標）。</li>
+<li>對每個臨界數看左右符號，判斷極大、極小、或都不是。</li>
+<li>把臨界數代回<strong>原函數 $f$</strong>，算出極值。</li>
+</ol>
+</div>
+<p><strong>例 1 續：</strong>$f(x) = x^3 - 3x^2 - 24x + 32$ 的符號圖是 ＋、－、＋。</p>
+<ul>
+<li>$x = -2$：由＋變－，相對極大值 $f(-2) = -8 - 12 + 48 + 32 = 60$。</li>
+<li>$x = 4$：由－變＋，相對極小值 $f(4) = 64 - 48 - 96 + 32 = -48$。</li>
+</ul>
+<p><strong>例 2 續：</strong>$f(x) = x + \dfrac1x$ 的符號圖是 ＋、－、－、＋。</p>
+<ul>
+<li>$x = -1$：由＋變－，相對極大值 $f(-1) = -2$。</li>
+<li>$x = 0$：不在定義域，不討論。</li>
+<li>$x = 1$：由－變＋，相對極小值 $f(1) = 2$。</li>
+</ul>
+<p>注意這裡相對極大值 $-2$ 比相對極小值 $2$ 還小。這不矛盾，因為「相對」只跟附近比。</p>
+<p><strong>例 3：</strong>上一段那條有兩座山的曲線，$f'(x) = -x^3 + x^2 + 2x = -x(x+1)(x-2)$：</p>
+<div class="signline" data-label="f′(x)" data-marks="-1=0, 0=0, 2=0" data-signs="+ - + -" data-kind="mono"></div>
+<p>$x = -1$（＋變－）相對極大，$x = 0$（－變＋）相對極小，$x = 2$（＋變－）相對極大，跟圖形一致。</p>
+<div class="quiz" data-answer="1">
+<p class="quiz-q">某函數 $f$ 的符號圖顯示：$f'$ 在 $x = 2$ 的左邊是負的、右邊是正的，而且 $f(2) = 5$。下列何者正確？</p>
+<button>$f$ 在 $x = 2$ 有相對極小值 5</button>
+<button>$f$ 在 $x = 2$ 有相對極大值 5</button>
+<button>$f$ 在 $x = 5$ 有相對極小值 2</button>
+<p class="quiz-why">先遞減再遞增，是谷底，所以是相對極小值。極值是函數值 $f(2) = 5$，位置是 $x = 2$。</p>
+</div>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">$f(x) = x^3$，$f'(x) = 3x^2$，所以 $0$ 是臨界數。$f$ 在 $x = 0$ 有相對極值嗎？</p>
+<button>有，因為 $f'(0) = 0$</button>
+<button>沒有，因為 $f'$ 在 0 的左右兩邊都是正的，沒有變號</button>
+<button>沒有，因為 0 不在定義域裡</button>
+<p class="quiz-why">$3x^2$ 除了 $x = 0$ 以外都是正的，符號圖是 ＋、＋。沒有變號就不是極值。$f' = 0$ 只是必要條件。</p>
+</div>
+
+<h2 id="problems">指定題</h2>
+<p>五題的前三題是「找區間、找極值」，後兩題是「證明一直遞減」。兩種都靠 $f'$ 的正負號。</p>
+
+<article class="prob" data-prob="4.1-34">
+<h3>根號函數的遞增遞減區間</h3>
+<div class="prob-q">
+<p>求函數 $f(x) = \sqrt{16 - x^2}$ 的遞增區間與遞減區間。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>先找定義域：根號裡面 $16 - x^2 \ge 0$。微分用連鎖律，裡面 $16 - x^2$ 的微分是 $-2x$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>定義域</h4>
+<p>根號裡面不能是負的：$16 - x^2 \ge 0$，也就是 $x^2 \le 16$，所以 $-4 \le x \le 4$。這個函數只活在 $[-4, 4]$。</p>
+</div>
+<div class="step">
+<h4>微分（連鎖律）</h4>
+$$f(x) = (16 - x^2)^{1/2} \quad\Longrightarrow\quad f'(x) = \frac12(16 - x^2)^{-1/2}\cdot(-2x) = \frac{-x}{\sqrt{16 - x^2}}$$
+</div>
+<div class="step">
+<h4>找分段點</h4>
+<p>$f'(x) = 0$：分子 $-x = 0$，得 $x = 0$。</p>
+<p>$f'(x)$ 不存在：分母 $\sqrt{16 - x^2} = 0$，得 $x = \pm 4$，剛好是定義域的兩個端點。</p>
+<p>所以只需要看 $(-4, 0)$ 和 $(0, 4)$ 兩段。</p>
+</div>
+<div class="step">
+<h4>判斷正負</h4>
+<p>在 $(-4, 4)$ 裡分母 $\sqrt{16 - x^2}$ 是正的，所以 $f'$ 的符號跟分子 $-x$ 一樣：</p>
+<ul>
+<li>測試點 $x = -2$：$f'(-2) = \dfrac{2}{\sqrt{12}} \gt 0$</li>
+<li>測試點 $x = 2$：$f'(2) = \dfrac{-2}{\sqrt{12}} \lt 0$</li>
+</ul>
+<div class="signline" data-label="f′(x)" data-marks="0=0" data-signs="+ -" data-notes="↗ 在 (−4, 0) 遞增|↘ 在 (0, 4) 遞減"></div>
+</div>
+<div class="step">
+<h4>結論與圖形</h4>
+<p>把 $y = \sqrt{16 - x^2}$ 兩邊平方得 $x^2 + y^2 = 16$，圖形是半徑 4 的<strong>上半圓</strong>：左半邊往上爬，右半邊往下走。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-5.5, 5.5], "y": [-1.2, 5.6], "h": 300, "equal": true,
+  "fns": [{ "f": "sqrt(16-x^2)", "color": "f", "label": "f(x) = √(16 − x²)", "domain": [-4, 4] }],
+  "tangent": { "fn": 0 },
+  "points": [
+    { "x": 0, "y": 4, "label": "(0, 4)", "pos": "t", "color": "ink" },
+    { "x": -4, "y": 0, "label": "(−4, 0)", "pos": "b", "color": "ink" },
+    { "x": 4, "y": 0, "label": "(4, 0)", "pos": "b", "color": "ink" }
+  ],
+  "slider": { "label": "x", "min": -3.9, "max": 3.9, "step": 0.02, "value": -2, "digits": 2,
+    "presets": [ { "label": "x = −2", "value": -2 }, { "label": "x = 0", "value": 0 }, { "label": "x = 2", "value": 2 } ] },
+  "readouts": [
+    { "label": "f′(x) = −x/√(16 − x²)", "expr": "-a/sqrt(16-a^2)", "digits": 3, "color": "d1" },
+    { "label": "函數正在", "expr": "-a/sqrt(16-a^2)", "pos": "遞增 ↗", "neg": "遞減 ↘", "zero": "最高點（水平切線）", "eps": 0.01 }
+  ]
+}
+</script>
+<figcaption>拖曳檢查：x 是負的時候切線斜率是正的，x 是正的時候斜率是負的。</figcaption>
+</figure>
+<p class="answer"><span>$f$ 在 $(-4, 0)$ 遞增，在 $(0, 4)$ 遞減。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.1-35">
+<h3>乘積函數的遞增遞減區間</h3>
+<div class="prob-q">
+<p>求函數 $g(x) = x\sqrt{x + 1}$ 的遞增區間與遞減區間。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>定義域是 $x \ge -1$。用乘法規則微分後會有兩項，把它們<strong>通分</strong>成一個分式，才看得出哪裡等於 0。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>定義域</h4>
+<p>根號裡面 $x + 1 \ge 0$，所以 $x \ge -1$，定義域是 $[-1, \infty)$。</p>
+</div>
+<div class="step">
+<h4>微分（乘法規則）</h4>
+<p>前面是 $x$（微分是 1），後面是 $(x+1)^{1/2}$（微分是 $\dfrac{1}{2\sqrt{x+1}}$）：</p>
+$$g'(x) = 1\cdot\sqrt{x+1} + x\cdot\frac{1}{2\sqrt{x+1}}$$
+</div>
+<div class="step">
+<h4>通分</h4>
+<p>第一項上下同乘 $2\sqrt{x+1}$，分子變成 $2(x+1)$：</p>
+$$g'(x) = \frac{2(x+1) + x}{2\sqrt{x+1}} = \frac{3x + 2}{2\sqrt{x+1}}$$
+</div>
+<div class="step">
+<h4>找分段點</h4>
+<p>$g'(x) = 0$：分子 $3x + 2 = 0$，得 $x = -\dfrac23$。</p>
+<p>$g'(x)$ 不存在：分母等於 0，得 $x = -1$，是定義域的端點。</p>
+<p>所以看 $\left(-1, -\tfrac23\right)$ 和 $\left(-\tfrac23, \infty\right)$ 兩段。</p>
+</div>
+<div class="step">
+<h4>判斷正負</h4>
+<p>$x \gt -1$ 時分母是正的，符號由分子 $3x + 2$ 決定：</p>
+<ul>
+<li>測試點 $x = -0.9$：$3(-0.9) + 2 = -0.7 \lt 0$</li>
+<li>測試點 $x = 0$：$3(0) + 2 = 2 \gt 0$</li>
+</ul>
+<div class="signline" data-label="g′(x)" data-marks="-2/3=0" data-signs="- +" data-notes="↘ 在 (−1, −2/3) 遞減|↗ 在 (−2/3, ∞) 遞增"></div>
+</div>
+<div class="step">
+<h4>結論與圖形</h4>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-1.4, 3], "y": [-1.2, 6.4], "h": 300,
+  "fns": [{ "f": "x*sqrt(x+1)", "color": "f", "label": "g(x) = x√(x + 1)", "domain": [-1, 3] }],
+  "points": [
+    { "x": -1, "y": 0, "label": "起點 (−1, 0)", "pos": "tl", "color": "ink" },
+    { "x": -0.6667, "y": -0.3849, "label": "最低點 x = −2/3", "pos": "br", "color": "neg" }
+  ]
+}
+</script>
+<figcaption>圖形從 (−1, 0) 出發，先往下走一小段到 x = −2/3（高度約 −0.385），之後一路往上。</figcaption>
+</figure>
+<p class="answer"><span>$g$ 在 $\left(-1, -\tfrac23\right)$ 遞減，在 $\left(-\tfrac23, \infty\right)$ 遞增。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.1-71">
+<h3>有分母的函數的相對極值</h3>
+<div class="prob-q">
+<p>求函數 $g(x) = 2x^2 + \dfrac{4000}{x} + 10$ 的相對極大值與相對極小值（如果有的話）。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>$\dfrac{4000}{x} = 4000x^{-1}$。微分後通分，分子會出現 $x^3 - 1000$。別忘了 $x = 0$ 不在定義域，但符號圖上要標它。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>定義域</h4>
+<p>分母不能是 0，所以定義域是 $x \ne 0$。</p>
+</div>
+<div class="step">
+<h4>微分</h4>
+$$g(x) = 2x^2 + 4000x^{-1} + 10 \quad\Longrightarrow\quad g'(x) = 4x - 4000x^{-2} = 4x - \frac{4000}{x^2}$$
+</div>
+<div class="step">
+<h4>通分並因式分解</h4>
+$$g'(x) = \frac{4x^3 - 4000}{x^2} = \frac{4(x^3 - 1000)}{x^2}$$
+</div>
+<div class="step">
+<h4>找臨界數</h4>
+<p>$g'(x) = 0$：$x^3 = 1000$，得 $x = 10$。</p>
+<p>$g'(x)$ 不存在：$x = 0$。但是 $0$ 不在定義域裡，所以它<strong>不是</strong>臨界數。唯一的臨界數是 $x = 10$。</p>
+</div>
+<div class="step">
+<h4>畫符號圖</h4>
+<p>分段點是 $0$ 和 $10$（$0$ 雖然不是臨界數，還是會把數線切開）。分母 $x^2$ 永遠是正的，所以只看 $x^3 - 1000$：</p>
+<ul>
+<li>$x = -1$：$(-1)^3 - 1000 \lt 0$</li>
+<li>$x = 1$：$1 - 1000 \lt 0$</li>
+<li>$x = 20$：$8000 - 1000 \gt 0$</li>
+</ul>
+<div class="signline" data-label="g′(x)" data-marks="0=x, 10=0" data-signs="- - +" data-kind="mono"></div>
+</div>
+<div class="step">
+<h4>一階導數檢定法</h4>
+<p>在 $x = 10$，$g'$ 由負變正，所以有<strong>相對極小值</strong>：</p>
+$$g(10) = 2(10)^2 + \frac{4000}{10} + 10 = 200 + 400 + 10 = 610$$
+<p>沒有任何地方是由正變負，所以沒有相對極大值。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-30, 30], "y": [-2500, 3500], "h": 320,
+  "fns": [{ "f": "2*x^2+4000/x+10", "color": "f", "label": "g(x) = 2x² + 4000/x + 10" }],
+  "vlines": [ { "x": 0, "label": "x = 0 沒有定義", "color": "neg", "low": true } ],
+  "points": [ { "x": 10, "y": 610, "label": "相對極小 (10, 610)", "pos": "t", "color": "neg" } ]
+}
+</script>
+<figcaption>右半邊在 x = 10 有一個谷底。左半邊（x &lt; 0）一路往下掉，沒有山頂也沒有谷底。</figcaption>
+</figure>
+<p class="answer"><span>相對極小值 $g(10) = 610$；沒有相對極大值。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.1-84">
+<h3>證明平均成本一直在下降</h3>
+<div class="prob-q">
+<p>某公司每週壓製 $x$ 片 CD 的平均成本（美元）為</p>
+$$\bar{C}(x) = -0.0001x + 2 + \frac{2000}{x} \qquad (0 \lt x \le 6000)$$
+<p>證明 $\bar{C}(x)$ 在區間 $(0, 6000)$ 上恆為遞減。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>「證明遞減」就是「證明導數在整個區間都是負的」。微分後不用解方程式，直接說明每一項的正負號。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>微分</h4>
+$$\bar{C}(x) = -0.0001x + 2 + 2000x^{-1} \quad\Longrightarrow\quad \bar{C}'(x) = -0.0001 - \frac{2000}{x^2}$$
+</div>
+<div class="step">
+<h4>說明導數恆為負</h4>
+<p>對 $(0, 6000)$ 裡的任何 $x$：</p>
+<ul>
+<li>$x^2 \gt 0$，所以 $\dfrac{2000}{x^2} \gt 0$，也就是 $-\dfrac{2000}{x^2} \lt 0$。</li>
+<li>$-0.0001 \lt 0$。</li>
+</ul>
+<p>兩個負數相加還是負數，所以 $\bar{C}'(x) \lt 0$ 對所有 $0 \lt x \lt 6000$ 都成立。</p>
+<div class="signline" data-label="C̄′(x)" data-marks="" data-signs="-" data-notes="↘ 在 (0, 6000) 整段都是負的"></div>
+</div>
+<div class="step">
+<h4>結論</h4>
+<p>因為 $\bar{C}'(x) \lt 0$，$\bar{C}$ 在 $(0, 6000)$ 上恆為遞減。意思是：壓得越多，每一片平均攤到的成本越低。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 6000], "y": [0, 12], "h": 280,
+  "xlabel": "x（片）", "ylabel": "平均成本（美元/片）",
+  "fns": [{ "f": "-0.0001*x+2+2000/x", "color": "f", "label": "C̄(x) = −0.0001x + 2 + 2000/x", "domain": [150, 6000] }],
+  "points": [
+    { "x": 1000, "y": 3.9, "label": "x = 1000：3.90", "pos": "tr", "color": "ink" },
+    { "x": 6000, "y": 1.7333, "label": "x = 6000：1.73", "pos": "tl", "color": "ink" }
+  ]
+}
+</script>
+<figcaption>曲線從頭到尾都往右下走，沒有任何一段回升。</figcaption>
+</figure>
+<p class="answer"><span>$\bar{C}'(x) = -0.0001 - \dfrac{2000}{x^2} \lt 0$ 對所有 $0 \lt x \lt 6000$ 成立，所以 $\bar{C}$ 在 $(0, 6000)$ 恆遞減。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.1-89">
+<h3>證明郵件量逐年下降</h3>
+<div class="prob-q">
+<p>2008 年到 2012 年美國第一類郵件的投遞量（十億件）可以用下面的函數近似，其中 $t$ 的單位是年，$t = 0$ 代表 2008 年：</p>
+$$f(t) = \frac{90.7}{0.01t^2 + 0.01t + 1} \qquad (0 \le t \le 4)$$
+<p>證明在這段期間，第一類郵件的投遞量一直在下降。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>分子是常數，改寫成 $90.7\,(0.01t^2 + 0.01t + 1)^{-1}$ 用連鎖律最快。然後說明 $f'(t)$ 在 $(0, 4)$ 為什麼一定是負的。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>微分（連鎖律）</h4>
+<p>外層是 $-1$ 次方，裡面 $0.01t^2 + 0.01t + 1$ 的微分是 $0.02t + 0.01$：</p>
+$$f'(t) = -90.7\,(0.01t^2 + 0.01t + 1)^{-2}\,(0.02t + 0.01) = \frac{-90.7\,(0.02t + 0.01)}{(0.01t^2 + 0.01t + 1)^2}$$
+</div>
+<div class="step">
+<h4>說明導數恆為負</h4>
+<p>對 $(0, 4)$ 裡的任何 $t$：</p>
+<ul>
+<li>$t \gt 0$，所以 $0.02t + 0.01 \gt 0$。</li>
+<li>分母是平方，而且 $0.01t^2 + 0.01t + 1 \ge 1$ 不會是 0，所以分母 $\gt 0$。</li>
+<li>最前面有一個 $-90.7$。</li>
+</ul>
+<p>負 × 正 ÷ 正 = 負，所以 $f'(t) \lt 0$ 對所有 $0 \lt t \lt 4$ 成立。</p>
+<div class="signline" data-label="f′(t)" data-marks="" data-signs="-" data-notes="↘ 在 (0, 4) 整段都是負的"></div>
+</div>
+<div class="step">
+<h4>結論</h4>
+<p>$f'(t) \lt 0$，所以 $f$ 在 $(0, 4)$ 遞減：從 2008 年到 2012 年，第一類郵件的投遞量一直在下降（由 $f(0) = 90.7$ 降到 $f(4) \approx 75.6$）。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 4], "y": [70, 95], "h": 280,
+  "xlabel": "t（年，t = 0 是 2008 年）", "ylabel": "投遞量（十億件）",
+  "fns": [{ "f": "90.7/(0.01*x^2+0.01*x+1)", "color": "f", "label": "f(t) = 90.7 / (0.01t² + 0.01t + 1)" }],
+  "points": [
+    { "x": 0, "y": 90.7, "label": "2008 年：90.7", "pos": "tr", "color": "ink" },
+    { "x": 4, "y": 75.5833, "label": "2012 年：75.6", "pos": "tl", "color": "ink" }
+  ]
+}
+</script>
+<figcaption>整條曲線都往右下走，而且越後面掉得越快。</figcaption>
+</figure>
+<p class="answer"><span>$f'(t) = \dfrac{-90.7(0.02t + 0.01)}{(0.01t^2 + 0.01t + 1)^2} \lt 0$ 對所有 $0 \lt t \lt 4$ 成立，所以投遞量在這段期間一直下降。</span></p>
+</div>
+</div>
+</article>
+
+<div class="exam">
+<p>這一節的答題格式很固定，照著寫就不會漏分：寫出 $f'$ 並化成因式或單一分式、標出 $f' = 0$ 和 $f'$ 不存在的點、畫符號圖、用<strong>開區間</strong>寫出遞增遞減區間。極值要寫成「相對極小值 $g(10) = 610$」這種形式，記得代回<strong>原函數</strong>算，不是代回 $f'$。「證明遞增／遞減」的題目，一定要寫出「因為 $f' \lt 0$（或 $\gt 0$）對區間裡所有 $x$ 都成立」這句理由。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

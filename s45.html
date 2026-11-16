@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.5 最佳化 II：應用題｜微積分期中考二衝刺</title>
+<meta name="description" content="最佳化應用題的固定五步驟，含指定題 4.5 #4、#9、#18、#20、#21、#26、#29、#30 的互動圖與逐步解答。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="s45">
+<main class="page">
+
+<p class="kicker">第 4 章 · Section 4.5</p>
+<h1>最佳化 II：應用題</h1>
+<p class="lead">這一節有 8 題指定題，是這次考試份量最重的地方。好消息是：每一題的解法都是同一套五個步驟。微分本身很簡單，難的是<strong>把文字翻成一個函數</strong>。這一頁每一題都附一張可以拖曳的圖，先玩圖、再看算式。</p>
+<div data-toc></div>
+
+<h2 id="idea">這一節在做什麼</h2>
+<p>4.4 節的題目會直接給你函數，例如「求 $f(x) = x^3 - 3x$ 在 $[0, 2]$ 的最大值」。4.5 節的題目不給函數，只給一段故事：圍籬有多長、盒子容量多少、鳥飛多快，然後問「怎樣最大」或「怎樣最省」。</p>
+<div class="say">
+<p>應用題 = <mark>自己把函數寫出來</mark> + 4.4 節學過的找最大最小。函數寫出來之後，剩下的就是微分、令它等於 0。</p>
+</div>
+
+<h2 id="steps">固定五步驟</h2>
+<div class="how" data-title="最佳化應用題五步驟">
+<ol>
+<li><strong>畫圖、設變數。</strong>把題目畫出來，會變動的長度用 $x$、$y$ 標上去。</li>
+<li><strong>寫出目標。</strong>題目要最大或最小的那個量（面積、成本、時間……）用變數寫成式子。</li>
+<li><strong>用限制條件消掉一個變數。</strong>題目一定會給一個固定的數（圍籬總長、容量、周長），用它把 $y$ 換成 $x$，讓目標變成只有一個變數的函數 $f(x)$。</li>
+<li><strong>寫出 $x$ 的範圍。</strong>長度不能是負的，人數不能超過上限。</li>
+<li><strong>微分、令 $f'(x) = 0$ 找臨界數，並確認</strong>它真的是最大（或最小），最後回答題目問的東西，記得寫單位。</li>
+</ol>
+</div>
+<div class="trap">
+<p>最常見的失分有兩種：第 3 步沒做，兩個變數就直接微分；第 5 步算出 $x$ 就停筆，忘了題目問的是「尺寸」「最大面積」還是「票價」。</p>
+</div>
+
+<h2 id="warmup">暖身：用最簡單的題目走一遍</h2>
+<p><strong>題目：</strong>周長 100 ft（英尺）的矩形，長和寬各是多少時面積最大？</p>
+<p>先拖曳下面的圖。周長固定，矩形越扁面積越小；什麼形狀面積最大？</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "slider": { "label": "長 x", "min": 2, "max": 48, "step": 0.5, "value": 10, "digits": 1, "unit": " ft", "dragPanel": 1,
+    "presets": [ { "label": "x = 10（瘦長）", "value": 10 }, { "label": "x = 25（正方形）", "value": 25 }, { "label": "x = 40（扁平）", "value": 40 } ] },
+  "panels": [
+    { "title": "矩形的形狀（周長固定 100 ft）", "narrow": true, "axes": false, "equal": true, "x": [-20, 54], "y": [-10, 54], "h": 260,
+      "shapes": [
+        { "type": "rect", "x": 0, "y": 0, "width": "a", "height": "50-a", "color": "f", "fill": true },
+        { "type": "text", "x": "a/2", "y": -6.5, "t": "x = {{a|1}}", "color": "f" },
+        { "type": "text", "x": -1.5, "y": "(50-a)/2", "t": "y = {{50-a|1}}", "color": "f", "anchor": "end" }
+      ] },
+    { "title": "面積隨 x 的變化", "x": [0, 50], "y": [0, 720], "h": 260, "xlabel": "x（ft）", "ylabel": "面積（ft²）",
+      "fns": [ { "f": "x*(50-x)", "color": "f", "label": "A(x) = x(50 − x)" } ],
+      "points": [ { "x": "a", "on": 0, "color": "d1", "label": "A = {{a*(50-a)|0}}", "pos": "t" } ] }
+  ],
+  "readouts": [
+    { "label": "寬 y = 50 − x", "expr": "50-a", "digits": 1, "unit": " ft" },
+    { "label": "面積 A", "expr": "a*(50-a)", "digits": 0, "unit": " ft²", "color": "f" },
+    { "label": "A′(x) = 50 − 2x", "expr": "50-2*a", "digits": 0, "color": "d1" },
+    { "label": "現在", "expr": "50-2*a", "pos": "A′ > 0，x 再長一點面積會變大", "neg": "A′ < 0，x 太長了，面積在變小", "zero": "A′ = 0，面積最大", "eps": 0.5 }
+  ]
+}
+</script>
+<figcaption>左邊是矩形實際的樣子，右邊是面積函數。橘點爬到山頂的那一刻（A′ = 0），矩形剛好是正方形。</figcaption>
+</figure>
+<p>照五步驟寫：</p>
+<ol>
+<li><strong>設變數：</strong>長 $x$、寬 $y$（單位 ft）。</li>
+<li><strong>目標：</strong>面積 $A = xy$ 要最大。</li>
+<li><strong>限制條件：</strong>周長 $2x + 2y = 100$，所以 $y = 50 - x$。代進去：
+$$A(x) = x(50 - x) = 50x - x^2$$</li>
+<li><strong>範圍：</strong>長和寬都不能是負的，所以 $0 \le x \le 50$。</li>
+<li><strong>微分：</strong>$A'(x) = 50 - 2x = 0$，得 $x = 25$。比較 $A(0) = 0$、$A(25) = 625$、$A(50) = 0$，最大是 625。此時 $y = 50 - 25 = 25$。</li>
+</ol>
+<p class="answer"><span>長、寬都是 25 ft（正方形），最大面積 625 ft²。</span></p>
+
+<h2 id="confirm">怎麼確認是最大還是最小</h2>
+<p>$f'(x) = 0$ 只告訴你「那裡的切線是水平的」，山頂和谷底都是水平的。所以最後一定要確認。兩種方法擇一：</p>
+<div class="key" data-title="方法一：範圍是閉區間 [a, b]（有頭有尾）">
+<p>把<strong>臨界數</strong>和<strong>兩個端點</strong>都代進 $f$，比大小。最大的就是絕對極大值，最小的就是絕對極小值。這就是 4.4 節的做法。</p>
+</div>
+<div class="key" data-title="方法二：範圍沒有端點（例如 x > 0），而且只有一個臨界數">
+<p>看二階導數 $f''(x)$ 在整個範圍的正負：</p>
+<p>$f''(x) \gt 0$（整條曲線凹向上，像碗）：那個臨界數是<strong>絕對極小</strong>。<br>
+$f''(x) \lt 0$（整條曲線凹向下，像山）：那個臨界數是<strong>絕對極大</strong>。</p>
+</div>
+<figure class="fig">
+<script type="application/json">
+{
+  "panels": [
+    { "title": "f″ > 0：像碗，谷底就是最小", "x": [0, 4], "y": [0, 6], "h": 210,
+      "fns": [ { "f": "(x-2)^2+1.2", "color": "f" } ],
+      "points": [ { "x": 2, "y": 1.2, "label": "唯一臨界數 → 絕對極小", "pos": "b", "color": "pos" } ] },
+    { "title": "f″ < 0：像山，山頂就是最大", "x": [0, 4], "y": [0, 6], "h": 210,
+      "fns": [ { "f": "4.8-(x-2)^2", "color": "f" } ],
+      "points": [ { "x": 2, "y": 4.8, "label": "唯一臨界數 → 絕對極大", "pos": "t", "color": "neg" } ] }
+  ]
+}
+</script>
+<figcaption>整段只彎一個方向、又只有一個水平切線的地方，那一點一定是全場最低（或最高）。</figcaption>
+</figure>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">成本函數 $C(x)$ 的範圍是 $x \gt 0$，只有一個臨界數 $x = 3$，而且 $C''(x) = 80 + \dfrac{4320}{x^3}$。可以下什麼結論？</p>
+<button>$x = 3$ 時成本最大</button>
+<button>$x = 3$ 時成本最小</button>
+<button>還要比較端點才知道</button>
+<p class="quiz-why">$x \gt 0$ 時 $C''(x)$ 一定是正的，整條曲線凹向上，唯一的臨界數就是絕對極小。範圍是開區間，沒有端點可以比。（這就是指定題 #9。）</p>
+</div>
+
+<h2 id="formulas">常用公式小表</h2>
+<p>應用題不會提醒你這些公式，要自己記得：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>形狀或情境</th><th>公式</th><th>哪一題用到</th></tr></thead>
+<tbody>
+<tr><td>矩形</td><td>面積 = 長 × 寬；周長 = 2 × (長 + 寬)</td><td>#4、暖身題</td></tr>
+<tr><td>正方形底的盒子（底邊 $x$、高 $h$）</td><td>體積 $x^2h$；底面積 $x^2$；四個側面共 $4xh$</td><td>#9</td></tr>
+<tr><td>圓、半圓（半徑 $r$）</td><td>圓面積 $\pi r^2$、圓周 $2\pi r$；半圓面積 $\tfrac12\pi r^2$、半圓弧長 $\pi r$</td><td>#18</td></tr>
+<tr><td>圓柱（半徑 $r$、高 $h$）</td><td>體積 $\pi r^2h$；側面積 $2\pi rh$；底面積 $\pi r^2$</td><td>#26</td></tr>
+<tr><td>半球（半徑 $r$）</td><td>體積 $\tfrac23\pi r^3$；球面部分的面積 $2\pi r^2$</td><td>#26</td></tr>
+<tr><td>直角三角形</td><td>斜邊 $= \sqrt{a^2 + b^2}$（畢氏定理）</td><td>#29、#30</td></tr>
+<tr><td>移動</td><td>時間 = 距離 ÷ 速度</td><td>#29、#30</td></tr>
+<tr><td>買賣</td><td>收益（總產量）= 單價（每棵產量）× 數量</td><td>#20、#21</td></tr>
+</tbody>
+</table>
+</div>
+<div class="quiz" data-answer="1">
+<p class="quiz-q">有 3000 yd 的圍籬，沿著河岸圍一塊矩形（靠河那邊不用圍，中間也不加隔板）。垂直河岸的邊長設為 $x$、平行河岸的邊長設為 $y$，限制條件是？</p>
+<button>$2x + y = 3000$</button>
+<button>$2x + 2y = 3000$</button>
+<button>$x + y = 3000$</button>
+<p class="quiz-why">垂直河岸的圍籬有左右兩道（$2x$），平行河岸的只有離河遠的那一道（$y$），靠河那邊不用圍。指定題 #4 中間多一道隔板，就會變成 $3x + y = 3000$。</p>
+</div>
+<div class="quiz" data-answer="3">
+<p class="quiz-q">遊艇 20 人報名時每人 600 美元。每多 1 人，<strong>所有人</strong>的票價都降 4 美元。多了 $x$ 人時，總收益是？</p>
+<button>$20 \times 600 - 4x$</button>
+<button>$(20 + x) \times 600 - 4x$</button>
+<button>$(20 + x)(600 - 4x)$</button>
+<p class="quiz-why">收益 = 人數 × 票價。人數變成 $20 + x$，每個人的票價變成 $600 - 4x$，兩個括號相乘。這種「多一個、單價就降一點」的題型（#20、#21）都是兩個括號相乘。</p>
+</div>
+
+<h2 id="problems">指定題</h2>
+<p>每一題的圖都可以拖曳。建議順序：先讀題目、拖一拖圖猜答案，自己照五步驟寫，卡住再一步一步打開解答。</p>
+
+<article class="prob" data-prob="4.5-4">
+<h3>沿河圍牧地，中間多一道隔板</h3>
+<div class="prob-q">
+<p>牧場主人有 3000 yd（碼）的圍籬，要沿著一段筆直的河岸圍出一塊矩形牧地，靠河的那一側不用圍。他還要在中間加一道和兩側平行的圍籬，把牧地隔成兩塊。能圍出的最大面積是多少？此時牧地的尺寸是多少？</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "slider": { "label": "垂直河岸的圍籬長 x", "min": 100, "max": 950, "step": 10, "value": 250, "digits": 0, "unit": " yd", "dragPanel": 1 },
+  "panels": [
+    { "title": "牧地俯視圖（粗線是圍籬，共 3000 yd）", "axes": false, "equal": true, "x": [-350, 3350], "y": [-1300, 480], "h": 230,
+      "shapes": [
+        { "type": "rect", "x": -400, "y": 0, "width": 3800, "height": 330, "color": "water", "fill": true, "w": 0.01 },
+        { "type": "text", "x": 1500, "y": 110, "t": "河（這一側不用圍）", "color": "water" },
+        { "type": "rect", "x": "1.5*a", "y": "-a", "width": "3000-3*a", "height": "a", "color": "pos", "fill": true, "w": 0.01 },
+        { "type": "line", "x1": "1.5*a", "y1": 0, "x2": "1.5*a", "y2": "-a", "color": "ink", "w": 3, "label": "x", "lo": [-10, 4], "anchor": "end" },
+        { "type": "line", "x1": 1500, "y1": 0, "x2": 1500, "y2": "-a", "color": "ink", "w": 3, "label": "x = {{a|0}}", "lo": [10, 4], "anchor": "start" },
+        { "type": "line", "x1": "3000-1.5*a", "y1": 0, "x2": "3000-1.5*a", "y2": "-a", "color": "ink", "w": 3, "label": "x", "lo": [10, 4], "anchor": "start" },
+        { "type": "line", "x1": "1.5*a", "y1": "-a", "x2": "3000-1.5*a", "y2": "-a", "color": "ink", "w": 3, "label": "y = {{3000-3*a|0}}", "lo": [0, 18] }
+      ] },
+    { "title": "面積隨 x 的變化", "x": [0, 1000], "y": [0, 900000], "h": 230, "xlabel": "x（yd）", "ylabel": "面積（yd²）",
+      "fns": [ { "f": "x*(3000-3*x)", "color": "f", "label": "A(x) = x(3000 − 3x)" } ],
+      "points": [ { "x": "a", "on": 0, "color": "d1", "label": "A = {{a*(3000-3*a)|0}}", "pos": "t" } ] }
+  ],
+  "readouts": [
+    { "label": "平行河岸 y = 3000 − 3x", "expr": "3000-3*a", "digits": 0, "unit": " yd" },
+    { "label": "面積 A = xy", "expr": "a*(3000-3*a)", "digits": 0, "unit": " yd²", "color": "f" },
+    { "label": "A′(x) = 3000 − 6x", "expr": "3000-6*a", "digits": 0, "color": "d1" }
+  ]
+}
+</script>
+<figcaption>三道垂直河岸的圍籬各長 x，剩下的圍籬全部拿去做平行河岸的那一道 y。拖曳看看 x 多長時綠色面積最大。</figcaption>
+</figure>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>數一數圖上有幾道長度是 $x$ 的圍籬。全部圍籬加起來是 3000，用這個條件把 $y$ 換成 $x$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>設變數、寫目標</h4>
+<p>垂直河岸的圍籬有三道（左、中、右），每道長 $x$ yd；平行河岸的圍籬一道，長 $y$ yd。要最大的是面積：</p>
+$$A = xy$$
+</div>
+<div class="step">
+<h4>用圍籬總長消掉 y</h4>
+$$3x + y = 3000 \quad\Longrightarrow\quad y = 3000 - 3x$$
+$$A(x) = x(3000 - 3x) = 3000x - 3x^2$$
+<p>注意是 $3x$ 不是 $2x$，因為中間多了一道隔板。</p>
+</div>
+<div class="step">
+<h4>x 的範圍</h4>
+<p>$x \ge 0$，而且 $y = 3000 - 3x \ge 0$，所以 $0 \le x \le 1000$。</p>
+</div>
+<div class="step">
+<h4>微分找臨界數</h4>
+$$A'(x) = 3000 - 6x = 0 \quad\Longrightarrow\quad x = 500$$
+</div>
+<div class="step">
+<h4>確認是最大，回答問題</h4>
+<p>範圍是閉區間，比較臨界數和端點：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>$x$</th><th class="n">0</th><th class="n">500</th><th class="n">1000</th></tr></thead>
+<tbody><tr><td>$A(x)$</td><td class="n">0</td><td class="n">750,000</td><td class="n">0</td></tr></tbody>
+</table>
+</div>
+<p>最大值在 $x = 500$。此時 $y = 3000 - 3(500) = 1500$。（也可以用 $A''(x) = -6 \lt 0$ 確認。）</p>
+<p class="answer"><span>垂直河岸的邊長 500 yd、沿河的邊長 1500 yd，最大面積 750,000 yd²。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.5-9">
+<h3>成本最低的筆筒</h3>
+<div class="prob-q">
+<p>要做一個容量 36 in.³（立方英寸）的筆筒，形狀是正方形底、沒有蓋子的長方體。側面材料每平方英寸 15 美分，底部材料每平方英寸 40 美分。筆筒的尺寸要多少，材料成本才會最低？</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "slider": { "label": "底邊長 x", "min": 1.6, "max": 6, "step": 0.05, "value": 2, "digits": 2, "unit": " in.", "dragPanel": 1 },
+  "panels": [
+    { "title": "筆筒的形狀（容量固定 36 in.³）", "narrow": true, "axes": false, "equal": true, "x": [-5.5, 10.5], "y": [-2.5, 17], "h": 300,
+      "shapes": [
+        { "type": "poly", "pts": [[0, 0], ["a", 0], ["1.4*a", "0.4*a"], ["0.4*a", "0.4*a"]], "close": true, "fill": true, "color": "d1", "w": 1.5 },
+        { "type": "rect", "x": 0, "y": 0, "width": "a", "height": "36/a^2", "color": "f", "fill": true },
+        { "type": "line", "x1": "a", "y1": 0, "x2": "1.4*a", "y2": "0.4*a", "color": "f" },
+        { "type": "line", "x1": "a", "y1": "36/a^2", "x2": "1.4*a", "y2": "36/a^2+0.4*a", "color": "f" },
+        { "type": "line", "x1": 0, "y1": "36/a^2", "x2": "0.4*a", "y2": "36/a^2+0.4*a", "color": "f" },
+        { "type": "line", "x1": "0.4*a", "y1": "36/a^2+0.4*a", "x2": "1.4*a", "y2": "36/a^2+0.4*a", "color": "f" },
+        { "type": "line", "x1": "1.4*a", "y1": "0.4*a", "x2": "1.4*a", "y2": "36/a^2+0.4*a", "color": "f" },
+        { "type": "text", "x": "a/2", "y": -1.6, "t": "x = {{a|2}}", "color": "f" },
+        { "type": "text", "x": -0.4, "y": "18/a^2", "t": "h = {{36/a^2|2}}", "color": "f", "anchor": "end" }
+      ] },
+    { "title": "成本隨 x 的變化", "x": [0, 6.5], "y": [0, 3000], "h": 300, "xlabel": "x（in.）", "ylabel": "成本（美分）",
+      "fns": [ { "f": "40*x^2+2160/x", "color": "f", "label": "C(x) = 40x² + 2160/x", "domain": [0.5, 6.5] } ],
+      "points": [ { "x": "a", "on": 0, "color": "d1", "label": "C = {{40*a^2+2160/a|0}}", "pos": "t" } ] }
+  ],
+  "readouts": [
+    { "label": "高 h = 36/x²", "expr": "36/a^2", "digits": 2, "unit": " in." },
+    { "label": "底的成本 40x²", "expr": "40*a^2", "digits": 0, "unit": " 美分", "color": "d1" },
+    { "label": "側面成本 2160/x", "expr": "2160/a", "digits": 0, "unit": " 美分", "color": "f" },
+    { "label": "總成本 C", "expr": "40*a^2+2160/a", "digits": 0, "unit": " 美分" }
+  ]
+}
+</script>
+<figcaption>橘色是比較貴的底。底越大，底的成本越高；底越小，筆筒就要越高，側面成本變高。兩者之間有一個最省的平衡點。</figcaption>
+</figure>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>成本 = 底面積 × 40 + 四個側面的面積 × 15。沒有蓋子，所以不用算上面。容量 $x^2h = 36$ 用來把 $h$ 換掉。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>設變數、寫目標</h4>
+<p>設底邊長 $x$ in.、高 $h$ in.。底是一個 $x \times x$ 的正方形，側面是四片 $x \times h$ 的長方形：</p>
+$$C = \underbrace{40\cdot x^2}_{\text{底}} + \underbrace{15\cdot 4xh}_{\text{四個側面}} = 40x^2 + 60xh \quad(\text{美分})$$
+</div>
+<div class="step">
+<h4>用容量消掉 h</h4>
+$$x^2h = 36 \quad\Longrightarrow\quad h = \frac{36}{x^2}$$
+$$C(x) = 40x^2 + 60x\cdot\frac{36}{x^2} = 40x^2 + \frac{2160}{x} \qquad (x \gt 0)$$
+</div>
+<div class="step">
+<h4>微分找臨界數</h4>
+<p>$\dfrac{2160}{x} = 2160x^{-1}$，微分是 $-2160x^{-2}$：</p>
+$$C'(x) = 80x - \frac{2160}{x^2} = 0 \quad\Longrightarrow\quad 80x^3 = 2160 \quad\Longrightarrow\quad x^3 = 27 \quad\Longrightarrow\quad x = 3$$
+</div>
+<div class="step">
+<h4>確認是最小</h4>
+<p>範圍 $x \gt 0$ 沒有端點，用二階導數：</p>
+$$C''(x) = 80 + \frac{4320}{x^3} \gt 0 \quad (x \gt 0)$$
+<p>曲線整段凹向上，唯一的臨界數 $x = 3$ 就是絕對極小。</p>
+</div>
+<div class="step">
+<h4>回答問題</h4>
+$$h = \frac{36}{3^2} = 4 \qquad C(3) = 40(9) + \frac{2160}{3} = 360 + 720 = 1080 \text{ 美分}$$
+<p class="answer"><span>底 3 in. × 3 in.、高 4 in.（最低成本 1080 美分，也就是 10.80 美元）。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.5-18">
+<h3>透光最多的諾曼窗</h3>
+<div class="prob-q">
+<p>諾曼窗（Norman window）的形狀是一個矩形上面接一個半圓。如果窗框的周長是 28 ft，窗戶的尺寸要多少才能讓最多的光透進來（也就是面積最大）？課本的圖把半圓的半徑標成 $x$、矩形的高標成 $y$。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "slider": { "label": "半圓半徑 x", "min": 0.8, "max": 5.4, "step": 0.02, "value": 2, "digits": 2, "unit": " ft", "dragPanel": 1 },
+  "panels": [
+    { "title": "窗戶的形狀（周長固定 28 ft）", "narrow": true, "axes": false, "equal": true, "x": [-11, 11], "y": [-2.2, 15.5], "h": 300,
+      "shapes": [
+        { "type": "rect", "x": "-a", "y": 0, "width": "2*a", "height": "14-a-pi*a/2", "color": "f", "fill": true },
+        { "type": "semi", "cx": 0, "cy": "14-a-pi*a/2", "r": "a", "color": "f", "fill": true },
+        { "type": "line", "x1": 0, "y1": "14-a-pi*a/2", "x2": "a", "y2": "14-a-pi*a/2", "color": "d1", "w": 3, "label": "x = {{a|2}}", "lo": [0, -8] },
+        { "type": "text", "x": "-a-0.4", "y": "(14-a-pi*a/2)/2", "t": "y = {{14-a-pi*a/2|2}}", "color": "f", "anchor": "end" },
+        { "type": "text", "x": 0, "y": -1.5, "t": "寬 2x = {{2*a|2}}", "color": "f" }
+      ] },
+    { "title": "面積隨 x 的變化", "x": [0, 5.6], "y": [0, 62], "h": 300, "xlabel": "x（ft）", "ylabel": "面積（ft²）",
+      "fns": [ { "f": "28*x-2*x^2-pi*x^2/2", "color": "f", "label": "A(x) = 28x − 2x² − πx²/2", "domain": [0, 5.446] } ],
+      "points": [ { "x": "a", "on": 0, "color": "d1", "label": "A = {{28*a-2*a^2-pi*a^2/2|2}}", "pos": "t" } ] }
+  ],
+  "readouts": [
+    { "label": "矩形高 y", "expr": "14-a-pi*a/2", "digits": 2, "unit": " ft" },
+    { "label": "面積 A", "expr": "28*a-2*a^2-pi*a^2/2", "digits": 2, "unit": " ft²", "color": "f" },
+    { "label": "A′(x) = 28 − (4 + π)x", "expr": "28-(4+pi)*a", "digits": 2, "color": "d1" }
+  ]
+}
+</script>
+<figcaption>周長固定，半圓越大，矩形就得越矮。橘色線段是半徑 x，窗戶的寬是 2x。</figcaption>
+</figure>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>周長是窗戶「外框」的長度：底邊 $2x$、左右兩邊各 $y$、上面的半圓弧 $\pi x$。矩形和半圓交界的那條線在窗戶裡面，不算周長。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>設變數、寫目標</h4>
+<p>半圓半徑 $x$，所以矩形的寬是 $2x$；矩形的高是 $y$。面積 = 矩形 + 半圓：</p>
+$$A = 2xy + \tfrac12\pi x^2$$
+</div>
+<div class="step">
+<h4>用周長消掉 y</h4>
+$$\underbrace{2x}_{\text{底}} + \underbrace{2y}_{\text{左右}} + \underbrace{\pi x}_{\text{半圓弧}} = 28 \quad\Longrightarrow\quad y = 14 - x - \frac{\pi x}{2}$$
+$$\begin{aligned}A(x) &= 2x\left(14 - x - \frac{\pi x}{2}\right) + \frac{\pi x^2}{2}\\ &= 28x - 2x^2 - \pi x^2 + \frac{\pi x^2}{2}\\ &= 28x - 2x^2 - \frac{\pi x^2}{2}\end{aligned}$$
+</div>
+<div class="step">
+<h4>微分找臨界數</h4>
+<p>$\pi$ 只是一個數字（大約 3.14），當成常數處理：</p>
+$$A'(x) = 28 - 4x - \pi x = 28 - (4 + \pi)x = 0 \quad\Longrightarrow\quad x = \frac{28}{4 + \pi} \approx 3.92$$
+</div>
+<div class="step">
+<h4>確認是最大</h4>
+$$A''(x) = -(4 + \pi) \lt 0$$
+<p>曲線整段凹向下，唯一的臨界數就是絕對極大。</p>
+</div>
+<div class="step">
+<h4>算 y，回答問題</h4>
+$$y = 14 - x\left(1 + \frac{\pi}{2}\right) = 14 - \frac{28}{4+\pi}\cdot\frac{2 + \pi}{2} = \frac{14(4 + \pi) - 14(2 + \pi)}{4 + \pi} = \frac{28}{4 + \pi} \approx 3.92$$
+<p>結果剛好 $y = x$：矩形的高等於半圓的半徑。考試時直接把 $x \approx 3.92$ 代進 $y = 14 - x - \dfrac{\pi x}{2}$ 按計算機也可以。</p>
+<p class="answer"><span>半圓半徑 $x = \dfrac{28}{4+\pi} \approx 3.92$ ft，矩形高 $y = \dfrac{28}{4+\pi} \approx 3.92$ ft（窗寬 $2x \approx 7.84$ ft），最大面積約 54.89 ft²。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.5-20">
+<h3>蘋果園每英畝該種幾棵</h3>
+<div class="prob-q">
+<p>蘋果園每英畝種 22 棵樹時，平均每棵可以收成 36 bushel（蒲式耳，容量單位）。每英畝每多種 1 棵，每棵樹的收成就少 2 蒲式耳。每英畝種幾棵，總收成最多？</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-12, 10], "y": [450, 850], "h": 320,
+  "xlabel": "x（比 22 棵多種幾棵）", "ylabel": "每英畝總收成（蒲式耳）",
+  "fns": [ { "f": "(22+x)*(36-2*x)", "color": "f", "label": "Y(x) = (22 + x)(36 − 2x)" } ],
+  "tangent": { "fn": 0 },
+  "vlines": [ { "x": 0, "label": "原本 22 棵", "color": "mute", "low": true } ],
+  "slider": { "label": "多種 x 棵", "min": -10, "max": 8, "step": 1, "value": 4, "digits": 0, "unit": " 棵",
+    "presets": [ { "label": "x = 4（多種 4 棵）", "value": 4 }, { "label": "x = 0（維持 22 棵）", "value": 0 }, { "label": "x = −4（少種 4 棵）", "value": -4 } ] },
+  "readouts": [
+    { "label": "每英畝棵數 22 + x", "expr": "22+a", "digits": 0, "unit": " 棵" },
+    { "label": "每棵收成 36 − 2x", "expr": "36-2*a", "digits": 0, "unit": " 蒲式耳" },
+    { "label": "總收成 Y", "expr": "(22+a)*(36-2*a)", "digits": 0, "unit": " 蒲式耳", "color": "f" },
+    { "label": "Y′(x) = −8 − 4x", "expr": "-8-4*a", "digits": 0, "color": "d1" }
+  ]
+}
+</script>
+<figcaption>x 是正的代表多種，負的代表少種。往右拖（多種）總收成一路下降；往左拖一點點反而上升。</figcaption>
+</figure>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>總收成 = 棵數 × 每棵收成。設每英畝「多種 $x$ 棵」，棵數是 $22 + x$，每棵收成是 $36 - 2x$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>設變數</h4>
+<p>設每英畝比 22 棵多種 $x$ 棵。那麼：</p>
+<p>棵數 $= 22 + x$　　每棵收成 $= 36 - 2x$</p>
+</div>
+<div class="step">
+<h4>寫目標函數</h4>
+$$Y(x) = (22 + x)(36 - 2x) = 792 - 44x + 36x - 2x^2 = 792 - 8x - 2x^2$$
+</div>
+<div class="step">
+<h4>微分找臨界數</h4>
+$$Y'(x) = -8 - 4x = 0 \quad\Longrightarrow\quad x = -2$$
+</div>
+<div class="step">
+<h4>解讀 x = −2，確認是最大</h4>
+<p>$Y''(x) = -4 \lt 0$，整段凹向下，所以 $x = -2$ 是絕對極大。</p>
+<p>$x$ 是負的，意思是<strong>要比現在少種 2 棵</strong>：棵數 $22 - 2 = 20$，每棵收成 $36 - 2(-2) = 40$，總收成 $20 \times 40 = 800$ 蒲式耳，比原本的 $22 \times 36 = 792$ 多。</p>
+<p class="answer"><span>每英畝種 20 棵，總收成最多（800 蒲式耳）。</span></p>
+</div>
+<div class="step">
+<h4>補充：如果規定只能多種</h4>
+<p>如果把題目讀成「只能增加棵數」（$x \ge 0$），那麼 $x \gt 0$ 時 $Y'(x) = -8 - 4x \lt 0$，收成一直遞減，最大就在端點 $x = 0$（維持 22 棵、792 蒲式耳）。課本這題的模型是讓 $x$ 可以往兩邊變動，答案寫 20 棵；考卷上把「$x = -2$ 代表少種 2 棵」這句話寫出來最保險。</p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.5-21">
+<h3>遊艇出租的最大收益</h3>
+<div class="prob-q">
+<p>一艘豪華遊艇，剛好 20 人報名時每人每天收 600 美元。超過 20 人時（最多可載 90 人），每多 1 人，每個人的票價都降 4 美元。假設至少有 20 人報名，幾個人報名時船東的收益最大？最大收益是多少？這時每個人的票價是多少？</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 75], "y": [0, 32000], "h": 320,
+  "xlabel": "x（超過 20 人的人數）", "ylabel": "每天收益（美元）",
+  "fns": [ { "f": "(20+x)*(600-4*x)", "color": "f", "label": "R(x) = (20 + x)(600 − 4x)", "domain": [0, 70] } ],
+  "tangent": { "fn": 0 },
+  "vlines": [ { "x": 70, "label": "滿載 90 人", "color": "neg" } ],
+  "slider": { "label": "多 x 人", "min": 0, "max": 70, "step": 1, "value": 20, "digits": 0, "unit": " 人",
+    "presets": [ { "label": "x = 0（20 人）", "value": 0 }, { "label": "x = 70（滿載 90 人）", "value": 70 } ] },
+  "readouts": [
+    { "label": "人數 20 + x", "expr": "20+a", "digits": 0, "unit": " 人" },
+    { "label": "票價 600 − 4x", "expr": "600-4*a", "digits": 0, "unit": " 美元" },
+    { "label": "收益 R", "expr": "(20+a)*(600-4*a)", "digits": 0, "unit": " 美元", "color": "f" },
+    { "label": "R′(x) = 520 − 8x", "expr": "520-8*a", "digits": 0, "color": "d1" }
+  ]
+}
+</script>
+<figcaption>人越多、票價越低。收益曲線在快到滿載之前就到頂了，所以「載滿」不是最賺的。</figcaption>
+</figure>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>設超過 20 人的人數是 $x$。最多 90 人，所以 $x$ 最大是 70。這題範圍是閉區間，要比較端點。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>設變數、寫範圍</h4>
+<p>設報名人數比 20 人多 $x$ 人。人數 $= 20 + x$，票價 $= 600 - 4x$。人數在 20 到 90 之間，所以 $0 \le x \le 70$。</p>
+</div>
+<div class="step">
+<h4>寫目標函數</h4>
+$$R(x) = (20 + x)(600 - 4x) = 12000 - 80x + 600x - 4x^2 = 12000 + 520x - 4x^2$$
+</div>
+<div class="step">
+<h4>微分找臨界數</h4>
+$$R'(x) = 520 - 8x = 0 \quad\Longrightarrow\quad x = 65$$
+<p>$x = 65$ 在範圍 $[0, 70]$ 裡面，可以用。</p>
+</div>
+<div class="step">
+<h4>比較臨界數和端點</h4>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>$x$</th><th class="n">0</th><th class="n">65</th><th class="n">70</th></tr></thead>
+<tbody>
+<tr><td>人數 × 票價</td><td class="n">20 × 600</td><td class="n">85 × 340</td><td class="n">90 × 320</td></tr>
+<tr><td>$R(x)$</td><td class="n">12,000</td><td class="n">28,900</td><td class="n">28,800</td></tr>
+</tbody>
+</table>
+</div>
+<p>最大的是 $R(65) = 28{,}900$。人數 $20 + 65 = 85$，票價 $600 - 4(65) = 340$。</p>
+<p class="answer"><span>85 人報名時收益最大，每天 28,900 美元，此時每人票價 340 美元。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.5-26">
+<h3>用料最省的穀倉</h3>
+<div class="prob-q">
+<p>穀倉的形狀是一個直立的圓柱，上面蓋一個半球。穀倉的容量要 $504\pi$ ft³。半徑和圓柱的高各是多少，建造用的材料最少？</p>
+<p>課本提示：體積是 $\pi r^2h + \tfrac23\pi r^3$，表面積（含地板）是 $\pi(3r^2 + 2rh)$。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "slider": { "label": "半徑 r", "min": 4, "max": 9, "step": 0.02, "value": 5, "digits": 2, "unit": " ft", "dragPanel": 1 },
+  "panels": [
+    { "title": "穀倉側面圖（容量固定 504π ft³）", "narrow": true, "axes": false, "equal": true, "x": [-22, 22], "y": [-4, 38], "h": 300,
+      "shapes": [
+        { "type": "rect", "x": "-a", "y": 0, "width": "2*a", "height": "504/a^2-2*a/3", "color": "f", "fill": true },
+        { "type": "semi", "cx": 0, "cy": "504/a^2-2*a/3", "r": "a", "color": "f", "fill": true },
+        { "type": "line", "x1": 0, "y1": "504/a^2-2*a/3", "x2": "a", "y2": "504/a^2-2*a/3", "color": "d1", "w": 3, "label": "r = {{a|2}}", "lo": [0, -8] },
+        { "type": "text", "x": "-a-0.8", "y": "(504/a^2-2*a/3)/2", "t": "h = {{504/a^2-2*a/3|2}}", "color": "f", "anchor": "end" },
+        { "type": "line", "x1": -16, "y1": 0, "x2": 16, "y2": 0, "color": "ink", "w": 3 },
+        { "type": "text", "x": 0, "y": -2.8, "t": "地面", "color": "mute" }
+      ] },
+    { "title": "表面積隨 r 的變化", "x": [0, 10], "y": [600, 1200], "h": 300, "xlabel": "r（ft）", "ylabel": "表面積（ft²）",
+      "fns": [ { "f": "pi*(5*x^2/3+1008/x)", "color": "f", "label": "S(r) = π(5r²/3 + 1008/r)", "domain": [2.5, 9.11] } ],
+      "points": [ { "x": "a", "on": 0, "color": "d1", "label": "S = {{pi*(5*a^2/3+1008/a)|1}}", "pos": "t" } ] }
+  ],
+  "readouts": [
+    { "label": "圓柱高 h", "expr": "504/a^2-2*a/3", "digits": 2, "unit": " ft" },
+    { "label": "表面積 S", "expr": "pi*(5*a^2/3+1008/a)", "digits": 1, "unit": " ft²", "color": "f" },
+    { "label": "S′(r)", "expr": "pi*(10*a/3-1008/a^2)", "digits": 1, "color": "d1" }
+  ]
+}
+</script>
+<figcaption>容量固定：半徑小，穀倉就得又高又瘦；半徑大，就又矮又胖。兩種極端的表面積都比較大。</figcaption>
+</figure>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>「用料最少」就是表面積最小。先把體積等式兩邊同除以 $\pi$，解出 $h$，再代進表面積公式。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>設變數、寫目標</h4>
+<p>設半徑 $r$ ft、圓柱的高 $h$ ft。要最小的是表面積：</p>
+$$S = \underbrace{\pi r^2}_{\text{地板}} + \underbrace{2\pi rh}_{\text{圓柱側面}} + \underbrace{2\pi r^2}_{\text{半球}} = \pi(3r^2 + 2rh)$$
+</div>
+<div class="step">
+<h4>用容量消掉 h</h4>
+$$\pi r^2h + \tfrac23\pi r^3 = 504\pi \quad\Longrightarrow\quad r^2h + \tfrac23 r^3 = 504 \quad\Longrightarrow\quad h = \frac{504}{r^2} - \frac{2r}{3}$$
+$$S(r) = \pi\left[3r^2 + 2r\left(\frac{504}{r^2} - \frac{2r}{3}\right)\right] = \pi\left[3r^2 + \frac{1008}{r} - \frac{4r^2}{3}\right] = \pi\left(\frac{5r^2}{3} + \frac{1008}{r}\right)$$
+<p>$3r^2 - \tfrac43 r^2 = \tfrac53 r^2$。範圍是 $r \gt 0$。</p>
+</div>
+<div class="step">
+<h4>微分找臨界數</h4>
+$$S'(r) = \pi\left(\frac{10r}{3} - \frac{1008}{r^2}\right) = 0 \quad\Longrightarrow\quad \frac{10r}{3} = \frac{1008}{r^2} \quad\Longrightarrow\quad r^3 = \frac{3024}{10} = 302.4$$
+$$r = \sqrt[3]{302.4} \approx 6.71$$
+<p>計算機按法：302.4 的 $(1 \div 3)$ 次方，或用立方根鍵。</p>
+</div>
+<div class="step">
+<h4>確認是最小</h4>
+$$S''(r) = \pi\left(\frac{10}{3} + \frac{2016}{r^3}\right) \gt 0 \quad (r \gt 0)$$
+<p>整段凹向上，唯一的臨界數是絕對極小。</p>
+</div>
+<div class="step">
+<h4>算 h，回答問題</h4>
+$$h = \frac{504}{r^2} - \frac{2r}{3} \approx \frac{504}{45.05} - 4.475 \approx 11.187 - 4.475 \approx 6.71$$
+<p>剛好 $h = r$。（原因：$\dfrac{504}{r^2} = \dfrac{504\,r}{r^3} = \dfrac{504\,r}{302.4} = \dfrac53 r$，所以 $h = \tfrac53 r - \tfrac23 r = r$。）</p>
+<p class="answer"><span>半徑 $r = \sqrt[3]{302.4} \approx 6.71$ ft，圓柱高 $h \approx 6.71$ ft。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.5-29">
+<h3>鳥該從哪裡上岸最省時間</h3>
+<div class="prob-q">
+<p>有些鳥在水面上飛得比在陸地上慢。一隻鳥在水面上的速度是 4 mph（每小時英里），在陸地上是 6 mph。牠從島上的 $E$ 點出發，島離筆直的海岸 3 mi（英里）；鳥巢 $N$ 在海岸上，離「島正對岸的那一點」12 mi。鳥先直線飛過水面到岸上的 $P$ 點，再沿著海岸飛到 $N$。$P$ 點離正對岸那一點 $x$ mi，$x$ 是多少時總時間最短？</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "slider": { "label": "P 點位置 x", "min": 0, "max": 12, "step": 0.01, "value": 6, "digits": 2, "unit": " mi", "dragPanel": 0, "play": true,
+    "presets": [ { "label": "x = 0（先飛到最近的岸）", "value": 0 }, { "label": "x = 12（直線飛到巢）", "value": 12 } ] },
+  "panels": [
+    { "title": "俯視圖（可以直接拖曳 P 點）", "axes": false, "equal": true, "x": [-1.8, 13.8], "y": [-2.6, 4.4], "h": 230,
+      "shapes": [
+        { "type": "rect", "x": -3, "y": 0, "width": 18, "height": 6, "color": "water", "fill": true, "w": 0.01 },
+        { "type": "line", "x1": -3, "y1": 0, "x2": 15, "y2": 0, "color": "ink", "w": 2.5 },
+        { "type": "line", "x1": 0, "y1": 3, "x2": 0, "y2": 0, "color": "mute", "dash": true, "label": "3 mi", "lo": [-8, 4], "anchor": "end" },
+        { "type": "line", "x1": 0, "y1": 3, "x2": "a", "y2": 0, "color": "d1", "w": 3, "label": "水上 {{sqrt(a^2+9)|2}} mi（4 mph）", "lo": [10, -6], "anchor": "start" },
+        { "type": "line", "x1": "a", "y1": 0, "x2": 12, "y2": 0, "color": "pos", "w": 5 },
+        { "type": "text", "x": "a/2", "y": -0.75, "t": "x = {{a|2}}", "color": "ink" },
+        { "type": "text", "x": 6.9, "y": -1.6, "t": "陸上 12 − x = {{12-a|2}} mi（6 mph）", "color": "pos" },
+        { "type": "text", "x": 9.5, "y": 3.6, "t": "水面", "color": "water" },
+        { "type": "text", "x": 13.4, "y": -2.3, "t": "陸地", "color": "mute", "anchor": "end" }
+      ],
+      "points": [
+        { "x": 0, "y": 3, "label": "E（島）", "pos": "tr", "color": "ink" },
+        { "x": "a", "y": 0, "label": "P", "pos": "tr", "color": "d1" },
+        { "x": 12, "y": 0, "label": "N（巢）", "pos": "t", "color": "pos" }
+      ] },
+    { "title": "總時間隨 x 的變化", "x": [0, 12], "y": [2.4, 3.2], "h": 230, "xlabel": "x（mi）", "ylabel": "時間（小時）",
+      "fns": [ { "f": "sqrt(x^2+9)/4+(12-x)/6", "color": "f", "label": "T(x) = √(x² + 9)/4 + (12 − x)/6" } ],
+      "points": [ { "x": "a", "on": 0, "color": "d1", "label": "T = {{sqrt(a^2+9)/4+(12-a)/6|3}}", "pos": "t" } ] }
+  ],
+  "readouts": [
+    { "label": "水上時間", "expr": "sqrt(a^2+9)/4", "digits": 3, "unit": " 小時", "color": "d1" },
+    { "label": "陸上時間", "expr": "(12-a)/6", "digits": 3, "unit": " 小時", "color": "pos" },
+    { "label": "總時間 T", "expr": "sqrt(a^2+9)/4+(12-a)/6", "digits": 3, "unit": " 小時", "color": "f" },
+    { "label": "T′(x)", "expr": "a/(4*sqrt(a^2+9))-1/6", "digits": 3 }
+  ]
+}
+</script>
+<figcaption>P 太靠左，陸上要飛很遠；P 太靠右，慢速的水上路程變長。按「播放」看 P 從左移到右時總時間怎麼變。</figcaption>
+</figure>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>時間 = 距離 ÷ 速度，水上和陸上分開算再相加。水上那一段是直角三角形的斜邊，兩股是 3 和 $x$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>把兩段距離寫出來</h4>
+<p>水上：$E$ 到 $P$ 是直角三角形的斜邊，兩股是 3 和 $x$，距離 $\sqrt{x^2 + 9}$。<br>陸上：$P$ 到 $N$ 的距離是 $12 - x$。</p>
+</div>
+<div class="step">
+<h4>寫目標函數（總時間）</h4>
+$$T(x) = \underbrace{\frac{\sqrt{x^2 + 9}}{4}}_{\text{水上，4 mph}} + \underbrace{\frac{12 - x}{6}}_{\text{陸上，6 mph}} \qquad (0 \le x \le 12)$$
+</div>
+<div class="step">
+<h4>微分</h4>
+<p>$\sqrt{x^2+9} = (x^2+9)^{1/2}$ 用連鎖律，裡面的微分是 $2x$：</p>
+$$T'(x) = \frac14\cdot\frac12(x^2+9)^{-1/2}\cdot 2x - \frac16 = \frac{x}{4\sqrt{x^2+9}} - \frac16$$
+</div>
+<div class="step">
+<h4>令 T′(x) = 0 解 x</h4>
+$$\frac{x}{4\sqrt{x^2+9}} = \frac16 \quad\Longrightarrow\quad 6x = 4\sqrt{x^2+9} \quad\Longrightarrow\quad 3x = 2\sqrt{x^2+9}$$
+<p>根號已經單獨在一邊，兩邊平方：</p>
+$$9x^2 = 4(x^2 + 9) \quad\Longrightarrow\quad 5x^2 = 36 \quad\Longrightarrow\quad x = \frac{6}{\sqrt5} \approx 2.68$$
+<p>$x$ 是距離，只取正的。</p>
+</div>
+<div class="step">
+<h4>比較臨界數和端點</h4>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>$x$</th><th class="n">0</th><th class="n">2.68</th><th class="n">12</th></tr></thead>
+<tbody><tr><td>$T(x)$（小時）</td><td class="n">2.750</td><td class="n">2.559</td><td class="n">3.092</td></tr></tbody>
+</table>
+</div>
+<p>$T(0) = \tfrac34 + 2$，$T(12) = \tfrac{\sqrt{153}}{4}$。最小的是 $x \approx 2.68$。</p>
+<p class="answer"><span>$P$ 點選在離正對岸那一點 $x = \dfrac{6}{\sqrt5} \approx 2.68$ mi 的地方（往鳥巢的方向），總時間最短，約 2.56 小時。</span></p>
+</div>
+</div>
+</article>
+
+<article class="prob" data-prob="4.5-30">
+<h3>划船加走路，怎麼走最快</h3>
+<div class="prob-q">
+<p>一位女士在湖上的小船裡，離筆直湖岸上最近的 $P$ 點 1 mi。她要去岸上的 $Q$ 點，$Q$ 沿著湖岸離 $P$ 有 10 mi。她打算先划船到 $P$、$Q$ 之間的某一點 $R$，再走路到 $Q$。划船速度 3 mph，走路速度 4 mph。$R$ 要選在哪裡才能最快到 $Q$？需要多少時間？</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "slider": { "label": "R 點位置 x", "min": 0, "max": 10, "step": 0.01, "value": 5, "digits": 2, "unit": " mi", "dragPanel": 0, "play": true,
+    "presets": [ { "label": "x = 0（划到最近的岸再走）", "value": 0 }, { "label": "x = 10（直接划到 Q）", "value": 10 } ] },
+  "panels": [
+    { "title": "俯視圖（可以直接拖曳 R 點）", "axes": false, "equal": true, "x": [-1.5, 11.5], "y": [-2.5, 2.3], "h": 200,
+      "shapes": [
+        { "type": "rect", "x": -3, "y": 0, "width": 16, "height": 4, "color": "water", "fill": true, "w": 0.01 },
+        { "type": "line", "x1": -3, "y1": 0, "x2": 13, "y2": 0, "color": "ink", "w": 2.5 },
+        { "type": "line", "x1": 0, "y1": 1, "x2": 0, "y2": 0, "color": "mute", "dash": true, "label": "1 mi", "lo": [-8, 4], "anchor": "end" },
+        { "type": "line", "x1": 0, "y1": 1, "x2": "a", "y2": 0, "color": "d1", "w": 3, "label": "划船 {{sqrt(1+a^2)|2}} mi（3 mph）", "lo": [10, -8], "anchor": "start" },
+        { "type": "line", "x1": "a", "y1": 0, "x2": 10, "y2": 0, "color": "pos", "w": 5 },
+        { "type": "text", "x": "a/2", "y": -0.7, "t": "x = {{a|2}}", "color": "ink" },
+        { "type": "text", "x": 5.6, "y": -1.5, "t": "走路 10 − x = {{10-a|2}} mi（4 mph）", "color": "pos" },
+        { "type": "text", "x": 8.5, "y": 1.6, "t": "湖面", "color": "water" },
+        { "type": "text", "x": 11.2, "y": -2.25, "t": "陸地", "color": "mute", "anchor": "end" }
+      ],
+      "points": [
+        { "x": 0, "y": 1, "label": "小船", "pos": "tr", "color": "ink" },
+        { "x": 0, "y": 0, "label": "P", "pos": "bl", "color": "mute" },
+        { "x": "a", "y": 0, "label": "R", "pos": "tr", "color": "d1" },
+        { "x": 10, "y": 0, "label": "Q", "pos": "t", "color": "pos" }
+      ] },
+    { "title": "總時間隨 x 的變化", "x": [0, 10], "y": [2.6, 3.4], "h": 200, "xlabel": "x（mi）", "ylabel": "時間（小時）",
+      "fns": [ { "f": "sqrt(1+x^2)/3+(10-x)/4", "color": "f", "label": "T(x) = √(1 + x²)/3 + (10 − x)/4" } ],
+      "points": [ { "x": "a", "on": 0, "color": "d1", "label": "T = {{sqrt(1+a^2)/3+(10-a)/4|3}}", "pos": "t" } ] }
+  ],
+  "readouts": [
+    { "label": "划船時間", "expr": "sqrt(1+a^2)/3", "digits": 3, "unit": " 小時", "color": "d1" },
+    { "label": "走路時間", "expr": "(10-a)/4", "digits": 3, "unit": " 小時", "color": "pos" },
+    { "label": "總時間 T", "expr": "sqrt(1+a^2)/3+(10-a)/4", "digits": 3, "unit": " 小時", "color": "f" },
+    { "label": "T′(x)", "expr": "a/(3*sqrt(1+a^2))-1/4", "digits": 3 }
+  ]
+}
+</script>
+<figcaption>走路比划船快，所以不會想直接划到 Q；但划到最近的岸又繞遠路。最快的上岸點在兩者之間。</figcaption>
+</figure>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>和 #29 完全同一型。設 $P$ 到 $R$ 的距離是 $x$，划船距離是斜邊 $\sqrt{1 + x^2}$，走路距離是 $10 - x$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>設變數、寫目標函數</h4>
+<p>設 $P$ 到 $R$ 的距離是 $x$ mi（$0 \le x \le 10$）。划船距離是直角三角形的斜邊 $\sqrt{1 + x^2}$，走路距離是 $10 - x$：</p>
+$$T(x) = \underbrace{\frac{\sqrt{1 + x^2}}{3}}_{\text{划船，3 mph}} + \underbrace{\frac{10 - x}{4}}_{\text{走路，4 mph}}$$
+</div>
+<div class="step">
+<h4>微分</h4>
+$$T'(x) = \frac13\cdot\frac12(1 + x^2)^{-1/2}\cdot 2x - \frac14 = \frac{x}{3\sqrt{1+x^2}} - \frac14$$
+</div>
+<div class="step">
+<h4>令 T′(x) = 0 解 x</h4>
+$$\frac{x}{3\sqrt{1+x^2}} = \frac14 \quad\Longrightarrow\quad 4x = 3\sqrt{1 + x^2}$$
+<p>兩邊平方：</p>
+$$16x^2 = 9(1 + x^2) \quad\Longrightarrow\quad 7x^2 = 9 \quad\Longrightarrow\quad x = \frac{3}{\sqrt7} \approx 1.13$$
+</div>
+<div class="step">
+<h4>比較臨界數和端點</h4>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>$x$</th><th class="n">0</th><th class="n">1.13</th><th class="n">10</th></tr></thead>
+<tbody><tr><td>$T(x)$（小時）</td><td class="n">2.833</td><td class="n">2.720</td><td class="n">3.350</td></tr></tbody>
+</table>
+</div>
+<p>$T(0) = \tfrac13 + \tfrac{10}{4}$，$T(10) = \tfrac{\sqrt{101}}{3}$。最小的是 $x \approx 1.13$。</p>
+</div>
+<div class="step">
+<h4>算最短時間，回答問題</h4>
+<p>把 $x = \dfrac{3}{\sqrt7}$ 代回去：$\sqrt{1 + x^2} = \sqrt{\tfrac{16}{7}} = \dfrac{4}{\sqrt7}$，所以</p>
+$$T = \frac{4}{3\sqrt7} + \frac{10}{4} - \frac{3}{4\sqrt7} = 2.5 + \frac{\sqrt7}{12} \approx 2.72 \text{ 小時}$$
+<p class="answer"><span>$R$ 選在離 $P$ 點 $x = \dfrac{3}{\sqrt7} \approx 1.13$ mi 的地方，最短時間約 2.72 小時（大約 2 小時 43 分）。</span></p>
+</div>
+</div>
+</article>
+
+<div class="exam">
+<p>應用題是照步驟給分的。就算最後算錯，只要寫出「設 $x$ 是什麼」「目標函數」「限制條件」「$f'(x) = 0$」這幾行，都拿得到部分分數。算出臨界數後一定要補一句確認（比較端點，或 $f'' \gt 0$／$f'' \lt 0$），最後用一句話回答題目問的東西並寫單位。這節會用到 $\pi$、根號和立方根，記得帶計算機，中間過程不要太早四捨五入。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>

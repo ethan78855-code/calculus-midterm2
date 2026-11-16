@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>微積分期中考二衝刺講義｜3.4–3.6、第 4 章、第 5 章</title>
+<meta name="description" content="從零開始的微積分期中考二複習：邊際函數、隱函數微分、極值與凹性、曲線描繪、最佳化、指數與對數，含 34 題指定題逐步解答與互動圖表。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=3">
+</head>
+<body data-page="index">
+<main class="page">
+
+<div class="hero">
+<p class="kicker">第二次期中考 · 115 年 11 月 19 日（四）</p>
+<h1>整份考卷，其實都在問<em>斜率</em></h1>
+<p class="lead">3.4 到第 5 章看起來有十幾節，核心只有一件事：算出導數，然後看它是正的、負的、還是零。拖一下這張圖，你就已經看完第 4 章的大綱了。</p>
+</div>
+
+<figure class="fig">
+<script type="application/json">
+{
+  "alt": "f(x) = x³ − 3x 的圖形與可拖曳的切線",
+  "x": [-2.4, 2.4], "y": [-4.6, 4.6], "h": 360,
+  "fns": [
+    { "f": "x^3-3*x", "color": "f", "label": "f(x) = x³ − 3x" },
+    { "f": "3*x^2-3", "color": "d1", "dash": true, "label": "f′(x)：每一點的斜率", "toggle": true, "show": false },
+    { "f": "6*x", "color": "d2", "dash": true, "label": "f″(x)：彎的方向", "toggle": true, "show": false }
+  ],
+  "tangent": { "fn": 0 },
+  "points": [
+    { "x": -1, "y": 2, "label": "相對極大值", "pos": "t", "color": "neg" },
+    { "x": 1, "y": -2, "label": "相對極小值", "pos": "b", "color": "pos" },
+    { "x": 0, "y": 0, "label": "反曲點", "pos": "tr", "color": "d2" }
+  ],
+  "slider": { "label": "x", "min": -2.2, "max": 2.2, "step": 0.01, "value": -1.7, "digits": 2, "play": true,
+    "presets": [ { "label": "山頂 x = −1", "value": -1 }, { "label": "反曲點 x = 0", "value": 0 }, { "label": "谷底 x = 1", "value": 1 } ] },
+  "readouts": [
+    { "label": "切線斜率 f′(x)", "d": 0, "digits": 2, "color": "d1" },
+    { "label": "4.1 節", "d": 0, "pos": "f′ > 0，函數遞增 ↗", "neg": "f′ < 0，函數遞減 ↘", "zero": "f′ = 0，極值候選", "eps": 0.06 },
+    { "label": "4.2 節", "d2": 0, "pos": "f″ > 0，凹向上 ∪", "neg": "f″ < 0，凹向下 ∩", "zero": "f″ = 0，反曲點候選", "eps": 0.15 }
+  ]
+}
+</script>
+<figcaption>在圖上左右拖曳，或按「播放」。橘色切線往右上斜的時候函數在爬升，水平的時候就是山頂或谷底。整個第 4 章就是把這件事用算的做出來。</figcaption>
+</figure>
+
+<ul class="facts">
+<li><b>考試日期</b>115 年 11 月 19 日（星期四），在授課教室</li>
+<li><b>範圍</b>Sections 3.4–3.6、Chapter 4、Chapter 5</li>
+<li><b>計算機</b>要有 $e^x$ 和 $\log$／$\ln$ 功能，請提早準備</li>
+<li><b>注意</b>考試時不能使用手機（不能拿手機當計算機）</li>
+</ul>
+
+<h2 id="how">這份講義怎麼用</h2>
+<div class="how" data-title="每一節都照這個順序">
+<ol>
+<li><strong>看觀念</strong>：每一節先用白話講這節在做什麼，再給公式。</li>
+<li><strong>玩圖</strong>：圖都可以拖曳或按播放，看數字怎麼跟著變。圖例上寫「點一下顯示」的可以開關。</li>
+<li><strong>做小測驗</strong>：點選項會立刻告訴你對不對、為什麼。</li>
+<li><strong>做指定題</strong>：先自己算，卡住再按「看第 1 步」，一次只開一步。</li>
+<li><strong>標記</strong>：會了就按「這題我會了」。進度存在這台裝置的瀏覽器裡，下次打開還在。</li>
+</ol>
+</div>
+<p>完全沒讀過的話，請從<a href="basics.html">暖身：微分從零開始</a>開始。那一頁不在考試範圍，但後面每一題都要用到。</p>
+
+<h2 id="plan">三天讀書計畫</h2>
+<p>照這個順序，每天大約 3 到 4 小時。時間不夠的話，至少把每一節的指定題跟著解答走一遍。</p>
+<ol class="plan">
+<li>
+<div class="when">11/16（一）<small>今晚 · 約 3 小時</small></div>
+<div>
+<p><a href="basics.html">暖身</a> → <a href="s34.html">3.4 邊際與彈性</a> → <a href="s35.html">3.5 高階導數</a> → <a href="s36.html">3.6 隱函數微分與相關變率</a></p>
+<p>目標：微分規則變成反射動作。3.4 的題型很固定，最容易拿分。</p>
+</div>
+</li>
+<li>
+<div class="when">11/17（二）<small>約 4 小時</small></div>
+<div>
+<p><a href="s41.html">4.1 遞增遞減與極值</a> → <a href="s42.html">4.2 凹性與反曲點</a> → <a href="s43.html">4.3 曲線描繪</a> → <a href="s44.html">4.4 絕對極值</a></p>
+<p>目標：會畫 $f'$ 和 $f''$ 的符號圖。這四節是同一套流程，一口氣讀完最省力。</p>
+</div>
+</li>
+<li>
+<div class="when">11/18（三）<small>約 4 小時</small></div>
+<div>
+<p><a href="s45.html">4.5 最佳化應用題</a>（8 題指定題，份量最重）→ <a href="s51.html">5.1–5.2 指數與對數</a> → <a href="s53.html">5.3 複利</a> → <a href="s54.html">5.4–5.5 微分</a> → <a href="s56.html">5.6 指數模型</a></p>
+<p>目標：應用題會列式；計算機的 $e^x$、$\ln$ 按得順。睡前把還沒標記「會了」的指定題不看解答重做一次。</p>
+</div>
+</li>
+<li>
+<div class="when">11/19（四）<small>考試當天</small></div>
+<div>
+<p>出門前看一遍<a href="formulas.html">公式總表與考前檢查</a>。帶計算機，手機收起來。</p>
+</div>
+</li>
+</ol>
+
+<h2 id="sections">全部章節</h2>
+<p id="homeProg" class="mono"></p>
+<div class="sec-grid" id="secGrid"></div>
+
+<h2 id="assigned">指定題總覽</h2>
+<p>老師公布的題目都在這裡，點題號直接跳到那一題的逐步解答。綠色代表你已經標記「會了」。</p>
+<div class="prob-groups" id="probGrid"></div>
+<div class="say">
+<p>老師的清單裡 5.6 寫的是「16, 16, 19, 22, 23, 24」，16 重複了一次。重複的那個有可能是 15，所以 5.6 #15 也一起做成「加碼題」放進來，總共 34 題。有機會的話跟老師或同學確認一下。</p>
+</div>
+<p class="reset-row"><button type="button" class="btn" id="resetProgress">清除所有進度標記</button></p>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=3"></script>
+</body>
+</html>
