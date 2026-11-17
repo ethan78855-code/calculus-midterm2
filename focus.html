@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>老師提示的六題｜微積分期中考二衝刺</title>
+<meta name="description" content="老師提示會考的六題：3.6 #34、#44、#49，4.3 #56，4.5 #21，5.6 #27。每一題從最基礎的觀念講起，附逐步解答、考卷寫法與換數字練習。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="assets/style.css?v=8">
+</head>
+<body data-page="focus">
+<main class="page">
+
+<p class="kicker">考前必讀 · 老師提示會考的題目</p>
+<h1>老師提示的六題</h1>
+<p class="lead">老師提示的題目是 3.6 的 #34、#44、#49，4.3 的 #56，4.5 的 #21，5.6 的 #27，數起來是<strong>六題</strong>。這一頁把六題從最基礎講起：每一題先補齊它需要的觀念，再一步一步算，最後給「考卷上可以照著寫的版本」和一題換數字的練習。六題讀熟之後，再回頭看其他章節。</p>
+<div data-toc></div>
+
+<h2 id="order">怎麼讀這一頁</h2>
+<p>六題照「由淺到深」排，不是照章節排。前三題是同一招（隱函數微分），一起讀最省力。</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>順序</th><th>題號</th><th>題型</th><th>要會的東西</th></tr></thead>
+<tbody>
+<tr><td>①</td><td><a href="#p34">3.6 #34</a></td><td>隱函數圖形的切線</td><td>連鎖律、看到 $y$ 多乘 $\dfrac{dy}{dx}$、點斜式</td></tr>
+<tr><td>②</td><td><a href="#p49">3.6 #49</a></td><td>產出函數與 MRTS</td><td>分數次方、乘法規則、隱函數微分</td></tr>
+<tr><td>③</td><td><a href="#p44">3.6 #44</a></td><td>相關變率（雞蛋）</td><td>對時間 $t$ 微分、單位換算、正負號</td></tr>
+<tr><td>④</td><td><a href="#p21">4.5 #21</a></td><td>最大收益應用題</td><td>列函數、微分等於 0、比較端點</td></tr>
+<tr><td>⑤</td><td><a href="#p56">4.3 #56</a></td><td>畫有理函數的圖</td><td>漸近線、除法規則、$f'$ 與 $f''$ 的符號圖</td></tr>
+<tr><td>⑥</td><td><a href="#p27">5.6 #27</a></td><td>消息傳播（邏輯斯成長）</td><td>$e$ 與 $\ln$、解方程、連鎖律</td></tr>
+</tbody>
+</table>
+</div>
+<div class="how" data-title="每一題都照這個順序讀">
+<ol>
+<li><strong>先補觀念</strong>：這一題用到、而你可能還沒學的東西，從頭講。</li>
+<li><strong>逐步解答</strong>：先自己想一下，再按「看第 1 步」，一次開一步。</li>
+<li><strong>常見錯誤</strong>：這題最容易被扣分的地方。</li>
+<li><strong>考卷上這樣寫</strong>：把過程濃縮成考卷上該出現的幾行。</li>
+<li><strong>換個數字練一次</strong>：蓋住答案自己算，算得出來才算真的會。</li>
+</ol>
+</div>
+<div class="say">
+<p>老師考試時有可能換數字。所以目標不是背答案，而是<mark>每一題都能說出「第一步要做什麼、為什麼」</mark>。</p>
+</div>
+
+<h2 id="tools">工具箱：微分規則</h2>
+<p>導數 $f'(x)$ 是圖形在那一點的<strong>切線斜率</strong>，也可以讀成「$x$ 多一點點時，$f$ 跟著變多少」。$f'(x)$、$y'$、$\dfrac{dy}{dx}$ 是同一個東西的三種寫法。</p>
+<p>六題裡要微分的地方，只會用到下面這幾條規則：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>規則</th><th>公式</th><th>例子</th><th>哪一題用到</th></tr></thead>
+<tbody>
+<tr><td>常數</td><td>$(c)' = 0$</td><td>$(72)' = 0$</td><td>全部</td></tr>
+<tr><td>冪次規則</td><td>$(x^n)' = n\,x^{n-1}$</td><td>$(x^3)' = 3x^2$，$(x)' = 1$</td><td>全部</td></tr>
+<tr><td>常數倍、加減</td><td>一項一項微</td><td>$(520x - 4x^2)' = 520 - 8x$</td><td>④</td></tr>
+<tr><td>連鎖律</td><td>$\big[(\text{一包})^n\big]' = n(\text{一包})^{n-1}\cdot(\text{一包})'$</td><td>$\big[(2x+1)^3\big]' = 3(2x+1)^2\cdot 2$</td><td>①②③⑥</td></tr>
+<tr><td>乘法規則</td><td>$(fg)' = f'g + fg'$</td><td>$\big[x^2(x+1)\big]' = 2x(x+1) + x^2\cdot 1$</td><td>②</td></tr>
+<tr><td>除法規則</td><td>$\Big(\dfrac{f}{g}\Big)' = \dfrac{f'g - fg'}{g^2}$</td><td>$\Big(\dfrac{x}{x+1}\Big)' = \dfrac{1\cdot(x+1) - x\cdot 1}{(x+1)^2}$</td><td>⑤</td></tr>
+<tr><td>$e$ 的次方</td><td>$(e^{kt})' = k\,e^{kt}$</td><td>$(e^{-0.4t})' = -0.4\,e^{-0.4t}$</td><td>⑥</td></tr>
+</tbody>
+</table>
+</div>
+<div class="say">
+<p>連鎖律是這六題的主角。口訣：<mark>外面照微，裡面那一包先不動，最後再乘上「那一包自己的微分」</mark>。前三題的「看到 $y$ 就多乘 $\dfrac{dy}{dx}$」其實就是連鎖律，因為 $y$ 也是一包 $x$ 的函數。</p>
+</div>
+<div class="quiz" data-answer="2">
+<p class="quiz-q">$\big[(3x - 1)^4\big]'$ 是？</p>
+<button>$4(3x-1)^3$</button>
+<button>$12(3x-1)^3$</button>
+<button>$12(3x-1)^4$</button>
+<p class="quiz-why">外面是 4 次方：$4(3x-1)^3$。裡面那包 $3x - 1$ 的微分是 3，要乘上去：$4\cdot 3 = 12$。第一個選項忘了乘裡面的微分。</p>
+</div>
+<div class="quiz" data-answer="1">
+<p class="quiz-q">$\big(x^{3/5}\big)'$ 是？</p>
+<button>$\tfrac35\,x^{-2/5}$</button>
+<button>$\tfrac35\,x^{8/5}$</button>
+<button>$x^{-2/5}$</button>
+<p class="quiz-why">分數次方一樣用冪次規則：次方 $\tfrac35$ 搬下來乘，次方再減 1：$\tfrac35 - 1 = -\tfrac25$。</p>
+</div>
+<p>規則還不熟的話，<a href="basics.html">暖身頁</a>有每一條規則的慢動作版。</p>
+
+<h2 id="p34">① 3.6 #34 隱函數的切線</h2>
+<div class="say">
+<p>題目給一條 $x$、$y$ 混在一起的方程式，和圖形上的一個點，要你寫出那一點的切線。只要做兩件事：<mark>用隱函數微分算出斜率，再用點斜式寫出直線</mark>。</p>
+</div>
+
+<h3>先補觀念 1：寫一條直線，只需要「一個點」和「斜率」</h3>
+<div class="key" data-title="點斜式">
+$$y - y_0 = m\,(x - x_0)$$
+<p>$(x_0, y_0)$ 是直線通過的點，$m$ 是斜率。</p>
+</div>
+<p>例：通過 $(2, 5)$、斜率 3 的直線是 $y - 5 = 3(x - 2)$，整理後是 $y = 3x - 1$。</p>
+<p>這一題的點已經給了，是 $(1, -1)$。缺的只有斜率，而<strong>切線斜率就是 $\dfrac{dy}{dx}$ 在那一點的值</strong>。</p>
+
+<h3>先補觀念 2：y 沒有單獨在一邊，照樣可以微分</h3>
+<p>平常的題目長得像 $y = x^2 + 1$，$y$ 自己在一邊。這題是 $(x - y - 1)^3 = x$，$y$ 被包在括號裡。這種叫<strong>隱函數</strong>：$y$ 還是跟著 $x$ 變，只是沒有寫成「$y = \cdots$」。</p>
+<p>做法是不去解 $y$，直接把等號<strong>兩邊同時對 $x$ 微分</strong>。微分時記住三句話：</p>
+<div class="key" data-title="隱函數微分的三句話">
+<p>看到 $x$，微分是 $1$。<br>
+看到 $y$，微分是 $\dfrac{dy}{dx}$（因為 $y$ 是 $x$ 的函數，它怎麼變我們還不知道，先用這個符號代表）。<br>
+看到常數，微分是 $0$。</p>
+</div>
+<p>最簡單的例子：$x^2 + y^2 = 25$。$x^2$ 微分是 $2x$；$y^2$ 是「一包 $y$ 的平方」，照連鎖律是 $2y$ 再乘 $y$ 自己的微分：</p>
+$$2x + 2y\,\frac{dy}{dx} = 0 \quad\Longrightarrow\quad \frac{dy}{dx} = -\frac{x}{y}$$
+
+<h3>先補觀念 3：一整包的三次方怎麼微</h3>
+<p>左邊 $(x - y - 1)^3$ 是「一包東西的 3 次方」。連鎖律：</p>
+$$\big[(\text{一包})^3\big]' = 3(\text{一包})^2\cdot(\text{一包})'$$
+<p>這一包是 $x - y - 1$，一項一項微：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>包裡的項</th><th>$x$</th><th>$-y$</th><th>$-1$</th></tr></thead>
+<tbody><tr><td>它的微分</td><td>$1$</td><td>$-\dfrac{dy}{dx}$</td><td>$0$</td></tr></tbody>
+</table>
+</div>
+<p>所以這一包的微分是 $1 - \dfrac{dy}{dx}$。下面的解答就是把這三個觀念接起來。</p>
+
+<article class="prob" data-prob="3.6-34">
+<h3>求隱函數圖形在指定點的切線</h3>
+<div class="prob-q">
+<p>求方程式 $(x - y - 1)^3 = x$ 的圖形在點 $(1, -1)$ 的切線方程式。</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>兩邊對 $x$ 微分。左邊用連鎖律，裡面那包的微分是 $1 - \dfrac{dy}{dx}$。微分完再把 $x = 1$、$y = -1$ 代進去，就能解出斜率。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>先確認點在圖形上</h4>
+<p>把 $x = 1$、$y = -1$ 代進方程式：左邊 $(1 - (-1) - 1)^3 = 1^3 = 1$，右邊 $x = 1$，相等。</p>
+<p>這一步考卷上可以不寫，但花五秒檢查，可以抓到題目抄錯或正負號看錯。</p>
+</div>
+<div class="step">
+<h4>兩邊對 x 微分</h4>
+<p>左邊：外面 3 次方照微，得 $3(x - y - 1)^2$，再乘裡面那包的微分 $1 - \dfrac{dy}{dx}$。<br>右邊：$x$ 的微分是 $1$。</p>
+$$3(x - y - 1)^2\Big(1 - \frac{dy}{dx}\Big) = 1$$
+</div>
+<div class="step">
+<h4>把點代進去</h4>
+<p>已經微分完了，現在可以代數字。在 $(1, -1)$，括號裡 $x - y - 1 = 1 + 1 - 1 = 1$：</p>
+$$3(1)^2\Big(1 - \frac{dy}{dx}\Big) = 1 \quad\Longrightarrow\quad 3\Big(1 - \frac{dy}{dx}\Big) = 1$$
+</div>
+<div class="step">
+<h4>解出斜率</h4>
+$$1 - \frac{dy}{dx} = \frac13 \quad\Longrightarrow\quad \frac{dy}{dx} = 1 - \frac13 = \frac23$$
+<p>切線斜率是 $\dfrac23$。</p>
+<p>如果題目沒有給點、只要求 $\dfrac{dy}{dx}$，就把上一步的式子解到底：$\dfrac{dy}{dx} = 1 - \dfrac{1}{3(x - y - 1)^2}$。</p>
+</div>
+<div class="step">
+<h4>用點斜式寫出切線</h4>
+<p>點 $(1, -1)$、斜率 $\dfrac23$。注意 $y_0 = -1$，所以 $y - (-1)$ 會變成 $y + 1$：</p>
+$$y + 1 = \frac23\,(x - 1) \quad\Longrightarrow\quad y = \frac23x - \frac23 - 1 = \frac23x - \frac53$$
+</div>
+<div class="step">
+<h4>看圖驗算</h4>
+<p>這條方程式其實解得出 $y$：兩邊開立方得 $x - y - 1 = \sqrt[3]{x}$，所以 $y = x - 1 - \sqrt[3]{x}$。下面的圖就是用它畫的。拖曳看看：「公式算的斜率」和「圖上量到的斜率」永遠一樣，在 $x = 1$ 都是 $0.667$。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-0.6, 4.6], "y": [-2, 2.2], "h": 330,
+  "fns": [{ "f": "x-1-cbrt(x)", "color": "f", "label": "(x − y − 1)³ = x" }],
+  "tangent": { "fn": 0 },
+  "points": [{ "x": 1, "y": -1, "label": "題目的點 (1, −1)", "pos": "br", "color": "ink" }],
+  "slider": { "label": "點的 x 座標", "min": 0.3, "max": 4.2, "step": 0.01, "value": 1, "digits": 2,
+    "presets": [ { "label": "x = 1（題目）", "value": 1 }, { "label": "x = 0.5", "value": 0.5 }, { "label": "x = 3", "value": 3 } ] },
+  "readouts": [
+    { "label": "點的 y 座標", "f": 0, "digits": 3 },
+    { "label": "公式算的斜率 1 − 1/[3(x − y − 1)²]", "expr": "1-1/(3*cbrt(a)^2)", "digits": 3, "color": "d1" },
+    { "label": "圖上量到的切線斜率", "d": 0, "digits": 3, "color": "d1" }
+  ]
+}
+</script>
+<figcaption>橘色直線就是切線。停在 x = 1 時，它通過 (1, −1)、斜率 2/3，往右走 3 格會上升 2 格。</figcaption>
+</figure>
+<p class="answer"><span>$y = \dfrac23x - \dfrac53$（寫成 $2x - 3y - 5 = 0$ 也可以）</span></p>
+</div>
+</div>
+</article>
+
+<div class="trap">
+<ul>
+<li>包裡 $-y$ 的微分是 $-\dfrac{dy}{dx}$。<strong>負號最容易掉</strong>，掉了斜率會算成 $-\dfrac23$。</li>
+<li>只寫 $3(x-y-1)^2 = 1$，忘了乘「裡面那包的微分」。</li>
+<li>把 $-1$ 的微分寫成 $-1$。常數的微分是 $0$。</li>
+<li>還沒微分就把 $x = 1$、$y = -1$ 代進去。那樣兩邊都變成數字，沒有東西可以微了。<strong>先微分，再代點</strong>。</li>
+<li>點斜式寫成 $y - 1$。$y_0$ 是 $-1$，要寫 $y + 1$。</li>
+</ul>
+</div>
+<div class="writeup">
+<p>兩邊對 $x$ 微分：$3(x - y - 1)^2\,(1 - y') = 1$</p>
+<p>代入 $(1, -1)$：$3(1)^2(1 - y') = 1$，所以 $y' = \dfrac23$</p>
+<p>切線：$y + 1 = \dfrac23(x - 1)$，即 $y = \dfrac23x - \dfrac53$</p>
+</div>
+<details class="peek"><summary>換個數字練一次：求 $x^2 + y^3 = 9$ 在點 $(1, 2)$ 的切線</summary>
+<p>兩邊對 $x$ 微分：$2x + 3y^2\,\dfrac{dy}{dx} = 0$。</p>
+<p>代入 $(1, 2)$：$2 + 12\,\dfrac{dy}{dx} = 0$，所以 $\dfrac{dy}{dx} = -\dfrac16$。</p>
+<p>切線：$y - 2 = -\dfrac16(x - 1)$，即 $y = -\dfrac16x + \dfrac{13}{6}$。</p>
+</details>
+
+<h2 id="p49">② 3.6 #49 產出與 MRTS</h2>
+<div class="say">
+<p>一個國家的產出 $Q$ 由兩種花費決定：花在勞動的 $x$、花在資本的 $y$。(a) 小題只是把數字代進去。(b) 小題問：<mark>產出要維持不變，勞動多花一點，資本可以少花多少？</mark>這就是求 $\dfrac{dy}{dx}$，方法和上一題一樣是隱函數微分。</p>
+</div>
+
+<h3>先補觀念 1：分數次方怎麼算</h3>
+<p>$x^{3/5}$ 的分母 5 代表「開 5 次方根」，分子 3 代表「3 次方」：$x^{3/5} = \big(\sqrt[5]{x}\,\big)^3$。先開根號，數字會變小，比較好算。</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>要算的</th><th>先認出它是誰的 5 次方</th><th>開 5 次方根</th><th>再做分子的次方</th></tr></thead>
+<tbody>
+<tr><td>$32^{3/5}$</td><td>$32 = 2^5$</td><td>$2$</td><td>$2^3 = 8$</td></tr>
+<tr><td>$243^{2/5}$</td><td>$243 = 3^5$</td><td>$3$</td><td>$3^2 = 9$</td></tr>
+</tbody>
+</table>
+</div>
+<p>課本這種題目的數字都是湊好的（$2^5 = 32$、$3^5 = 243$）。看不出來也沒關係，計算機按 <span class="mono">32 ^ ( 3 ÷ 5 ) =</span> 會得到 8。<strong>次方的括號一定要加</strong>，不加會變成 $32^3 \div 5$。</p>
+<p>分數次方的微分照樣用冪次規則：$\big(x^{3/5}\big)' = \tfrac35x^{-2/5}$，$\big(y^{2/5}\big)' = \tfrac25y^{-3/5}$（之後還要乘 $\dfrac{dy}{dx}$）。</p>
+
+<h3>先補觀念 2：「產出維持不變」是一條 x 和 y 的關係式</h3>
+<p>(a) 會算出產出是 1440。「維持在這個水準」的意思是 $Q$ 不准變，永遠等於 1440：</p>
+$$20x^{3/5}y^{2/5} = 1440$$
+<p>勞動 $x$ 多花一點，資本 $y$ 就可以少花一點，產出還是一樣。所以 $y$ 會跟著 $x$ 變，只是沒寫成「$y = \cdots$」。這就是隱函數。下圖畫出所有「產出剛好 1440」的 $(x, y)$：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [15, 80], "y": [0, 800], "h": 330,
+  "xlabel": "勞動支出 x（十億美元）", "ylabel": "資本支出 y（十億美元）",
+  "fns": [{ "f": "43987.7/x^1.5", "color": "f", "label": "產出維持 1440 的所有 (x, y)" }],
+  "tangent": { "fn": 0 },
+  "points": [{ "x": 32, "y": 243, "label": "題目的點 (32, 243)", "pos": "tr", "color": "ink" }],
+  "slider": { "label": "勞動支出 x", "min": 18, "max": 75, "step": 0.5, "value": 32, "digits": 1,
+    "presets": [ { "label": "x = 32（題目）", "value": 32 }, { "label": "x = 33（多花 1）", "value": 33 }, { "label": "x = 60", "value": 60 } ] },
+  "readouts": [
+    { "label": "資本支出 y", "f": 0, "digits": 1 },
+    { "label": "產出 Q", "expr": "20*a^0.6*(43987.7/a^1.5)^0.4", "digits": 0 },
+    { "label": "切線斜率 dy/dx", "d": 0, "digits": 2, "color": "d1" }
+  ]
+}
+</script>
+<figcaption>沿著曲線走，產出 Q 一直是 1440。往右（勞動多花）曲線就往下（資本少花），所以斜率是負的。按「x = 33」：資本從 243 降到大約 232。</figcaption>
+</figure>
+
+<h3>先補觀念 3：dy/dx 就是「x 多 1，y 大約變多少」</h3>
+<p>3.4 節的「邊際」就是這個想法：導數可以當成「再多 1 單位時的變化量」。這裡 $\dfrac{dy}{dx}$ 算出來大約是 $-11.4$，意思是勞動多花 1（十億美元），資本大約要<strong>少</strong> 11.4（十億美元）。</p>
+<div class="key" data-title="MRTS（邊際技術替代率）">
+$$\text{MRTS} = -\frac{dy}{dx}$$
+<p>把 $\dfrac{dy}{dx}$ 的負號拿掉，寫成正數。它回答「多 1 單位勞動，可以換掉多少資本」。</p>
+</div>
+
+<article class="prob" data-prob="3.6-49">
+<h3>產出函數：算產出，再求資本該怎麼調整</h3>
+<div class="prob-q">
+<p>某國的產出為 $Q = 20x^{3/5}y^{2/5}$，其中 $x$ 是花在勞動上的金額，$y$ 是花在資本上的金額，三個量的單位都是十億美元。</p>
+<p>(a) 勞動花 32、資本花 243（十億美元）時，產出是多少？<br>
+(b) 如果產出要維持在 (a) 的水準，勞動支出增加 1（十億美元）時，資本支出應該改變多少？MRTS 是多少？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>(a) $32 = 2^5$，$243 = 3^5$。(b) 把「產出不變」寫成 $20x^{3/5}y^{2/5} = 1440$，兩邊對 $x$ 微分。左邊是 $x^{3/5}$ 和 $y^{2/5}$ 相乘，要用乘法規則，$y$ 那一塊微分後要多乘 $\dfrac{dy}{dx}$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>(a) 把數字代進去</h4>
+$$Q = 20\cdot 32^{3/5}\cdot 243^{2/5} = 20\cdot 8\cdot 9 = 1440$$
+<p>產出是 1440（十億美元）。</p>
+</div>
+<div class="step">
+<h4>(b) 把「產出不變」寫成方程式</h4>
+$$20x^{3/5}y^{2/5} = 1440 \quad\Longrightarrow\quad x^{3/5}y^{2/5} = 72$$
+<p>兩邊先除以 20，後面比較好算。右邊是常數，微分會是 0。</p>
+</div>
+<div class="step">
+<h4>兩邊對 x 微分（乘法規則）</h4>
+<p>左邊是兩塊相乘：前面 $x^{3/5}$，後面 $y^{2/5}$。</p>
+<p>前面的微分：$\tfrac35x^{-2/5}$。<br>後面的微分：$\tfrac25y^{-3/5}\cdot\dfrac{dy}{dx}$（$y$ 是 $x$ 的函數，要多乘 $\dfrac{dy}{dx}$）。</p>
+$$\underbrace{\tfrac35x^{-2/5}}_{\text{前微}}\cdot y^{2/5} + x^{3/5}\cdot\underbrace{\tfrac25y^{-3/5}\,\frac{dy}{dx}}_{\text{後微}} = 0$$
+</div>
+<div class="step">
+<h4>解出 dy/dx</h4>
+<p>把沒有 $\dfrac{dy}{dx}$ 的那一項移到右邊，再除過去：</p>
+$$\tfrac25x^{3/5}y^{-3/5}\,\frac{dy}{dx} = -\tfrac35x^{-2/5}y^{2/5} \quad\Longrightarrow\quad \frac{dy}{dx} = -\frac{\tfrac35\,x^{-2/5}\,y^{2/5}}{\tfrac25\,x^{3/5}\,y^{-3/5}}$$
+<p>分成數字、$x$、$y$ 三塊各自化簡（同底相除，次方相減）：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>哪一塊</th><th>算式</th><th>結果</th></tr></thead>
+<tbody>
+<tr><td>數字</td><td>$\tfrac35 \div \tfrac25$</td><td>$\tfrac32$</td></tr>
+<tr><td>$x$</td><td>$x^{-2/5} \div x^{3/5} = x^{-2/5 - 3/5}$</td><td>$x^{-1} = \dfrac1x$</td></tr>
+<tr><td>$y$</td><td>$y^{2/5} \div y^{-3/5} = y^{2/5 + 3/5}$</td><td>$y$</td></tr>
+</tbody>
+</table>
+</div>
+$$\frac{dy}{dx} = -\frac32\cdot\frac{y}{x}$$
+</div>
+<div class="step">
+<h4>代入 x = 32、y = 243</h4>
+$$\frac{dy}{dx} = -\frac32\cdot\frac{243}{32} = -\frac{729}{64} \approx -11.39$$
+<p>不想化簡的話，也可以把數字直接代進微分完的那一行：$32^{-2/5} = \tfrac14$、$243^{2/5} = 9$、$32^{3/5} = 8$、$243^{-3/5} = \tfrac{1}{27}$，得到 $\tfrac{27}{20} + \tfrac{16}{135}\dfrac{dy}{dx} = 0$，解出來一樣是 $-11.39$。</p>
+</div>
+<div class="step">
+<h4>解讀，回答兩個問題</h4>
+<p>$\dfrac{dy}{dx} \approx -11.39$ 是負的：勞動多花 1，資本要<strong>減少</strong>大約 11.4，產出才會維持在 1440。</p>
+<p>MRTS 是 $-\dfrac{dy}{dx}$，寫成正數：大約 11.4。</p>
+<p class="answer"><span>(a) 1440（十億美元）。(b) 資本支出應減少約 11.4（十億美元）；MRTS $= \dfrac{729}{64} \approx 11.4$，也就是每多花 1（十億美元）在勞動上，可以少花 11.4（十億美元）在資本上。</span></p>
+</div>
+</div>
+</article>
+
+<div class="trap">
+<ul>
+<li>$y^{2/5}$ 微分後忘了乘 $\dfrac{dy}{dx}$。沒有它，式子裡就沒有東西可以解。</li>
+<li>先把 $x = 32$、$y = 243$ 代進去再微分。代完全部是常數，微分是 0。<strong>先微分，再代數字</strong>。</li>
+<li>次方相除要<strong>相減</strong>：$x^{-2/5} \div x^{3/5} = x^{-1}$。減的時候正負號要小心，$y$ 那塊是 $\tfrac25 - \big(-\tfrac35\big) = 1$。</li>
+<li>MRTS 要寫<strong>正的</strong>。「資本改變多少」則要說清楚是「減少」。</li>
+<li>計算機按 $32^{3/5}$ 沒加括號。</li>
+</ul>
+</div>
+<div class="writeup">
+<p>(a) $Q = 20(32)^{3/5}(243)^{2/5} = 20\cdot 8\cdot 9 = 1440$（十億美元）</p>
+<p>(b) $20x^{3/5}y^{2/5} = 1440$，兩邊對 $x$ 微分：</p>
+<p>$20\Big[\tfrac35x^{-2/5}y^{2/5} + \tfrac25x^{3/5}y^{-3/5}\,y'\Big] = 0$，所以 $y' = -\dfrac{3y}{2x}$</p>
+<p>代入 $x = 32$、$y = 243$：$y' = -\dfrac{729}{64} \approx -11.4$</p>
+<p>資本支出約減少 11.4（十億美元）；MRTS $\approx 11.4$</p>
+</div>
+<details class="peek"><summary>換個數字練一次：課本 3.6 #48 是同一型</summary>
+<p>某家具工廠每天的產出 $Q = 5x^{1/4}y^{3/4}$（千美元），$x$ 是勞動支出、$y$ 是資本支出（千美元）。(a) $x = 16$、$y = 81$ 時產出多少？(b) 產出不變，勞動多花 1（千美元）時資本該怎麼調整？MRTS 是多少？</p>
+<p>(a) $16 = 2^4$、$81 = 3^4$，所以 $Q = 5\cdot 2\cdot 27 = 270$（千美元）。</p>
+<p>(b) $x^{1/4}y^{3/4} = 54$ 兩邊微分：$\tfrac14x^{-3/4}y^{3/4} + \tfrac34x^{1/4}y^{-1/4}\,\dfrac{dy}{dx} = 0$，解得 $\dfrac{dy}{dx} = -\dfrac{y}{3x}$。</p>
+<p>代入：$-\dfrac{81}{48} \approx -1.69$。資本約減少 1.69（千美元）；MRTS $\approx 1.69$。</p>
+</details>
+
+<h2 id="p44">③ 3.6 #44 雞蛋供給量</h2>
+<div class="say">
+<p>價格 $p$ 和供給量 $x$ 被一條方程式綁在一起。價格每週都在跌，問供給量每週掉多快。兩個量都隨著<strong>時間</strong>在變，所以這次不是對 $x$ 微分，而是<mark>對時間 $t$ 微分</mark>。這種題目叫「相關變率」。</p>
+</div>
+
+<h3>先補觀念 1：「變得多快」就是對時間的導數</h3>
+<p>$\dfrac{dp}{dt}$ 讀作「$p$ 對時間的變化率」，意思是價格每週變多少。在漲是正的，<strong>在跌是負的</strong>。先把題目的每一句話翻成符號：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>題目的句子</th><th>翻成符號</th><th>要注意的地方</th></tr></thead>
+<tbody>
+<tr><td>市面上有 25,000 盒</td><td>$x = 25$</td><td>$x$ 的單位是<strong>千</strong>盒</td></tr>
+<tr><td>價格每週每盒跌 2 美分</td><td>$\dfrac{dp}{dt} = -0.02$</td><td>$p$ 的單位是美元，2 美分是 0.02；下跌所以是負的</td></tr>
+<tr><td>供給量下降得多快</td><td>求 $\dfrac{dx}{dt}$</td><td>答案的單位是千盒／週</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>先補觀念 2：對 t 微分，和前兩題是同一招</h3>
+<p>前兩題是「看到 $y$ 多乘 $\dfrac{dy}{dx}$」。現在 $p$ 和 $x$ 都是時間 $t$ 的函數，所以每個變數微分後，都要多乘「它自己對 $t$ 的變化率」：</p>
+<div class="key" data-title="對時間 t 微分">
+$$\frac{d}{dt}\big(p^2\big) = 2p\,\frac{dp}{dt} \qquad\qquad \frac{d}{dt}\big(x^2\big) = 2x\,\frac{dx}{dt} \qquad\qquad \frac{d}{dt}\big(100\big) = 0$$
+</div>
+
+<h3>先補觀念 3：先微分，最後才代數字</h3>
+<p>$x = 25$ 只是「這一刻」的值，$x$ 本身還在變。如果一開始就把 25 代進方程式，$x$ 會變成常數，微分是 0，整題就做不下去。順序一定是：<strong>方程式 → 對 $t$ 微分 → 最後代數字</strong>。</p>
+
+<article class="prob" data-prob="3.6-44">
+<h3>價格在跌，供給量每週少多少</h3>
+<div class="prob-q">
+<p>某品牌中型雞蛋的批發價 $p$（美元／盒）與每週供給量 $x$（千盒）滿足</p>
+$$625p^2 - x^2 = 100$$
+<p>某一週開始時市面上有 25,000 盒，而且價格正以每週每盒 2 美分的速度下跌。這時候每週供給量下降得多快？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>題目沒給這一刻的價格 $p$，先把 $x = 25$ 代回原方程式求出來。然後把原方程式兩邊對 $t$ 微分，最後才把 $x$、$p$、$\dfrac{dp}{dt}$ 三個數字代進去。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>列出已知和所求</h4>
+<p>已知：$x = 25$，$\dfrac{dp}{dt} = -0.02$。所求：$\dfrac{dx}{dt}$。</p>
+</div>
+<div class="step">
+<h4>求這一刻的價格 p</h4>
+<p>等一下的式子裡會出現 $p$，但題目沒給。把 $x = 25$ 代回<strong>原方程式</strong>（這一步只是求一個數字，不是微分）：</p>
+$$625p^2 - 25^2 = 100 \quad\Longrightarrow\quad 625p^2 = 725 \quad\Longrightarrow\quad p^2 = 1.16 \quad\Longrightarrow\quad p = \sqrt{1.16} \approx 1.077$$
+<p>價格不會是負的，取正根。</p>
+</div>
+<div class="step">
+<h4>原方程式兩邊對 t 微分</h4>
+<p>$625p^2$ 微分是 $625\cdot 2p\,\dfrac{dp}{dt}$；$x^2$ 微分是 $2x\,\dfrac{dx}{dt}$；右邊 100 是常數：</p>
+$$1250\,p\,\frac{dp}{dt} - 2x\,\frac{dx}{dt} = 0$$
+</div>
+<div class="step">
+<h4>解出 dx/dt</h4>
+$$2x\,\frac{dx}{dt} = 1250\,p\,\frac{dp}{dt} \quad\Longrightarrow\quad \frac{dx}{dt} = \frac{1250\,p}{2x}\cdot\frac{dp}{dt} = \frac{625\,p}{x}\cdot\frac{dp}{dt}$$
+</div>
+<div class="step">
+<h4>現在才代數字</h4>
+$$\frac{dx}{dt} = \frac{625\,(1.077)}{25}\,(-0.02) = 26.925\times(-0.02) \approx -0.5385$$
+<p>單位是千盒／週。</p>
+</div>
+<div class="step">
+<h4>換回「盒」，用一句話回答</h4>
+<p>$-0.5385$ 千盒 $= -538.5$ 盒。負號代表在減少，所以供給量每週大約減少 539 盒。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 2], "y": [0, 50], "h": 310,
+  "xlabel": "批發價 p（美元/盒）", "ylabel": "供給量 x（千盒）",
+  "fns": [{ "f": "sqrt(625*x^2-100)", "color": "f", "label": "625p² − x² = 100", "domain": [0.4, 2] }],
+  "tangent": { "fn": 0 },
+  "points": [{ "x": 1.077, "y": 25, "label": "題目這一刻", "pos": "br", "color": "ink" }],
+  "slider": { "label": "價格 p", "min": 0.5, "max": 1.9, "step": 0.001, "value": 1.077, "digits": 3, "unit": " 美元",
+    "presets": [ { "label": "p = 1.077（題目）", "value": 1.077 }, { "label": "p = 0.6", "value": 0.6 }, { "label": "p = 1.8", "value": 1.8 } ] },
+  "readouts": [
+    { "label": "供給量 x", "f": 0, "digits": 2, "unit": " 千盒" },
+    { "label": "切線斜率 dx/dp = 625p/x", "d": 0, "digits": 2, "color": "d1" },
+    { "label": "價格每週跌 0.02 時的 dx/dt", "expr": "625*a/sqrt(625*a^2-100)*(-0.02)*1000", "digits": 0, "unit": " 盒/週", "color": "d1" }
+  ]
+}
+</script>
+<figcaption>價格越低，願意供應的量越少。切線斜率 26.9 的意思是價格每掉 1 美元，供給少 26.9 千盒；現在每週只掉 0.02 美元，所以每週少 26.9 × 0.02 ≈ 0.54 千盒。</figcaption>
+</figure>
+<p class="answer"><span>$\dfrac{dx}{dt} \approx -0.539$ 千盒／週，也就是每週供給量大約減少 539 盒。</span></p>
+</div>
+</div>
+</article>
+
+<div class="trap">
+<ul>
+<li>單位沒換：25,000 盒要寫 $x = 25$；2 美分要寫 0.02 美元。</li>
+<li>「下跌」忘了寫負號，答案會變成增加。</li>
+<li>一開始就把 $x = 25$ 代進方程式再微分。</li>
+<li>$p^2$ 微分只寫 $2p$，漏了 $\dfrac{dp}{dt}$。</li>
+<li>算到 $-0.5385$ 就停筆，沒有換成盒、也沒有說是「減少」。</li>
+</ul>
+</div>
+<div class="writeup">
+<p>已知 $x = 25$，$\dfrac{dp}{dt} = -0.02$；求 $\dfrac{dx}{dt}$</p>
+<p>$x = 25$ 時：$625p^2 = 725$，$p = \sqrt{1.16} \approx 1.077$</p>
+<p>兩邊對 $t$ 微分：$1250\,p\,\dfrac{dp}{dt} - 2x\,\dfrac{dx}{dt} = 0$</p>
+<p>$\dfrac{dx}{dt} = \dfrac{625\,p}{x}\cdot\dfrac{dp}{dt} = \dfrac{625(1.077)}{25}(-0.02) \approx -0.539$</p>
+<p>供給量每週約減少 539 盒</p>
+</div>
+<details class="peek"><summary>換個數字練一次：同一條方程式，改成 15,000 盒、價格每週漲 3 美分</summary>
+<p>$x = 15$，$\dfrac{dp}{dt} = +0.03$（上漲是正的）。</p>
+<p>先求 $p$：$625p^2 = 100 + 225 = 325$，$p = \sqrt{0.52} \approx 0.7211$。</p>
+<p>微分後的式子不變：$\dfrac{dx}{dt} = \dfrac{625\,p}{x}\cdot\dfrac{dp}{dt} = \dfrac{625(0.7211)}{15}(0.03) \approx 0.901$。</p>
+<p>供給量每週大約<strong>增加</strong> 901 盒。</p>
+</details>
+
+<h2 id="p21">④ 4.5 #21 遊艇收益</h2>
+<div class="say">
+<p>報名的人越多，每個人的票價越便宜。問幾個人報名時，船東收到的錢最多。做法是把「總收益」寫成只有一個變數的函數，<mark>微分等於 0 找出山頂，再和範圍的兩端比一比</mark>。</p>
+</div>
+
+<h3>先補觀念 1：收益 = 人數 × 票價，兩個都會變</h3>
+<p>題目的規則：剛好 20 人時每人 600 美元；每多 1 人，<strong>每一個人</strong>的票價都降 4 美元。先用數字感覺一下：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>多幾人</th><th class="n">人數</th><th class="n">票價</th><th class="n">收益 = 人數 × 票價</th></tr></thead>
+<tbody>
+<tr><td>0</td><td class="n">20</td><td class="n">600</td><td class="n">12,000</td></tr>
+<tr><td>1</td><td class="n">21</td><td class="n">596</td><td class="n">12,516</td></tr>
+<tr><td>10</td><td class="n">30</td><td class="n">560</td><td class="n">16,800</td></tr>
+<tr><td>40</td><td class="n">60</td><td class="n">440</td><td class="n">26,400</td></tr>
+<tr><td>70（滿載）</td><td class="n">90</td><td class="n">320</td><td class="n">28,800</td></tr>
+</tbody>
+</table>
+</div>
+<p>人數在增加、票價在減少，兩個相乘先變大。但是人太多的時候，票價掉得太兇，收益會回頭往下。中間一定有一個最大的地方。</p>
+<p>把「多幾人」叫做 $x$，表格的規律就是：<strong>人數 $= 20 + x$，票價 $= 600 - 4x$</strong>。</p>
+
+<h3>先補觀念 2：為什麼「微分等於 0」找得到最大值</h3>
+<p>把收益畫成圖是一座山丘。上坡時切線斜率是正的，下坡時是負的，<strong>山頂的切線是水平的，斜率是 0</strong>。斜率就是導數，所以解 $R'(x) = 0$ 就能找到山頂的位置。在圖上拖曳看看：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 75], "y": [0, 32000], "h": 330,
+  "xlabel": "x（超過 20 人的人數）", "ylabel": "每天收益（美元）",
+  "fns": [{ "f": "(20+x)*(600-4*x)", "color": "f", "label": "R(x) = (20 + x)(600 − 4x)", "domain": [0, 70] }],
+  "tangent": { "fn": 0 },
+  "vlines": [ { "x": 70, "label": "滿載 90 人", "color": "neg" } ],
+  "slider": { "label": "多 x 人", "min": 0, "max": 70, "step": 1, "value": 20, "digits": 0, "unit": " 人", "play": true,
+    "presets": [ { "label": "x = 0（20 人）", "value": 0 }, { "label": "x = 65", "value": 65 }, { "label": "x = 70（滿載）", "value": 70 } ] },
+  "readouts": [
+    { "label": "人數 20 + x", "expr": "20+a", "digits": 0, "unit": " 人" },
+    { "label": "票價 600 − 4x", "expr": "600-4*a", "digits": 0, "unit": " 美元" },
+    { "label": "收益 R", "expr": "(20+a)*(600-4*a)", "digits": 0, "unit": " 美元", "color": "f" },
+    { "label": "切線斜率 R′(x) = 520 − 8x", "expr": "520-8*a", "digits": 0, "color": "d1" },
+    { "label": "現在", "expr": "520-8*a", "pos": "R′ > 0：再多一人，收益還會增加", "neg": "R′ < 0：人太多了，收益在減少", "zero": "R′ = 0：山頂，收益最大", "eps": 0.5 }
+  ]
+}
+</script>
+<figcaption>按「播放」從 20 人走到 90 人。橘色切線從往右上斜，慢慢變平，到 x = 65 剛好水平，之後往右下斜。</figcaption>
+</figure>
+
+<h3>先補觀念 3：有範圍的題目，還要看兩端</h3>
+<p>這題的人數有限制：至少 20 人、最多 90 人，所以 $x$ 只能在 0 到 70 之間。在一段有頭有尾的範圍裡，最大值只可能出現在兩種地方：</p>
+<div class="key" data-title="閉區間找最大值">
+<p>把<strong>臨界數</strong>（$R' = 0$ 的地方）和<strong>兩個端點</strong>都代進 $R$，誰最大誰就是答案。</p>
+</div>
+<p>如果山頂剛好落在範圍外面，答案就會是端點，所以這個比較不能省。</p>
+
+<article class="prob" data-prob="4.5-21">
+<h3>幾個人報名，船東收益最大</h3>
+<div class="prob-q">
+<p>一艘豪華遊艇，剛好 20 人報名時每人每天收 600 美元。超過 20 人時（最多可載 90 人），每多 1 人，每個人的票價都降 4 美元。假設至少有 20 人報名，幾個人報名時船東的收益最大？最大收益是多少？這時每個人的票價是多少？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>設 $x$ 是「超過 20 人的人數」，不是總人數。收益是兩個括號相乘，先展開再微分。題目問了三件事，最後三個都要回答。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>設變數，寫出範圍</h4>
+<p>設報名人數比 20 人多 $x$ 人。</p>
+<p>人數 $= 20 + x$　　票價 $= 600 - 4x$　　範圍 $0 \le x \le 70$（因為最多 90 人）</p>
+</div>
+<div class="step">
+<h4>寫出收益函數，展開</h4>
+<p>兩個括號相乘，四項都要乘到：</p>
+$$R(x) = (20 + x)(600 - 4x) = \underbrace{12000}_{20\times 600}\ \underbrace{-\,80x}_{20\times(-4x)}\ \underbrace{+\,600x}_{x\times 600}\ \underbrace{-\,4x^2}_{x\times(-4x)}$$
+$$R(x) = 12000 + 520x - 4x^2$$
+</div>
+<div class="step">
+<h4>微分</h4>
+<p>一項一項微：常數 12000 變 0，$520x$ 變 520，$-4x^2$ 變 $-8x$。</p>
+$$R'(x) = 520 - 8x$$
+</div>
+<div class="step">
+<h4>令 R′(x) = 0</h4>
+$$520 - 8x = 0 \quad\Longrightarrow\quad x = \frac{520}{8} = 65$$
+<p>$65$ 在範圍 $[0, 70]$ 裡面，可以用。</p>
+</div>
+<div class="step">
+<h4>和兩個端點比較</h4>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>$x$</th><th class="n">0</th><th class="n">65</th><th class="n">70</th></tr></thead>
+<tbody>
+<tr><td>人數 × 票價</td><td class="n">20 × 600</td><td class="n">85 × 340</td><td class="n">90 × 320</td></tr>
+<tr><td>$R(x)$</td><td class="n">12,000</td><td class="n">28,900</td><td class="n">28,800</td></tr>
+</tbody>
+</table>
+</div>
+<p>最大的是 $R(65) = 28{,}900$。（另一種確認方式：$R''(x) = -8 \lt 0$，整條曲線凹向下，所以 $x = 65$ 是山頂。）</p>
+</div>
+<div class="step">
+<h4>回答題目問的三件事</h4>
+<p>$x = 65$ 不是答案，它只是「多了幾人」。要換回題目問的東西：</p>
+<p>人數 $= 20 + 65 = 85$　　票價 $= 600 - 4(65) = 340$　　收益 $= 85 \times 340 = 28{,}900$</p>
+<p class="answer"><span>85 人報名時收益最大，每天 28,900 美元，這時每人票價 340 美元。</span></p>
+</div>
+</div>
+</article>
+
+<div class="trap">
+<ul>
+<li>把 $x$ 當成總人數，寫成 $x(600 - 4x)$。$x$ 是「多出來的人數」，人數是 $20 + x$。</li>
+<li>只降「多出來的那些人」的票價。題目說的是<strong>每一個人</strong>都降，所以是整個人數乘上新票價。</li>
+<li>展開時漏項或正負號錯。四項是 $12000$、$-80x$、$+600x$、$-4x^2$。</li>
+<li>算出 $x = 65$ 就停筆。題目問的是人數（85）、收益、票價三件事。</li>
+<li>沒有和端點比較，也沒有說明為什麼是最大。</li>
+</ul>
+</div>
+<div class="writeup">
+<p>設超過 20 人的人數為 $x$，$0 \le x \le 70$</p>
+<p>$R(x) = (20 + x)(600 - 4x) = 12000 + 520x - 4x^2$</p>
+<p>$R'(x) = 520 - 8x = 0$，得 $x = 65$</p>
+<p>$R(0) = 12000$，$R(65) = 28900$，$R(70) = 28800$，最大值在 $x = 65$</p>
+<p>85 人時收益最大，為 28,900 美元，票價 340 美元</p>
+</div>
+<details class="peek"><summary>換個數字練一次：課本 4.5 #19 是同一型</summary>
+<p>包機剛好 200 人報名時每人 300 美元；超過 200 人時，每多 1 人，每個人的票價都降 1 美元。幾位乘客時收益最大？最大收益和票價各是多少？</p>
+<p>設多 $x$ 人：$R(x) = (200 + x)(300 - x) = 60000 + 100x - x^2$。</p>
+<p>$R'(x) = 100 - 2x = 0$，得 $x = 50$；$R''(x) = -2 \lt 0$，是最大。</p>
+<p>250 位乘客，收益 $250 \times 250 = 62{,}500$ 美元，票價 250 美元。</p>
+</details>
+
+<h2 id="p56">⑤ 4.3 #56 畫圖</h2>
+<div class="say">
+<p>畫圖題看起來最長，其實是<mark>九個小項目一項一項填</mark>：定義域、截距、兩端的行為、漸近線、遞增遞減、極值、凹性、反曲點、描點。每一項都是小計算，而且各自有分數。就算最後的圖畫得不漂亮，把每一項寫對就能拿到大部分的分數。</p>
+</div>
+
+<h3>先補觀念 1：定義域和截距</h3>
+<p><strong>定義域</strong>是「$x$ 可以代哪些數」。分式的分母不能是 0，所以把讓分母等於 0 的 $x$ 挖掉。</p>
+<p><strong>截距</strong>是圖形碰到座標軸的點：</p>
+<ul>
+<li>$y$ 截距：代 $x = 0$ 算 $f(0)$。</li>
+<li>$x$ 截距：解 $f(x) = 0$。分式等於 0，只要<strong>分子</strong>等於 0。</li>
+</ul>
+
+<h3>先補觀念 2：漸近線是圖形會貼近的直線</h3>
+<p>這題的函數是 $f(x) = \dfrac{x^2 - 9}{x^2 - 4}$。先看 $x$ 靠近 2、還有 $x$ 很大的時候，函數值怎麼跑：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>$x$</th><th class="n">1.9</th><th class="n">1.99</th><th class="n">2</th><th class="n">2.01</th><th class="n">2.1</th><th class="n">10</th><th class="n">100</th></tr></thead>
+<tbody><tr><td>$f(x)$</td><td class="n">13.8</td><td class="n">126.3</td><td class="n">不存在</td><td class="n">−123.7</td><td class="n">−11.2</td><td class="n">0.948</td><td class="n">0.9995</td></tr></tbody>
+</table>
+</div>
+<div class="key" data-title="兩種漸近線">
+<p><strong>垂直漸近線</strong>：分母等於 0、分子不等於 0 的地方。圖形在它旁邊往上衝或往下掉。寫成 $x = $ 某數。</p>
+<p><strong>水平漸近線</strong>：$x$ 跑到很遠時，函數值貼近的高度。寫成 $y = $ 某數。分子分母次數一樣時，就是最高次項的係數相除。</p>
+</div>
+<p>垂直漸近線兩側是往上還是往下，不用算極限：代一個很靠近的數，只看分子、分母的正負號。</p>
+
+<h3>先補觀念 3：符號圖怎麼讀</h3>
+<p>$f'$ 是斜率。$f' \gt 0$ 圖形往上走，$f' \lt 0$ 往下走。把 $f'$ 等於 0 或不存在的點標在數線上，每一段各代一個數看正負，就是符號圖。$f''$ 也畫一張：$f'' \gt 0$ 是 ∪ 形（凹向上），$f'' \lt 0$ 是 ∩ 形（凹向下）。</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>看到的符號變化</th><th>結論</th></tr></thead>
+<tbody>
+<tr><td>$f'$ 由 − 變 ＋（先下後上）</td><td>相對極小值</td></tr>
+<tr><td>$f'$ 由 ＋ 變 −（先上後下）</td><td>相對極大值</td></tr>
+<tr><td>$f''$ 變號，而且那個點在定義域裡</td><td>反曲點</td></tr>
+</tbody>
+</table>
+</div>
+<p>不在定義域裡的點（這題的 $x = \pm 2$）要標在符號圖上，但它們<strong>不會</strong>是極值，也不會是反曲點，因為圖形上根本沒有那個點。</p>
+
+<h3>先補觀念 4：分式的微分用除法規則</h3>
+$$\Big(\frac{\text{上}}{\text{下}}\Big)' = \frac{\text{上}'\cdot\text{下} - \text{上}\cdot\text{下}'}{\text{下}^2}$$
+<p>順序是「上微乘下，<strong>減</strong>，上乘下微」，分母平方。減號兩邊不能對調。</p>
+
+<article class="prob" data-prob="4.3-56">
+<h3>照九個步驟畫出圖形</h3>
+<div class="prob-q">
+<p>用曲線描繪的流程畫出下列函數的圖形：</p>
+$$f(x) = \frac{x^2 - 9}{x^2 - 4}$$
+</div>
+<details class="hint"><summary>提示</summary>
+<p>分母 $x^2 - 4 = (x - 2)(x + 2)$。用除法規則算 $f'$ 時，分子可以提出 $2x$，括號裡只剩常數 5。這個函數的 $x$ 只以 $x^2$ 出現，圖形左右對稱，右半邊做完，左半邊照鏡子。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>① 定義域</h4>
+<p>分母不能是 0：$x^2 - 4 = 0$ 的解是 $x = \pm 2$，所以定義域是 $x \ne \pm 2$。</p>
+</div>
+<div class="step">
+<h4>② 截距與對稱</h4>
+<p>$y$ 截距：$f(0) = \dfrac{0 - 9}{0 - 4} = \dfrac94$，點是 $\big(0, \tfrac94\big)$。</p>
+<p>$x$ 截距：分子 $x^2 - 9 = 0$，得 $x = \pm 3$，點是 $(-3, 0)$ 和 $(3, 0)$。</p>
+<p>把 $x$ 換成 $-x$，式子不變（因為只有 $x^2$），所以圖形<strong>對 $y$ 軸左右對稱</strong>。</p>
+</div>
+<div class="step">
+<h4>③ x 跑到很遠時</h4>
+<p>分子分母都是 2 次，看最高次項 $\dfrac{x^2}{x^2}$，係數相除是 $\dfrac11 = 1$：</p>
+$$\lim_{x\to\pm\infty}\frac{x^2 - 9}{x^2 - 4} = 1$$
+<p>左右兩端都貼近高度 1。</p>
+</div>
+<div class="step">
+<h4>④ 漸近線</h4>
+<p><strong>水平：</strong>$y = 1$（上一步的結果）。</p>
+<p><strong>垂直：</strong>分母在 $x = \pm 2$ 等於 0，而分子在那裡是 $4 - 9 = -5$，不是 0，所以 $x = 2$ 和 $x = -2$ 都是垂直漸近線。</p>
+<p>看 $x = 2$ 的兩側（分子在這附近都大約是 $-5$，負的）：</p>
+<ul>
+<li>左邊代 $x = 1.9$：分母 $3.61 - 4$ 是負的，負 ÷ 負 = 正，往 $+\infty$。</li>
+<li>右邊代 $x = 2.1$：分母 $4.41 - 4$ 是正的，負 ÷ 正 = 負，往 $-\infty$。</li>
+</ul>
+<p>$x = -2$ 的兩側用對稱：靠 0 的那一側往 $+\infty$，外側往 $-\infty$。</p>
+<p>到這裡，圖的「骨架」已經出來了：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-7, 7], "y": [-7, 9], "h": 300,
+  "vlines": [ { "x": -2, "label": "x = −2", "color": "ink" }, { "x": 2, "label": "x = 2", "color": "ink" } ],
+  "hlines": [ { "y": 1, "label": "y = 1", "color": "ink" } ],
+  "shapes": [
+    { "type": "text", "x": 1.35, "y": 5.6, "t": "↑ +∞", "color": "d1", "size": 12 },
+    { "type": "text", "x": 2.75, "y": -6, "t": "↓ −∞", "color": "d1", "size": 12 },
+    { "type": "text", "x": -1.35, "y": 5.6, "t": "↑ +∞", "color": "d1", "size": 12 },
+    { "type": "text", "x": -2.75, "y": -6, "t": "↓ −∞", "color": "d1", "size": 12 }
+  ],
+  "points": [
+    { "x": 0, "y": 2.25, "label": "(0, 9/4)", "pos": "t", "color": "f" },
+    { "x": -3, "y": 0, "label": "(−3, 0)", "pos": "bl", "color": "f" },
+    { "x": 3, "y": 0, "label": "(3, 0)", "pos": "br", "color": "f" }
+  ]
+}
+</script>
+<figcaption>畫圖的第一階段：三條漸近線、三個截距，以及圖形在垂直漸近線兩側的方向。曲線還沒畫。</figcaption>
+</figure>
+</div>
+<div class="step">
+<h4>⑤ f′ 與遞增遞減</h4>
+<p>除法規則：上面 $x^2 - 9$ 的微分是 $2x$，下面 $x^2 - 4$ 的微分也是 $2x$。</p>
+$$f'(x) = \frac{2x\,(x^2 - 4) - (x^2 - 9)\,(2x)}{(x^2 - 4)^2}$$
+<p>分子兩項都有 $2x$，提出來：</p>
+$$f'(x) = \frac{2x\big[(x^2 - 4) - (x^2 - 9)\big]}{(x^2 - 4)^2} = \frac{2x\cdot 5}{(x^2 - 4)^2} = \frac{10x}{(x^2 - 4)^2}$$
+<p>中括號裡 $x^2$ 消掉，$-4 - (-9) = 5$。</p>
+<p>分母是平方，一定是正的。所以 <strong>$f'$ 的正負號和分子 $10x$ 一樣</strong>：$x$ 是負的時候 $f' \lt 0$，$x$ 是正的時候 $f' \gt 0$。分段點是 $f' = 0$ 的 $x = 0$，和 $f'$ 不存在的 $x = \pm 2$：</p>
+<div class="signline" data-label="f′(x)" data-marks="-2=x, 0=0, 2=x" data-signs="- - + +" data-kind="mono"></div>
+<p>在 $(-\infty, -2)$ 和 $(-2, 0)$ 遞減；在 $(0, 2)$ 和 $(2, \infty)$ 遞增。</p>
+</div>
+<div class="step">
+<h4>⑥ 相對極值</h4>
+<p>$f'$ 在 $x = 0$ 由負變正（先下後上），所以有<strong>相對極小值</strong> $f(0) = \dfrac94$。</p>
+<p>$x = \pm 2$ 不在定義域，不算。沒有相對極大值。把箭頭加到骨架上：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-7, 7], "y": [-7, 9], "h": 300,
+  "vlines": [ { "x": -2, "label": "x = −2", "color": "ink" }, { "x": 2, "label": "x = 2", "color": "ink" } ],
+  "hlines": [ { "y": 1, "label": "y = 1", "color": "ink" } ],
+  "shapes": [
+    { "type": "text", "x": -4.6, "y": -2.4, "t": "↘ 遞減", "color": "neg", "size": 13 },
+    { "type": "text", "x": -1.1, "y": 6, "t": "↘", "color": "neg", "size": 15 },
+    { "type": "text", "x": 1.1, "y": 6, "t": "↗", "color": "pos", "size": 15 },
+    { "type": "text", "x": 4.6, "y": -2.4, "t": "↗ 遞增", "color": "pos", "size": 13 }
+  ],
+  "points": [
+    { "x": 0, "y": 2.25, "label": "相對極小 (0, 9/4)", "pos": "t", "color": "pos" },
+    { "x": -3, "y": 0, "label": "(−3, 0)", "pos": "bl", "color": "f" },
+    { "x": 3, "y": 0, "label": "(3, 0)", "pos": "br", "color": "f" }
+  ]
+}
+</script>
+<figcaption>第二階段：每一段標上升降的方向。中間那一段先下後上，谷底在 (0, 9/4)。</figcaption>
+</figure>
+</div>
+<div class="step">
+<h4>⑦ f″ 與凹性</h4>
+<p>把 $f'$ 寫成 $10x\,(x^2 - 4)^{-2}$，用乘法規則。後面那塊 $(x^2 - 4)^{-2}$ 的微分用連鎖律：$-2(x^2 - 4)^{-3}\cdot 2x$。</p>
+$$f''(x) = \underbrace{10}_{\text{前微}}(x^2 - 4)^{-2} + 10x\cdot\underbrace{(-2)(x^2 - 4)^{-3}\cdot 2x}_{\text{後微}} = \frac{10}{(x^2 - 4)^2} - \frac{40x^2}{(x^2 - 4)^3}$$
+<p>通分（第一項上下同乘 $x^2 - 4$）：</p>
+$$f''(x) = \frac{10(x^2 - 4) - 40x^2}{(x^2 - 4)^3} = \frac{-30x^2 - 40}{(x^2 - 4)^3} = \frac{-10(3x^2 + 4)}{(x^2 - 4)^3}$$
+<p>分子 $-10(3x^2 + 4)$ <strong>永遠是負的</strong>（$3x^2 + 4$ 至少是 4）。所以 $f''$ 的正負號和分母 $(x^2 - 4)^3$ 相反：</p>
+<ul>
+<li>$x$ 在 $-2$ 和 $2$ 之間：$x^2 - 4$ 是負的，負 ÷ 負 = 正，$f'' \gt 0$。</li>
+<li>$x \lt -2$ 或 $x \gt 2$：$x^2 - 4$ 是正的，負 ÷ 正 = 負，$f'' \lt 0$。</li>
+</ul>
+<div class="signline" data-label="f″(x)" data-marks="-2=x, 2=x" data-signs="- + -" data-kind="concave"></div>
+<p>在 $(-2, 2)$ 凹向上；在 $(-\infty, -2)$ 和 $(2, \infty)$ 凹向下。</p>
+</div>
+<div class="step">
+<h4>⑧ 反曲點</h4>
+<p>$f''$ 的分子不會是 0，所以 $f''$ 從來不等於 0。凹性雖然在 $x = \pm 2$ 改變，但這兩個數不在定義域，圖形上沒有那個點。所以<strong>沒有反曲點</strong>。</p>
+</div>
+<div class="step">
+<h4>⑨ 多代幾個點，連成曲線</h4>
+<p>$f(1) = \dfrac{-8}{-3} = \dfrac83 \approx 2.67$，$f(4) = \dfrac{7}{12} \approx 0.58$，$f(5) = \dfrac{16}{21} \approx 0.76$。左半邊用對稱補上。</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [-7, 7], "y": [-7, 9], "h": 360,
+  "fns": [
+    { "f": "(x^2-9)/(x^2-4)", "color": "f", "label": "f(x) = (x² − 9) / (x² − 4)", "domain": [-7, -2.001] },
+    { "f": "(x^2-9)/(x^2-4)", "color": "f", "domain": [-1.999, 1.999] },
+    { "f": "(x^2-9)/(x^2-4)", "color": "f", "domain": [2.001, 7] }
+  ],
+  "vlines": [ { "x": -2, "label": "x = −2", "color": "ink" }, { "x": 2, "label": "x = 2", "color": "ink" } ],
+  "hlines": [ { "y": 1, "label": "水平漸近線 y = 1", "color": "ink" } ],
+  "points": [
+    { "x": 0, "y": 2.25, "label": "相對極小 (0, 9/4)", "pos": "t", "color": "pos" },
+    { "x": -3, "y": 0, "label": "(−3, 0)", "pos": "bl", "color": "f" },
+    { "x": 3, "y": 0, "label": "(3, 0)", "pos": "br", "color": "f" }
+  ]
+}
+</script>
+<figcaption>完成圖。中間是一個 ∪ 形，谷底在 (0, 9/4)，兩邊沿著垂直漸近線往上衝。左右兩塊沿著垂直漸近線從底下爬上來，穿過 x 軸，越來越貼近 y = 1，但一直在它下面。</figcaption>
+</figure>
+<p class="answer"><span>定義域 $x \ne \pm2$；截距 $\big(0, \tfrac94\big)$、$(\pm3, 0)$；水平漸近線 $y = 1$，垂直漸近線 $x = \pm2$；在 $(-\infty, -2)$、$(-2, 0)$ 遞減，在 $(0, 2)$、$(2, \infty)$ 遞增；相對極小值 $f(0) = \tfrac94$；在 $(-2, 2)$ 凹向上，在 $(-\infty, -2)$、$(2, \infty)$ 凹向下；無反曲點。</span></p>
+</div>
+</div>
+</article>
+
+<div class="trap">
+<ul>
+<li>把 $x = \pm 2$ 當成臨界數、極值或反曲點。它們不在定義域，只是符號圖上的分段點。</li>
+<li>除法規則的減號兩邊寫反，$f'$ 會差一個負號，遞增遞減整個顛倒。</li>
+<li>水平漸近線寫成 $x = 1$。水平線是 $y = 1$；垂直線才是 $x = \pm 2$。</li>
+<li>遞減區間寫成 $(-\infty, 0)$。中間 $x = -2$ 斷開了，要分成 $(-\infty, -2)$ 和 $(-2, 0)$ 兩段。</li>
+<li>$f''$ 的分子前面有負號，判斷正負時漏看，凹向上和凹向下會寫反。</li>
+<li>答案是「沒有」的項目（相對極大值、反曲點）留白。要寫「無」，並說明理由。</li>
+</ul>
+</div>
+<div class="writeup">
+<p>定義域：$x \ne \pm 2$。截距：$\big(0, \tfrac94\big)$、$(\pm 3, 0)$。圖形對 $y$ 軸對稱。</p>
+<p>漸近線：水平 $y = 1$；垂直 $x = 2$、$x = -2$。</p>
+<p>$f'(x) = \dfrac{10x}{(x^2 - 4)^2}$：在 $(-\infty, -2)$、$(-2, 0)$ 遞減，在 $(0, 2)$、$(2, \infty)$ 遞增。</p>
+<p>相對極小值 $f(0) = \tfrac94$；無相對極大值。</p>
+<p>$f''(x) = \dfrac{-10(3x^2 + 4)}{(x^2 - 4)^3}$：在 $(-2, 2)$ 凹向上，在 $(-\infty, -2)$、$(2, \infty)$ 凹向下；無反曲點。</p>
+<p>（附上圖，標出三個截距、三條漸近線。兩張符號圖也畫在考卷上。）</p>
+</div>
+<details class="peek"><summary>換個函數練一次：畫 $g(x) = \dfrac{x^2}{x^2 - 1}$</summary>
+<p>定義域 $x \ne \pm 1$；截距只有 $(0, 0)$；對 $y$ 軸對稱。水平漸近線 $y = 1$，垂直漸近線 $x = \pm 1$。</p>
+<p>$g'(x) = \dfrac{2x(x^2 - 1) - x^2(2x)}{(x^2 - 1)^2} = \dfrac{-2x}{(x^2 - 1)^2}$：在 $(-\infty, -1)$、$(-1, 0)$ 遞增，在 $(0, 1)$、$(1, \infty)$ 遞減。相對極大值 $g(0) = 0$。</p>
+<p>$g''(x) = \dfrac{6x^2 + 2}{(x^2 - 1)^3}$：在 $(-\infty, -1)$、$(1, \infty)$ 凹向上，在 $(-1, 1)$ 凹向下；無反曲點。</p>
+<p>和指定題比一比：這題 $g'$ 的分子多一個負號，所以山谷變成山頂，凹性也整個反過來。</p>
+</details>
+
+<h2 id="p27">⑥ 5.6 #27 消息傳播</h2>
+<div class="say">
+<p>一個消息在 3000 人的校園裡傳開。知道的人數一開始增加得慢，中間最快，快到 3000 人時又慢下來。公式裡有兩個還不知道的常數 $B$ 和 $k$，<mark>題目藏了兩個條件，剛好用來把它們求出來</mark>。求出來之後，再回答「4 小時後幾個人知道」和「那時候傳得多快」。</p>
+</div>
+
+<h3>先補觀念 1：e 只是一個數字</h3>
+<p>$e \approx 2.718$，和 $\pi$ 一樣是一個固定的數。這題會用到它的三個性質：</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>性質</th><th>意思</th><th>這題哪裡用到</th></tr></thead>
+<tbody>
+<tr><td>$e^0 = 1$</td><td>任何數的 0 次方都是 1</td><td>代 $t = 0$ 求 $B$</td></tr>
+<tr><td>$e^{-x} = \dfrac{1}{e^x}$</td><td>負次方是倒數；$x$ 越大，$e^{-x}$ 越接近 0</td><td>解釋為什麼人數會貼近 3000</td></tr>
+<tr><td>$\big(e^{a}\big)^2 = e^{2a}$</td><td>次方的次方，指數相乘</td><td>不按計算機就算出 $e^{-4k}$</td></tr>
+</tbody>
+</table>
+</div>
+<p>計算機：$e^x$ 鍵通常在 <span class="mono">ln</span> 鍵的上方，要先按 <span class="mono">SHIFT</span>。指數是負的或是一串算式時，一定要加括號。試機：$e^{-1.622} \approx 0.1975$。</p>
+
+<h3>先補觀念 2：ln 是「e 的次方」的反操作</h3>
+<p>$\ln$ 回答的問題是「$e$ 的幾次方會等於這個數」。所以：</p>
+<div class="key" data-title="用 ln 把指數拉下來">
+$$e^{\,\square} = c \quad\Longrightarrow\quad \square = \ln c$$
+<p>條件：$e$ 的那一項要<strong>先單獨留在一邊</strong>，才能取 $\ln$。</p>
+</div>
+<p>例：$e^{u} = 5$，那麼 $u = \ln 5 \approx 1.609$。再一個例子：$e^{-2k} = \dfrac49$，那麼 $-2k = \ln\dfrac49 \approx -0.8109$。小於 1 的數取 $\ln$ 會是<strong>負的</strong>，這是正常的。</p>
+<p>計算機：按 <span class="mono">ln ( 4 ÷ 9 ) =</span> 得 $-0.8109$。不要按成 <span class="mono">log</span>，那是另一個鍵。</p>
+
+<h3>先補觀念 3：這條曲線長什麼樣子</h3>
+<p>公式是 $f(t) = \dfrac{3000}{1 + Be^{-kt}}$。時間 $t$ 很大時，$e^{-kt}$ 趨近 0，分母趨近 1，所以 $f(t)$ 趨近 3000。意思是：最後全校 3000 人都會知道，3000 就是上限。下面是把 $B$、$k$ 求出來之後的圖，先看形狀：</p>
+<figure class="fig">
+<script type="application/json">
+{
+  "x": [0, 14], "y": [0, 3300], "h": 340,
+  "xlabel": "典禮後 t（小時）", "ylabel": "知道消息的人數",
+  "fns": [{ "f": "3000/(1+9*e^(-0.405465*x))", "color": "f", "label": "f(t) = 3000 / (1 + 9e^(−0.4055t))" }],
+  "tangent": { "fn": 0 },
+  "hlines": [ { "y": 3000, "label": "全校 3000 人（上限）", "color": "mute" } ],
+  "points": [
+    { "x": 0, "y": 300, "label": "t = 0：300 人", "pos": "tr", "color": "ink" },
+    { "x": 2, "y": 600, "label": "t = 2：600 人", "pos": "br", "color": "ink" }
+  ],
+  "slider": { "label": "t", "min": 0, "max": 13.5, "step": 0.01, "value": 4, "digits": 2, "unit": " 小時", "play": true,
+    "presets": [ { "label": "t = 0", "value": 0 }, { "label": "t = 2", "value": 2 }, { "label": "t = 4（題目問的）", "value": 4 }, { "label": "t = 5.42（傳得最快）", "value": 5.42 } ] },
+  "readouts": [
+    { "label": "知道的人數 f(t)", "f": 0, "digits": 0, "unit": " 人", "color": "f" },
+    { "label": "傳播速度 f′(t)", "d": 0, "digits": 0, "unit": " 人/小時", "color": "d1" }
+  ]
+}
+</script>
+<figcaption>S 形的曲線。按「播放」：切線一開始比較平，中間最陡，最後又變平。切線斜率就是「每小時多幾個人知道」。</figcaption>
+</figure>
+
+<h3>先補觀念 4：分母有東西的函數怎麼微分</h3>
+<p>$\dfrac{3000}{\text{一包}}$ 可以寫成 $3000\,(\text{一包})^{-1}$，用連鎖律：</p>
+$$\Big[3000\,(\text{一包})^{-1}\Big]' = -3000\,(\text{一包})^{-2}\cdot(\text{一包})'$$
+<p>這題的一包是 $1 + 9e^{-kt}$。它的微分：$1$ 變 $0$；$9e^{-kt}$ 照抄，再乘指數 $-kt$ 的微分 $-k$，得 $-9k\,e^{-kt}$。</p>
+
+<article class="prob" data-prob="5.6-27">
+<h3>求出 B 和 k，再算人數和傳播速度</h3>
+<div class="prob-q">
+<p>某大學新大樓的落成典禮有 300 名學生參加。校長在典禮上宣布了新的擴建計畫。典禮後 $t$ 小時，知道這個消息的學生人數為</p>
+$$f(t) = \frac{3000}{1 + Be^{-kt}}$$
+<p>已知典禮後 2 小時，校園裡有 600 名學生知道這個消息。</p>
+<p>(1) 典禮後 4 小時，有多少學生知道？<br>(2) 典禮後 4 小時那一刻，消息傳得多快？</p>
+</div>
+<details class="hint"><summary>提示</summary>
+<p>兩個條件：$t = 0$ 時是 300 人（在場的學生當下就知道了），$t = 2$ 時是 600 人。先用第一個求 $B$，再用第二個求 $k$。「傳得多快」就是 $f'(4)$。</p>
+</details>
+<div class="solution">
+<div class="step">
+<h4>用 t = 0 求 B</h4>
+<p>典禮當下（$t = 0$）在場的 300 人已經知道，所以 $f(0) = 300$。代 $t = 0$，$e^{0} = 1$：</p>
+$$\frac{3000}{1 + B\cdot 1} = 300 \quad\Longrightarrow\quad 1 + B = \frac{3000}{300} = 10 \quad\Longrightarrow\quad B = 9$$
+</div>
+<div class="step">
+<h4>用 t = 2 列出 k 的方程式</h4>
+<p>$f(2) = 600$，而且 $B = 9$：</p>
+$$\frac{3000}{1 + 9e^{-2k}} = 600 \quad\Longrightarrow\quad 1 + 9e^{-2k} = \frac{3000}{600} = 5$$
+</div>
+<div class="step">
+<h4>把 e 的那一項單獨留下</h4>
+<p>一層一層剝：先減 1，再除以 9。</p>
+$$9e^{-2k} = 4 \quad\Longrightarrow\quad e^{-2k} = \frac49$$
+</div>
+<div class="step">
+<h4>取 ln，解出 k</h4>
+$$-2k = \ln\frac49 \approx -0.8109 \quad\Longrightarrow\quad k = \frac{-0.8109}{-2} \approx 0.4055$$
+<p>$k$ 是正的才合理（消息越傳越多人知道）。如果算出負的，就是正負號掉了。</p>
+<p>現在公式完整了：$f(t) = \dfrac{3000}{1 + 9e^{-0.4055t}}$。</p>
+</div>
+<div class="step">
+<h4>(1) 算 f(4)</h4>
+<p>要用到 $e^{-4k}$。有一個不用按計算機的算法：$e^{-4k} = \big(e^{-2k}\big)^2$，而上面剛算出 $e^{-2k} = \dfrac49$：</p>
+$$e^{-4k} = \Big(\frac49\Big)^2 = \frac{16}{81} \approx 0.1975$$
+$$f(4) = \frac{3000}{1 + 9\cdot\frac{16}{81}} = \frac{3000}{1 + \frac{16}{9}} = \frac{3000}{\frac{25}{9}} = 3000\times\frac{9}{25} = 1080$$
+<p>用計算機也可以：$e^{-4\times 0.4055} = e^{-1.622} \approx 0.1975$，$1 + 9(0.1975) = 2.7778$，$3000 \div 2.7778 \approx 1080$。</p>
+</div>
+<div class="step">
+<h4>(2) 先求導數 f′(t)</h4>
+<p>改寫成 $f(t) = 3000\,(1 + 9e^{-kt})^{-1}$，用連鎖律。裡面那包的微分是 $-9k\,e^{-kt}$：</p>
+$$f'(t) = -3000\,(1 + 9e^{-kt})^{-2}\cdot\big(-9k\,e^{-kt}\big) = \frac{27000\,k\,e^{-kt}}{(1 + 9e^{-kt})^2}$$
+<p>兩個負號相乘變正，$3000 \times 9 = 27000$。</p>
+</div>
+<div class="step">
+<h4>代 t = 4</h4>
+<p>需要的數字上一步都有了：$k \approx 0.4055$，$e^{-4k} \approx 0.1975$，$1 + 9e^{-4k} \approx 2.7778$。</p>
+$$f'(4) = \frac{27000\,(0.4055)(0.1975)}{(2.7778)^2} \approx \frac{2162.3}{7.716} \approx 280$$
+<p>單位是「人／小時」。意思是典禮後 4 小時那一刻，每小時大約多 280 個學生知道這個消息。</p>
+<p class="answer"><span>(1) 4 小時後有 1080 名學生知道。(2) 那一刻消息以每小時大約 280 人的速度傳開。</span></p>
+</div>
+</div>
+</article>
+
+<div class="trap">
+<ul>
+<li>沒發現 $t = 0$ 這個條件。「300 名學生參加典禮」就是 $f(0) = 300$。</li>
+<li>把 $e^0$ 當成 0。$e^0 = 1$，所以 $f(0) = \dfrac{3000}{1 + B}$。</li>
+<li>$1 + 9e^{-2k} = 5$ 還沒整理就取 $\ln$。要先減 1、再除以 9，讓 $e^{-2k}$ 單獨在一邊。</li>
+<li>$k$ 太早四捨五入。用 $k = 0.41$ 會算出 1093 人，不是 1080。$k$ 至少留四位小數，或用 $\big(\tfrac49\big)^2$ 的算法。</li>
+<li>微分時漏掉連鎖律多出來的 $-k$，或是兩個負號沒有變正。傳播速度應該是正的。</li>
+<li>計算機的負指數沒加括號。</li>
+<li>第 (2) 小題沒寫單位。答案是「人／小時」。</li>
+</ul>
+</div>
+<div class="writeup">
+<p>$f(0) = 300$：$\dfrac{3000}{1 + B} = 300$，得 $B = 9$</p>
+<p>$f(2) = 600$：$1 + 9e^{-2k} = 5$，$e^{-2k} = \dfrac49$，$k = -\dfrac12\ln\dfrac49 \approx 0.4055$</p>
+<p>(1) $e^{-4k} = \big(\tfrac49\big)^2 = \tfrac{16}{81}$，$f(4) = \dfrac{3000}{1 + 9\cdot\frac{16}{81}} = 1080$（人）</p>
+<p>(2) $f'(t) = \dfrac{27000\,k\,e^{-kt}}{(1 + 9e^{-kt})^2}$，$f'(4) = \dfrac{27000(0.4055)(0.1975)}{(2.7778)^2} \approx 280$（人／小時）</p>
+</div>
+<details class="peek"><summary>換個問法練一次：典禮後多久，全校一半的人（1500 人）知道？</summary>
+<p>令 $f(t) = 1500$：$\dfrac{3000}{1 + 9e^{-kt}} = 1500$，所以 $1 + 9e^{-kt} = 2$，$e^{-kt} = \dfrac19$。</p>
+<p>取 $\ln$：$-kt = \ln\dfrac19 = -\ln 9$，所以 $t = \dfrac{\ln 9}{k} \approx \dfrac{2.1972}{0.4055} \approx 5.42$ 小時。</p>
+<p>補充：這種 S 形曲線在「剛好一半」的時候傳得最快（那裡是反曲點）。回到上面的圖按「t = 5.42」，速度大約是每小時 304 人，比 $t = 4$ 的 280 還快。</p>
+</details>
+
+<h2 id="next">六題之後讀什麼</h2>
+<p>六題都能不看解答重做一遍之後，照下面的順序往外擴。每一列的「同型題」和你剛學的是同一招，會讀得很快。</p>
+<div class="tbl-wrap">
+<table class="tbl">
+<thead><tr><th>你已經會的</th><th>接著讀</th><th>同型的指定題</th></tr></thead>
+<tbody>
+<tr><td>①②③ 隱函數微分、相關變率</td><td><a href="s36.html">3.6 節</a></td><td>#19、#23（求 $\dfrac{dy}{dx}$）</td></tr>
+<tr><td>④ 最大收益</td><td><a href="s45.html">4.5 節</a></td><td>#20（蘋果園，同一型）、#4、#9</td></tr>
+<tr><td>⑤ 畫圖</td><td><a href="s41.html">4.1</a>、<a href="s42.html">4.2</a>、<a href="s43.html">4.3 節</a></td><td>4.3 #55、#60；4.1、4.2 的指定題是畫圖的前半段</td></tr>
+<tr><td>⑥ $e$ 和 $\ln$</td><td><a href="s51.html">5.1–5.2</a>、<a href="s54.html">5.4–5.5</a>、<a href="s56.html">5.6 節</a></td><td>5.6 #22、#23（也是 S 形曲線）、#16、#19</td></tr>
+<tr><td>還沒碰到的</td><td><a href="s34.html">3.4</a>、<a href="s35.html">3.5</a>、<a href="s44.html">4.4</a>、<a href="s53.html">5.3 節</a></td><td>3.4 #13、#15、#37；3.5 #28</td></tr>
+</tbody>
+</table>
+</div>
+<p>出門前看一遍<a href="formulas.html">公式總表與考前檢查</a>。</p>
+
+<div class="exam">
+<p>六題的共同點：<strong>先微分，再代數字</strong>；答案要<strong>換回題目問的東西</strong>並寫單位（切線方程式、減少 11.4、減少 539 盒、85 人、1080 人與每小時 280 人）。考卷上的數字如果和這裡不一樣，方法完全相同，照「考卷上這樣寫」的那幾行換數字就可以。今晚把六題各自蓋住答案重做一次，卡住的那一步就是明天最需要再看一眼的地方。</p>
+</div>
+
+</main>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="assets/app.js?v=8"></script>
+</body>
+</html>

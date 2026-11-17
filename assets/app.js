@@ -12,6 +12,7 @@
 
   var PAGES = [
     { id: 'index', file: 'index.html', num: '', title: '首頁 · 讀書計畫' },
+    { id: 'focus', file: 'focus.html', num: '★', title: '老師提示的六題', group: '考前必讀', study: true },
     { id: 'basics', file: 'basics.html', num: '0', title: '暖身：微分從零開始', group: '暖身（沒讀過先看這裡）', study: true },
     { id: 's34', file: 's34.html', num: '3.4', title: '邊際函數與需求彈性', group: '第 3 章　微分', study: true, probs: [13, 15, 37] },
     { id: 's35', file: 's35.html', num: '3.5', title: '高階導數', study: true, probs: [28] },
@@ -27,6 +28,10 @@
     { id: 's56', file: 's56.html', num: '5.6', title: '指數模型：成長、衰退、學習曲線', study: true, probs: [15, 16, 19, 22, 23, 24] },
     { id: 'formulas', file: 'formulas.html', num: '', title: '公式總表與考前檢查', group: '考前' }
   ];
+
+  // 老師提示會考的題目（照 focus.html 的閱讀順序）。詳細講解都在 focus.html。
+  var FOCUS = ['3.6-34', '3.6-49', '3.6-44', '4.5-21', '4.3-56', '5.6-27'];
+  function isFocus(id) { return FOCUS.indexOf(id) >= 0; }
 
   var pageId = document.body.getAttribute('data-page') || 'index';
   var curIndex = Math.max(0, PAGES.findIndex(function (p) { return p.id === pageId; }));
@@ -156,8 +161,9 @@
     document.querySelectorAll('.side-link').forEach(function (a) {
       a.classList.toggle('is-done', !!state.pages[a.getAttribute('data-id')]);
     });
+    var doneF = FOCUS.filter(function (id) { return state.probs[id]; }).length;
     var sp = document.getElementById('sideProg');
-    if (sp) sp.textContent = '讀完 ' + doneP + ' / ' + studyPages.length + ' 節　·　指定題 ' + doneQ + ' / ' + probs.length;
+    if (sp) sp.textContent = '老師提示 ' + doneF + ' / ' + FOCUS.length + ' 題　·　指定題 ' + doneQ + ' / ' + probs.length + '　·　讀完 ' + doneP + ' / ' + studyPages.length + ' 節';
     var sb = document.getElementById('sideBar');
     if (sb) sb.style.width = Math.round(((doneP + doneQ) / (studyPages.length + probs.length)) * 100) + '%';
 
@@ -174,6 +180,10 @@
     });
     var hp = document.getElementById('homeProg');
     if (hp) hp.textContent = '目前進度：讀完 ' + doneP + ' / ' + studyPages.length + ' 節，指定題會了 ' + doneQ + ' / ' + probs.length + ' 題。';
+    var fp = document.getElementById('focusProg');
+    if (fp) {
+      fp.textContent = doneF === FOCUS.length ? '六題都標記會了' : '已經會 ' + doneF + ' / ' + FOCUS.length + ' 題';
+    }
   }
 
   function buildPageEnd() {
@@ -881,7 +891,9 @@
     card.id = 'q-' + id;
     var head = mk('div', 'prob-head');
     var stamp = mk('span', 'prob-stamp');
-    stamp.textContent = (card.hasAttribute('data-extra') ? '加碼題 ' : '指定題 ') + parts[0] + ' #' + parts[1];
+    var focus = isFocus(id);
+    stamp.textContent = (focus ? '老師提示 ' : card.hasAttribute('data-extra') ? '加碼題 ' : '指定題 ') + parts[0] + ' #' + parts[1];
+    if (focus) card.classList.add('is-focus');
     var btn = mk('button', 'prob-done');
     btn.type = 'button';
     function paint() {
@@ -896,6 +908,12 @@
     });
     head.appendChild(stamp); head.appendChild(btn);
     card.insertBefore(head, card.firstChild);
+    // 章節頁上的同一題：指到專頁的詳細版
+    if (focus && pageId !== 'focus') {
+      var more = mk('p', 'prob-focus');
+      more.innerHTML = '老師提示會考。<a href="focus.html#q-' + id + '">看從頭講起的詳細版 →</a>';
+      card.insertBefore(more, head.nextSibling);
+    }
     paint();
   }
 
@@ -915,10 +933,18 @@
       var rows = '';
       PAGES.filter(function (p) { return p.probs; }).forEach(function (p) {
         rows += '<div class="prob-row"><span class="sec">' + esc(p.num) + '</span><div class="chips">' + p.probs.map(function (n) {
-          return '<a class="chip" data-prob="' + p.num + '-' + n + '" href="' + p.file + '#q-' + p.num + '-' + n + '">' + n + '</a>';
+          var id = p.num + '-' + n;
+          return '<a class="chip' + (isFocus(id) ? ' is-focus' : '') + '" data-prob="' + id + '" href="' + p.file + '#q-' + id + '">' + n + '</a>';
         }).join('') + '</div></div>';
       });
       pg.innerHTML = rows;
+    }
+    var fg = document.getElementById('focusGrid');
+    if (fg) {
+      fg.innerHTML = FOCUS.map(function (id) {
+        var parts = id.split('-');
+        return '<a class="chip" data-prob="' + id + '" href="focus.html#q-' + id + '">' + parts[0] + ' #' + parts[1] + '</a>';
+      }).join('');
     }
     var rb = document.getElementById('resetProgress');
     if (rb) {

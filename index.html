@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-<link rel="stylesheet" href="assets/style.css?v=6">
+<link rel="stylesheet" href="assets/style.css?v=8">
 </head>
 <body data-page="index">
 <main class="page">
@@ -19,6 +19,14 @@
 <h1>整份考卷，其實都在問<em>斜率</em></h1>
 <p class="lead">3.4 到第 5 章看起來有十幾節，核心只有一件事：算出導數，然後看它是正的、負的、還是零。拖一下這張圖，你就已經看完第 4 章的大綱了。</p>
 </div>
+
+<section class="focus-banner" aria-labelledby="focusTitle">
+<p class="fb-kicker">考前必讀</p>
+<p class="fb-title" id="focusTitle">老師提示會考的六題，先讀這裡</p>
+<p>3.6 的 #34、#44、#49，4.3 的 #56，4.5 的 #21，5.6 的 #27。每一題都從最基礎的觀念講起，附逐步解答、考卷寫法和換數字的練習。六題讀熟了，再回頭看其他章節。</p>
+<div class="chips" id="focusGrid"></div>
+<div class="fb-row"><a class="fb-go" href="focus.html">開始讀六題 →</a><span class="fb-prog" id="focusProg"></span></div>
+</section>
 
 <figure class="fig">
 <script type="application/json">
@@ -87,6 +95,7 @@
 <li>
 <div class="when">11/18（三）<small>約 4 小時</small></div>
 <div>
+<p><strong>先讀<a href="focus.html">老師提示的六題</a></strong>。六題都能蓋住答案自己重做之後，再往下。</p>
 <p><a href="s45.html">4.5 最佳化應用題</a>（8 題指定題，份量最重）→ <a href="s51.html">5.1–5.2 指數與對數</a> → <a href="s53.html">5.3 複利</a> → <a href="s54.html">5.4–5.5 微分</a> → <a href="s56.html">5.6 指數模型</a></p>
 <p>目標：應用題會列式；計算機的 $e^x$、$\ln$ 按得順。睡前把還沒標記「會了」的指定題不看解答重做一次。</p>
 </div>
@@ -94,7 +103,7 @@
 <li>
 <div class="when">11/19（四）<small>考試當天</small></div>
 <div>
-<p>出門前看一遍<a href="formulas.html">公式總表與考前檢查</a>。帶計算機，手機收起來。</p>
+<p>出門前把<a href="focus.html">六題</a>每一題的「考卷上這樣寫」再看一遍，然後看<a href="formulas.html">公式總表與考前檢查</a>。帶計算機，手機收起來。</p>
 </div>
 </li>
 </ol>
@@ -104,7 +113,7 @@
 <div class="sec-grid" id="secGrid"></div>
 
 <h2 id="assigned">指定題總覽</h2>
-<p>老師公布的題目都在這裡，點題號直接跳到那一題的逐步解答。綠色代表你已經標記「會了」。</p>
+<p>老師公布的題目都在這裡，點題號直接跳到那一題的逐步解答。綠色代表你已經標記「會了」；題號底下有黃線的，是老師提示會考的題目（3.6 #34、#49 和 5.6 #27 不在原本的指定題清單裡，收在<a href="focus.html">六題專頁</a>）。</p>
 <div class="prob-groups" id="probGrid"></div>
 <div class="say">
 <p>老師的清單裡 5.6 寫的是「16, 16, 19, 22, 23, 24」，16 重複了一次。重複的那個有可能是 15，所以 5.6 #15 也一起做成「加碼題」放進來，總共 34 題。有機會的話跟老師或同學確認一下。</p>
@@ -114,6 +123,6 @@
 </main>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-<script defer src="assets/app.js?v=6"></script>
+<script defer src="assets/app.js?v=8"></script>
 </body>
 </html>
