@@ -12,7 +12,7 @@
 
   var PAGES = [
     { id: 'index', file: 'index.html', num: '', title: '首頁 · 讀書計畫' },
-    { id: 'focus', file: 'focus.html', num: '★', title: '老師提示的六題', group: '考前必讀', study: true },
+    { id: 'focus', file: 'focus.html', num: '★', title: '老師提示的七題', group: '考前必讀', study: true },
     { id: 'basics', file: 'basics.html', num: '0', title: '暖身：微分從零開始', group: '暖身（沒讀過先看這裡）', study: true },
     { id: 's34', file: 's34.html', num: '3.4', title: '邊際函數與需求彈性', group: '第 3 章　微分', study: true, probs: [13, 15, 37] },
     { id: 's35', file: 's35.html', num: '3.5', title: '高階導數', study: true, probs: [28] },
@@ -30,7 +30,7 @@
   ];
 
   // 老師提示會考的題目（照 focus.html 的閱讀順序）。詳細講解都在 focus.html。
-  var FOCUS = ['3.6-34', '3.6-49', '3.6-44', '4.5-21', '4.3-56', '5.6-27'];
+  var FOCUS = ['3.6-34', '3.6-19', '3.6-49', '3.6-44', '4.5-21', '4.3-56', '5.6-27'];
   function isFocus(id) { return FOCUS.indexOf(id) >= 0; }
 
   var pageId = document.body.getAttribute('data-page') || 'index';
@@ -182,7 +182,7 @@
     if (hp) hp.textContent = '目前進度：讀完 ' + doneP + ' / ' + studyPages.length + ' 節，指定題會了 ' + doneQ + ' / ' + probs.length + ' 題。';
     var fp = document.getElementById('focusProg');
     if (fp) {
-      fp.textContent = doneF === FOCUS.length ? '六題都標記會了' : '已經會 ' + doneF + ' / ' + FOCUS.length + ' 題';
+      fp.textContent = doneF === FOCUS.length ? FOCUS.length + ' 題都標記會了' : '已經會 ' + doneF + ' / ' + FOCUS.length + ' 題';
     }
   }
 
