@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>考試模式｜微積分期中考二衝刺</title>
-<meta name="description" content="考試模式：只有英文題目，在紙上作答，寫完再對答案。A 卷是老師提示的七題，B 卷和 C 卷是其他指定題。">
+<meta name="description" content="考試模式：只有英文題目，在紙上作答，寫完再對答案。A 卷是老師提示的七題，B、C、D 卷是其他指定題。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
 
 <div class="how" data-title="怎麼用">
 <ol>
-<li>選一份考卷。<strong>A 卷</strong>是老師提示的七題；<strong>B 卷</strong>是其他指定題挑出來的九題，每一節至少一題；<strong>C 卷</strong>是另外十一題重點題，補齊 A、B 卷沒考到的題型（遞增遞減、二階導數檢定、圍籬、諾曼窗、划船、指數成長）。數字都和課本一樣。</li>
+<li>選一份考卷。<strong>A 卷</strong>是老師提示的七題；<strong>B 卷</strong>是其他指定題挑出來的九題，每一節至少一題；<strong>C 卷</strong>是另外十一題重點題，補齊 A、B 卷沒考到的題型（遞增遞減、二階導數檢定、圍籬、諾曼窗、划船、指數成長）；<strong>D 卷</strong>是剩下的十題指定題。四份合起來就是全部的指定題，沒有重複。數字都和課本一樣。</li>
 <li>只看英文，在紙上作答。英文真的看不懂才按「單字提示」。</li>
 <li>寫完按「寫完了，對答案」，會出現這一題在考卷上該有的寫法。</li>
 <li>自己對一對，按「寫對了」或「寫錯或不會」。</li>
@@ -223,6 +223,76 @@
 <p>(a) $D(1) = 2000 - 1500e^{-0.05} \approx 573$，$D(12) \approx 1177$，$D(24) \approx 1548$，$D(60) \approx 1925$（台／月）</p>
 <p>(b) $t$ 很大時 $e^{-0.05t} \to 0$，$D(t) \to 2000$（台／月）</p>
 <p>(c) $D'(t) = -1500(-0.05)\,e^{-0.05t} = 75e^{-0.05t}$，$D'(10) = 75e^{-0.5} \approx 45.5$，約每月 46 台</p>
+</div>
+</section>
+
+<section class="paper" data-paper="D" data-name="D 卷" data-title="Practice Paper D" data-desc="剩下的指定題" data-probs="4.1-34,4.1-84,4.2-65,4.2-88,4.5-20,4.5-26,4.5-29,5.6-16,5.6-22,5.6-24">
+<div class="exam-ans" data-for="4.1-34">
+<p>定義域：$16 - x^2 \ge 0$，所以 $-4 \le x \le 4$</p>
+<p>$f'(x) = \dfrac12(16 - x^2)^{-1/2}(-2x) = \dfrac{-x}{\sqrt{16 - x^2}}$</p>
+<p>$f'(x) = 0$ 得 $x = 0$；$f'$ 在端點 $x = \pm 4$ 不存在</p>
+<p>$f'$ 的符號：$-4 \lt x \lt 0$ 是正的，$0 \lt x \lt 4$ 是負的</p>
+<p>Increasing on $(-4, 0)$；decreasing on $(0, 4)$</p>
+</div>
+<div class="exam-ans" data-for="4.1-84">
+<p>$\bar{C}(x) = -0.0001x + 2 + 2000x^{-1}$</p>
+<p>$\bar{C}'(x) = -0.0001 - \dfrac{2000}{x^2}$</p>
+<p>在 $(0, 6000)$ 上：$-0.0001 \lt 0$，而且 $-\dfrac{2000}{x^2} \lt 0$，兩個負數相加還是負的，所以 $\bar{C}'(x) \lt 0$</p>
+<p>所以 $\bar{C}$ 在 $(0, 6000)$ 恆遞減。</p>
+<p>英文可以這樣寫：Since $\bar{C}'(x) \lt 0$ for all $x$ in $(0, 6000)$, $\bar{C}$ is always decreasing on $(0, 6000)$.</p>
+</div>
+<div class="exam-ans" data-for="4.2-65">
+<p>$f'(x) = x^2 - 4x - 5 = (x - 5)(x + 1)$，$f'(x) = 0$ 得 $x = -1$、$x = 5$</p>
+<p>$f''(x) = 2x - 4$</p>
+<p>$f''(-1) = -6 \lt 0$：relative maximum $f(-1) = -\dfrac73$</p>
+<p>$f''(5) = 6 \gt 0$：relative minimum $f(5) = -\dfrac{115}{3}$</p>
+</div>
+<div class="exam-ans" data-for="4.2-88">
+<p>$C(x) = 1910.5\,x^{-1.72} + 42.9$</p>
+<p>$C'(x) = 1910.5(-1.72)\,x^{-2.72} = -3286.06\,x^{-2.72}$</p>
+<p>$C''(x) = -3286.06(-2.72)\,x^{-3.72} = \dfrac{8938.0832}{x^{3.72}}$</p>
+<p>在 $(5, 20)$ 上 $x^{3.72} \gt 0$，所以 $C''(x) \gt 0$，圖形凹向上。</p>
+<p>解釋：$C' \lt 0$，開得越多每英里的平均成本越低；$C'' \gt 0$，成本下降得越來越慢。</p>
+<p>英文可以這樣寫：The average cost per mile decreases as more miles are driven, but it decreases at a slower and slower rate.</p>
+</div>
+<div class="exam-ans" data-for="4.5-20">
+<p>設每英畝比 22 棵多種 $x$ 棵。棵數 $= 22 + x$，每棵收成 $= 36 - 2x$</p>
+<p>$Y(x) = (22 + x)(36 - 2x) = 792 - 8x - 2x^2$</p>
+<p>$Y'(x) = -8 - 4x = 0$，$x = -2$；$Y''(x) = -4 \lt 0$，所以是最大</p>
+<p>$x = -2$ 代表比 22 棵少種 2 棵：$22 - 2 = 20$ 棵，收成 $20 \times 40 = 800$</p>
+<p>每英畝種 20 棵（20 trees per acre），總收成 800 bushels</p>
+<p>這題是雙數題，課本書末沒有解答。如果老師規定只能多種（$x \ge 0$），答案是維持 22 棵；考卷上把「$x = -2$ 代表少種 2 棵」寫出來最保險。</p>
+</div>
+<div class="exam-ans" data-for="4.5-26">
+<p>設半徑 $r$、圓柱高 $h$（ft）。要最小的是表面積 $S = \pi(3r^2 + 2rh)$</p>
+<p>容量：$\pi r^2h + \tfrac23\pi r^3 = 504\pi$，所以 $h = \dfrac{504}{r^2} - \dfrac{2r}{3}$</p>
+<p>$S(r) = \pi\left(3r^2 + \dfrac{1008}{r} - \dfrac{4r^2}{3}\right) = \pi\left(\dfrac{5r^2}{3} + \dfrac{1008}{r}\right)$（$r \gt 0$）</p>
+<p>$S'(r) = \pi\left(\dfrac{10r}{3} - \dfrac{1008}{r^2}\right) = 0$，$r^3 = 302.4$，$r = \sqrt[3]{302.4} \approx 6.71$</p>
+<p>$S''(r) = \pi\left(\dfrac{10}{3} + \dfrac{2016}{r^3}\right) \gt 0$，所以是最小</p>
+<p>$h = \dfrac{504}{r^2} - \dfrac{2r}{3} \approx 6.71$。半徑約 6.71 ft，圓柱高約 6.71 ft</p>
+</div>
+<div class="exam-ans" data-for="4.5-29">
+<p>設 $P$ 離「島正對岸那一點」的距離是 $x$ mi（$0 \le x \le 12$）。水上距離 $\sqrt{x^2 + 9}$，陸上距離 $12 - x$</p>
+<p>$T(x) = \dfrac{\sqrt{x^2 + 9}}{4} + \dfrac{12 - x}{6}$</p>
+<p>$T'(x) = \dfrac{x}{4\sqrt{x^2 + 9}} - \dfrac16 = 0$，$3x = 2\sqrt{x^2 + 9}$，$9x^2 = 4x^2 + 36$，$x = \dfrac{6}{\sqrt5} \approx 2.68$</p>
+<p>$T(0) = 2.75$，$T(2.68) \approx 2.56$，$T(12) \approx 3.09$，最小在 $x \approx 2.68$</p>
+<p>$x = \dfrac{6}{\sqrt5} \approx 2.68$ mi</p>
+</div>
+<div class="exam-ans" data-for="5.6-16">
+<p>圖形：從 $(0, 60)$ 出發，一路上升但越來越平，貼近高度 $180$（因為 $t$ 很大時 $e^{-0.05t} \to 0$）；課程只到 $t = 20$。</p>
+<p>(a) $Q(0) = 120(1 - 1) + 60 = 60$（words per minute）</p>
+<p>(b) 課程一半是 $t = 10$：$Q(10) = 120(1 - e^{-0.5}) + 60 \approx 107$</p>
+<p>(c) 結業是 $t = 20$：$Q(20) = 120(1 - e^{-1}) + 60 \approx 136$</p>
+</div>
+<div class="exam-ans" data-for="5.6-22">
+<p>(a) $Q(1) = \dfrac{1000}{1 + 199e^{-0.8}} \approx \dfrac{1000}{90.42} \approx 11$（人）</p>
+<p>(b) $Q(10) = \dfrac{1000}{1 + 199e^{-8}} \approx \dfrac{1000}{1.0668} \approx 937$（人）</p>
+<p>(c) $t$ 很大時 $e^{-0.8t} \to 0$，$Q(t) \to 1000$（人）</p>
+</div>
+<div class="exam-ans" data-for="5.6-24">
+<p>2010 年是 $t = 20$（$t = 0$ 是 1990 年初）</p>
+<p>$P(20) = \dfrac{197.9}{1 + 3.274e^{-0.722}} \approx \dfrac{197.9}{1 + 3.274(0.4858)} \approx \dfrac{197.9}{2.590} \approx 76.4$</p>
+<p>約 76.4 million（7640 萬人）</p>
 </div>
 </section>
 
