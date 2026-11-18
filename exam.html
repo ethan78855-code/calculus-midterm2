@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>考試模式｜微積分期中考二衝刺</title>
-<meta name="description" content="考試模式：只有英文題目，在紙上作答，寫完再對答案。A 卷是老師提示的七題，B 卷是其他指定題。">
+<meta name="description" content="考試模式：只有英文題目，在紙上作答，寫完再對答案。A 卷是老師提示的七題，B 卷和 C 卷是其他指定題。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
 
 <div class="how" data-title="怎麼用">
 <ol>
-<li>選一份考卷。<strong>A 卷</strong>是老師提示的七題；<strong>B 卷</strong>是其他指定題挑出來的九題，每一節至少一題。數字都和課本一樣。</li>
+<li>選一份考卷。<strong>A 卷</strong>是老師提示的七題；<strong>B 卷</strong>是其他指定題挑出來的九題，每一節至少一題；<strong>C 卷</strong>是另外十一題重點題，補齊 A、B 卷沒考到的題型（遞增遞減、二階導數檢定、圍籬、諾曼窗、划船、指數成長）。數字都和課本一樣。</li>
 <li>只看英文，在紙上作答。英文真的看不懂才按「單字提示」。</li>
 <li>寫完按「寫完了，對答案」，會出現這一題在考卷上該有的寫法。</li>
 <li>自己對一對，按「寫對了」或「寫錯或不會」。</li>
@@ -146,6 +146,83 @@
 <p>(c) $N(20) = \dfrac{400}{1 + 39e^{-3.2}} \approx \dfrac{400}{2.590} \approx 154$（隻）</p>
 <p>(d) $N'(t) = \dfrac{400(39)(0.16)\,e^{-0.16t}}{(1 + 39e^{-0.16t})^2} = \dfrac{2496\,e^{-0.16t}}{(1 + 39e^{-0.16t})^2}$</p>
 <p>$N'(20) \approx \dfrac{2496(0.04076)}{(2.590)^2} \approx 15$（隻／天）</p>
+</div>
+</section>
+
+<section class="paper" data-paper="C" data-name="C 卷" data-title="Practice Paper C" data-desc="重點題，補齊 A、B 卷沒考到的題型" data-probs="3.4-15,4.1-35,4.1-89,4.2-70,4.2-100,4.3-60,4.5-4,4.5-18,4.5-30,5.6-15,5.6-19">
+<div class="exam-ans" data-for="3.4-15">
+<p>(a) $\bar{C}(x) = \dfrac{C(x)}{x} = 0.000002x^2 - 0.03x + 400 + \dfrac{80{,}000}{x}$</p>
+<p>(b) $\bar{C}'(x) = 0.000004x - 0.03 - \dfrac{80{,}000}{x^2}$</p>
+<p>(c) $\bar{C}'(5000) = 0.02 - 0.03 - 0.0032 = -0.0132$，$\bar{C}'(10{,}000) = 0.04 - 0.03 - 0.0008 = 0.0092$</p>
+<p>解釋：產量 5000 台時，平均成本正在下降（每多一台約少 0.0132 美元）；產量 10,000 台時，平均成本正在上升（每多一台約多 0.0092 美元）。</p>
+<p>英文可以這樣寫：At a production level of 5000 sets the average cost is decreasing; at 10,000 sets it is increasing.</p>
+<p>(d) 圖形在 3.4 節的詳細解答裡。</p>
+</div>
+<div class="exam-ans" data-for="4.1-35">
+<p>定義域：$x \ge -1$</p>
+<p>$g'(x) = \sqrt{x + 1} + \dfrac{x}{2\sqrt{x + 1}} = \dfrac{2(x + 1) + x}{2\sqrt{x + 1}} = \dfrac{3x + 2}{2\sqrt{x + 1}}$</p>
+<p>$g'(x) = 0$ 得 $x = -\tfrac23$；$g'$ 在端點 $x = -1$ 不存在</p>
+<p>$g'$ 的符號：$-1 \lt x \lt -\tfrac23$ 是負的，$x \gt -\tfrac23$ 是正的</p>
+<p>Decreasing on $\left(-1, -\tfrac23\right)$；increasing on $\left(-\tfrac23, \infty\right)$</p>
+</div>
+<div class="exam-ans" data-for="4.1-89">
+<p>$f(t) = 90.7\,(0.01t^2 + 0.01t + 1)^{-1}$</p>
+<p>$f'(t) = -90.7\,(0.01t^2 + 0.01t + 1)^{-2}\,(0.02t + 0.01) = \dfrac{-90.7\,(0.02t + 0.01)}{(0.01t^2 + 0.01t + 1)^2}$</p>
+<p>在 $(0, 4)$ 上：$0.02t + 0.01 \gt 0$，分母是平方所以大於 0，前面有負號，所以 $f'(t) \lt 0$</p>
+<p>$f$ 在 $(0, 4)$ 遞減，所以投遞量在這段期間一直下降。</p>
+<p>英文可以這樣寫：Since $f'(t) \lt 0$ on $(0, 4)$, $f$ is decreasing, so the volume was declining throughout the period.</p>
+</div>
+<div class="exam-ans" data-for="4.2-70">
+<p>$f'(x) = \dfrac{2(x^2 + 1) - 2x(2x)}{(x^2 + 1)^2} = \dfrac{2 - 2x^2}{(x^2 + 1)^2}$，$f'(x) = 0$ 得 $x = \pm 1$</p>
+<p>$f''(x) = \dfrac{4x(x^2 - 3)}{(x^2 + 1)^3}$</p>
+<p>$f''(1) = -1 \lt 0$：relative maximum $f(1) = 1$</p>
+<p>$f''(-1) = 1 \gt 0$：relative minimum $f(-1) = -1$</p>
+</div>
+<div class="exam-ans" data-for="4.2-100">
+<p>$D(t) = D_2(t) - D_1(t) = 0.0075t^2 + 0.13t + 0.17$</p>
+<p>(a) $D'(t) = 0.015t + 0.13 \gt 0$ 在 $(0, 3)$ 成立，所以 $D$ 遞增。解釋：兩種情況的赤字差距持續擴大。</p>
+<p>(b) $D''(t) = 0.015 \gt 0$，所以圖形凹向上。解釋：差距擴大得越來越快。</p>
+<p>英文可以這樣寫：(a) The gap between the two deficits keeps growing. (b) The gap is growing at an increasing rate.</p>
+</div>
+<div class="exam-ans" data-for="4.3-60">
+<p>定義域：$[-2, \infty)$。$y$ 截距 $2\sqrt2 + 1 \approx 3.83$；沒有 $x$ 截距。沒有漸近線。</p>
+<p>$g'(x) = \dfrac32(x + 2)^{1/2} \gt 0$：在 $(-2, \infty)$ 遞增；沒有相對極值。</p>
+<p>$g''(x) = \dfrac{3}{4\sqrt{x + 2}} \gt 0$：在 $(-2, \infty)$ 凹向上；沒有反曲點。</p>
+<p>（附上圖：從 $(-2, 1)$ 出發，一路上升，通過 $(-1, 2)$ 和 $(2, 9)$。完成圖在 4.3 節的詳細解答裡。）</p>
+</div>
+<div class="exam-ans" data-for="4.5-4">
+<p>設垂直河岸的邊長 $x$、沿河的邊長 $y$（yd）。圍籬：$3x + y = 3000$，$y = 3000 - 3x$</p>
+<p>$A(x) = xy = 3000x - 3x^2$（$0 \le x \le 1000$）</p>
+<p>$A'(x) = 3000 - 6x = 0$，$x = 500$；$A''(x) = -6 \lt 0$，所以是最大</p>
+<p>$y = 3000 - 3(500) = 1500$，$A = 500 \times 1500 = 750{,}000$</p>
+<p>Dimensions：500 yd × 1500 yd；largest area：750,000 yd²</p>
+</div>
+<div class="exam-ans" data-for="4.5-18">
+<p>設半圓半徑 $x$、矩形高 $y$（ft）。周長：$2x + 2y + \pi x = 28$，$y = 14 - x - \dfrac{\pi x}{2}$</p>
+<p>$A = 2xy + \dfrac12\pi x^2 = 28x - 2x^2 - \dfrac{\pi x^2}{2}$</p>
+<p>$A'(x) = 28 - (4 + \pi)x = 0$，$x = \dfrac{28}{4 + \pi} \approx 3.92$；$A''(x) = -(4 + \pi) \lt 0$，所以是最大</p>
+<p>$y = 14 - x - \dfrac{\pi x}{2} = \dfrac{28}{4 + \pi} \approx 3.92$</p>
+<p>半圓半徑約 3.92 ft（窗寬約 7.84 ft），矩形高約 3.92 ft</p>
+</div>
+<div class="exam-ans" data-for="4.5-30">
+<p>設 $R$ 離 $P$ 的距離是 $x$ mi（$0 \le x \le 10$）。划船距離 $\sqrt{1 + x^2}$，走路距離 $10 - x$</p>
+<p>$T(x) = \dfrac{\sqrt{1 + x^2}}{3} + \dfrac{10 - x}{4}$</p>
+<p>$T'(x) = \dfrac{x}{3\sqrt{1 + x^2}} - \dfrac14 = 0$，$4x = 3\sqrt{1 + x^2}$，$16x^2 = 9 + 9x^2$，$x = \dfrac{3}{\sqrt7} \approx 1.13$</p>
+<p>$T(0) \approx 2.83$，$T(1.13) \approx 2.72$，$T(10) \approx 3.35$，最小在 $x \approx 1.13$</p>
+<p>$R$ 在離 $P$ 約 1.13 mi 的地方；需要約 2.72 小時</p>
+<p>英文可以這樣寫：She should row to a point about 1.13 mi from $P$. The trip takes about 2.72 hr.</p>
+</div>
+<div class="exam-ans" data-for="5.6-15">
+<p>(a) $S(t) = S_0e^{kt}$。$S(0) = 100$，所以 $S_0 = 100$</p>
+<p>$S(5) = 100e^{5k} = 150$，$e^{5k} = 1.5$，$k = \dfrac{\ln 1.5}{5} \approx 0.0811$</p>
+<p>$S(t) = 100e^{0.0811t}$（百萬美元）</p>
+<p>(b) 2013 年是 $t = 3$：$S(3) = 100e^{0.2433} \approx 127.5$（百萬美元）</p>
+</div>
+<div class="exam-ans" data-for="5.6-19">
+<p>$t$ 的單位是月，所以一年是 $t = 12$、兩年是 $t = 24$、五年是 $t = 60$</p>
+<p>(a) $D(1) = 2000 - 1500e^{-0.05} \approx 573$，$D(12) \approx 1177$，$D(24) \approx 1548$，$D(60) \approx 1925$（台／月）</p>
+<p>(b) $t$ 很大時 $e^{-0.05t} \to 0$，$D(t) \to 2000$（台／月）</p>
+<p>(c) $D'(t) = -1500(-0.05)\,e^{-0.05t} = 75e^{-0.05t}$，$D'(10) = 75e^{-0.5} \approx 45.5$，約每月 46 台</p>
 </div>
 </section>
 
