@@ -768,6 +768,27 @@ details.hint > :last-child, details.peek > :last-child { margin-bottom: 12px; }
 .prob.is-focus { border-top-color: var(--d1); }
 .prob.is-focus.is-done { border-top-color: var(--pos); }
 .prob.is-focus .prob-stamp { border-color: var(--ink); color: var(--ink); background: var(--mark); }
+/* ---------- 英文版題目 ---------- */
+.prob-en {
+  margin: 10px 0 14px;
+  padding: 14px 16px 12px;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--ink);
+  border-radius: 10px;
+  background: var(--paper);
+}
+.prob-en .en-label { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0 0 8px; font-size: 0.84rem; color: var(--ink-2); }
+.prob-en .en-label b { padding: 3px 8px; border-radius: 5px; background: var(--ink); color: #fff; font: 600 0.72rem/1.4 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.prob-en .en-q { font-size: 1.02rem; line-height: 1.7; }
+.prob-en .en-q p { margin: 0 0 8px; }
+.prob-en .en-q > :last-child { margin-bottom: 0; }
+.prob-en .en-sub { margin: 12px 0 6px; font: 600 0.74rem/1.4 var(--font-mono); letter-spacing: 0.06em; color: var(--ink-3); }
+.en-terms { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.en-terms li { margin: 0; padding: 5px 9px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); font-size: 0.86rem; line-height: 1.45; }
+.en-terms b { margin-right: 8px; font-weight: 600; }
+.en-terms span { color: var(--ink-2); }
+.prob-en .en-src { margin: 10px 0 0; font-size: 0.8rem; color: var(--ink-3); }
+.zh-label { margin: 0 0 4px; font: 600 0.74rem/1.4 var(--font-mono); letter-spacing: 0.1em; color: var(--ink-3); }
 .prob-focus { margin: 10px 0 0; padding: 8px 12px; border-radius: 9px; background: var(--mark-soft); font-size: 0.92rem; }
 .prob-focus a { font-weight: 700; }
 

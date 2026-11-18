@@ -914,6 +914,22 @@
       more.innerHTML = '老師提示會考。<a href="focus.html#q-' + id + '">看從頭講起的詳細版 →</a>';
       card.insertBefore(more, head.nextSibling);
     }
+    // 英文版題目（考卷是英文的）：放在中文題目上面。資料在 assets/problems-en.js
+    var en = (window.CALC_EN || {})[id];
+    var qEl = card.querySelector('.prob-q');
+    if (en && qEl) {
+      var box = mk('div', 'prob-en');
+      var termHtml = (en.terms || []).map(function (t) {
+        return '<li><b lang="en">' + esc(t[0]) + '</b><span>' + esc(t[1]) + '</span></li>';
+      }).join('');
+      box.innerHTML =
+        '<p class="en-label"><b lang="en">English</b>考卷上的題目是英文，先試著只讀這一段</p>' +
+        '<div class="en-q" lang="en">' + en.q.split('[$]').join('<span class="nomath">$</span>') + '</div>' +
+        (termHtml ? '<p class="en-sub">考卷上會看到的用語</p><ul class="en-terms">' + termHtml + '</ul>' : '') +
+        '<p class="en-src">英文是依課本題意重寫的，數字和問法相同。課本原文在 p. ' + en.page + '，Exercise ' + esc(parts[1]) + '。</p>';
+      qEl.parentNode.insertBefore(box, qEl);
+      qEl.parentNode.insertBefore(mk('p', 'zh-label', '中文'), qEl);
+    }
     paint();
   }
 
@@ -965,6 +981,7 @@
         { left: '$$', right: '$$', display: true },
         { left: '$', right: '$', display: false }
       ],
+      ignoredClasses: ['nomath'], // 英文題目裡的錢字號 $ 不是數學式
       throwOnError: false,
       strict: false
     });
