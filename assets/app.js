@@ -13,6 +13,7 @@
   var PAGES = [
     { id: 'index', file: 'index.html', num: '', title: '首頁 · 讀書計畫' },
     { id: 'focus', file: 'focus.html', num: '★', title: '老師提示的七題', group: '考前必讀', study: true },
+    { id: 'exam', file: 'exam.html', num: '✎', title: '考試模式（只有英文）' },
     { id: 'basics', file: 'basics.html', num: '0', title: '暖身：微分從零開始', group: '暖身（沒讀過先看這裡）', study: true },
     { id: 's34', file: 's34.html', num: '3.4', title: '邊際函數與需求彈性', group: '第 3 章　微分', study: true, probs: [13, 15, 37] },
     { id: 's35', file: 's35.html', num: '3.5', title: '高階導數', study: true, probs: [28] },
@@ -933,6 +934,142 @@
     paint();
   }
 
+  /* ================= 考試模式（exam.html） =================
+     每個 <section class="paper" data-probs="…"> 是一份考卷；英文題目取自 problems-en.js，
+     答案寫在 <div class="exam-ans" data-for="題號"> 裡，對答案時才顯示。作答紀錄另外存。 */
+  var EXAM_KEY = 'calc-mid2-exam-v1';
+  function initExam() {
+    var papers = Array.prototype.slice.call(document.querySelectorAll('section.paper'));
+    var tabs = document.getElementById('examTabs');
+    if (!papers.length || !tabs) return;
+    var EN = window.CALC_EN || {};
+    var st = {};
+    try { st = JSON.parse(localStorage.getItem(EXAM_KEY)) || {}; } catch (e) { st = {}; }
+    if (!st.marks || typeof st.marks !== 'object') st.marks = {};
+    function save() { try { localStorage.setItem(EXAM_KEY, JSON.stringify(st)); } catch (e) { /* 無痕模式：只留在本次瀏覽 */ } }
+    function pageFor(id) {
+      if (isFocus(id)) return 'focus.html#q-' + id;
+      var sec = id.split('-')[0];
+      var pg = PAGES.filter(function (p) { return p.num === sec; })[0];
+      return (pg ? pg.file : 'index.html') + '#q-' + id;
+    }
+    function setOpen(btn, panel, open, labels) {
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? labels[1] : labels[0];
+    }
+    var CHECK = ['寫完了，對答案', '收起答案'], VOCAB = ['單字提示', '收起單字'];
+
+    var tabBtns = [];
+    function showPaper(key) {
+      papers.forEach(function (p, i) {
+        var on = p.getAttribute('data-paper') === key;
+        p.hidden = !on;
+        tabBtns[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      st.tab = key; save();
+    }
+
+    papers.forEach(function (paper) {
+      var key = paper.getAttribute('data-paper');
+      var ids = paper.getAttribute('data-probs').split(',');
+
+      var tab = mk('button', 'exam-tab');
+      tab.type = 'button';
+      tab.innerHTML = '<b>' + esc(paper.getAttribute('data-name')) + '</b>' + esc(paper.getAttribute('data-desc')) + '（' + ids.length + ' 題）';
+      tab.addEventListener('click', function () { showPaper(key); });
+      tabs.appendChild(tab);
+      tabBtns.push(tab);
+
+      var head = mk('header', 'paper-head');
+      head.setAttribute('lang', 'en');
+      head.innerHTML = '<p class="paper-kicker">Calculus · Midterm II</p><p class="paper-title">' + esc(paper.getAttribute('data-title')) + '</p>' +
+        '<p class="paper-note">' + ids.length + ' problems. Show all your work. A calculator with e<sup>x</sup> and ln keys is allowed.</p>';
+      paper.insertBefore(head, paper.firstChild);
+
+      var cards = ids.map(function (id, i) {
+        var en = EN[id] || { q: '<p>(English text missing)</p>', terms: [] };
+        var parts = id.split('-');
+        var termHtml = (en.terms || []).map(function (t) {
+          return '<li><b lang="en">' + esc(t[0]) + '</b><span>' + esc(t[1]) + '</span></li>';
+        }).join('');
+        var card = mk('article', 'exam-q');
+        card.setAttribute('data-id', id);
+        card.innerHTML =
+          '<p class="eq-num" lang="en">Problem ' + (i + 1) + '</p>' +
+          '<div class="eq-text" lang="en">' + en.q.split('[$]').join('<span class="nomath">$</span>') + '</div>' +
+          '<div class="eq-tools"><button type="button" class="btn btn-primary eq-check"></button>' +
+          '<button type="button" class="btn eq-vocab"></button></div>' +
+          '<ul class="en-terms eq-terms" hidden>' + termHtml + '</ul>' +
+          '<div class="eq-answer" hidden><p class="eq-src">課本 ' + esc(parts[0]) + ' #' + esc(parts[1]) + '</p><div class="writeup"></div>' +
+          '<div class="eq-mark"><span class="eq-ask">和你寫的比一比：</span>' +
+          '<button type="button" class="btn eq-ok" aria-pressed="false">寫對了</button>' +
+          '<button type="button" class="btn eq-no" aria-pressed="false">寫錯或不會</button>' +
+          '<a class="eq-more" href="' + pageFor(id) + '">看詳細解法 →</a></div></div>';
+        var ans = paper.querySelector('.exam-ans[data-for="' + id + '"]');
+        var wu = card.querySelector('.writeup');
+        if (ans) { while (ans.firstChild) wu.appendChild(ans.firstChild); ans.parentNode.removeChild(ans); }
+
+        var check = card.querySelector('.eq-check'), answer = card.querySelector('.eq-answer');
+        var vocab = card.querySelector('.eq-vocab'), terms = card.querySelector('.eq-terms');
+        setOpen(check, answer, !!st.marks[key + '|' + id], CHECK);
+        setOpen(vocab, terms, false, VOCAB);
+        check.addEventListener('click', function () { setOpen(check, answer, answer.hidden, CHECK); });
+        vocab.addEventListener('click', function () { setOpen(vocab, terms, terms.hidden, VOCAB); });
+        ['ok', 'no'].forEach(function (m) {
+          card.querySelector('.eq-' + m).addEventListener('click', function () {
+            var k = key + '|' + id;
+            if (st.marks[k] === m) delete st.marks[k]; else st.marks[k] = m;
+            save(); paint();
+          });
+        });
+        paper.appendChild(card);
+        return { id: id, n: i + 1, el: card, check: check, answer: answer, vocab: vocab, terms: terms };
+      });
+
+      var sum = mk('div', 'paper-sum');
+      sum.innerHTML = '<p class="ps-text" aria-live="polite"></p><ul class="ps-list"></ul><button type="button" class="btn ps-reset">重考這一份</button>';
+      paper.appendChild(sum);
+      var psText = sum.querySelector('.ps-text'), psList = sum.querySelector('.ps-list');
+
+      function paint() {
+        var ok = 0, no = [];
+        cards.forEach(function (c) {
+          var m = st.marks[key + '|' + c.id];
+          c.el.classList.toggle('is-ok', m === 'ok');
+          c.el.classList.toggle('is-no', m === 'no');
+          c.el.querySelector('.eq-ok').setAttribute('aria-pressed', m === 'ok' ? 'true' : 'false');
+          c.el.querySelector('.eq-no').setAttribute('aria-pressed', m === 'no' ? 'true' : 'false');
+          if (m === 'ok') ok++;
+          if (m === 'no') no.push(c);
+        });
+        var done = ok + no.length;
+        psText.textContent = done === 0 ? '還沒對答案。寫完一題就對一題。'
+          : done < cards.length ? '已對答案 ' + done + ' / ' + cards.length + ' 題，寫對 ' + ok + ' 題。'
+          : '全部對完了：寫對 ' + ok + ' / ' + cards.length + ' 題。' + (no.length ? '' : '這一份沒問題了。');
+        psList.innerHTML = no.map(function (c) {
+          var parts = c.id.split('-');
+          return '<li>Problem ' + c.n + '（課本 ' + esc(parts[0]) + ' #' + esc(parts[1]) + '）要重讀：<a href="' + pageFor(c.id) + '">看詳細解法 →</a></li>';
+        }).join('');
+      }
+      sum.querySelector('.ps-reset').addEventListener('click', function () {
+        if (!window.confirm('要清掉這一份的對答案紀錄，重考一次嗎？')) return;
+        cards.forEach(function (c) {
+          delete st.marks[key + '|' + c.id];
+          setOpen(c.check, c.answer, false, CHECK);
+          setOpen(c.vocab, c.terms, false, VOCAB);
+        });
+        save(); paint();
+        paper.scrollIntoView();
+      });
+      paint();
+    });
+
+    var first = papers[0].getAttribute('data-paper');
+    var keys = papers.map(function (p) { return p.getAttribute('data-paper'); });
+    showPaper(keys.indexOf(st.tab) >= 0 ? st.tab : first);
+  }
+
   /* ================= 7. 首頁元件 ================= */
   function buildHome() {
     var sg = document.getElementById('secGrid');
@@ -1002,6 +1139,7 @@
     document.querySelectorAll('.solution').forEach(initSolution);
     document.querySelectorAll('.quiz').forEach(initQuiz);
     document.querySelectorAll('.signline').forEach(initSignline);
+    initExam();
     buildPageEnd();
     renderMath();
     document.querySelectorAll('figure.fig').forEach(initFigure);
